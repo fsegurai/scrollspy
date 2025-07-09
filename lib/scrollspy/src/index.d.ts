@@ -4,8 +4,10 @@ export interface ScrollspyOptions {
   nested?: boolean;
   nestedClass?: string;
   offset?: number;
+  bottomThreshold?: number;
   reflow?: boolean;
   events?: boolean;
+  observe?: boolean;
 }
 
 export interface ScrollspyEvent {
@@ -28,29 +30,29 @@ declare class scrollspy {
   getContents(): void;
 
   /**
-   * Detect current scroll position and activate corresponding navigation
+   * Detect the current scroll position and activate corresponding navigation
    */
   detect(): void;
 
   /**
    * Get positions of all content elements
    */
-  getPositions(): Array<{ content: Element; offset: number }>;
+  getPositions(): { content: Element; offset: number }[];
 
   /**
-   * Get offset top position of an element
+   * Get the offset top position of an element
    */
   getOffsetTop(element: Element): number;
 
   /**
-   * Get current viewport position with offset
+   * Get the current viewport position with offset
    */
   getViewportPosition(): number;
 
   /**
-   * Get currently active elements based on scroll position
+   * Currently get active elements based on scroll position
    */
-  getCurrentActive(positions: Array<{ content: Element; offset: number }>, position: number): Element[];
+  getCurrentActive(positions: { content: Element; offset: number }[], position: number): Element[];
 
   /**
    * Check if the active elements have changed
@@ -83,7 +85,7 @@ declare class scrollspy {
   emitEvent(type: string, content: Element, nav: Element): void;
 
   /**
-   * Setup scroll and resize event listeners
+   * Setup scrolls and resizes event listeners
    */
   setupListeners(): void;
 
@@ -91,6 +93,16 @@ declare class scrollspy {
    * Refresh the scrollspy to detect content changes
    */
   setup(): void;
+
+  /**
+   * Refresh the scrollspy to detect content changes
+   */
+  refresh(): void;
+
+  /**
+   * Observe DOM changes and refresh when mutations occur
+   */
+  observeChanges(): void;
 
   /**
    * Destroy the scrollspy instance and clean up event listeners

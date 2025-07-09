@@ -1,9 +1,8 @@
-/* Scrollspy specific styles */
 .toc-nav {
     position: fixed;
     top: 120px;
     right: 20px;
-    width: 200px;
+    width: 270px;
     max-height: calc(100vh - 160px);
     overflow-y: auto;
     background: var(--md-sys-color-surface-container);
@@ -11,72 +10,88 @@
     padding: 16px;
     border: 1px solid var(--md-sys-color-outline-variant);
     z-index: 100;
-}
 
-.toc-nav h3 {
-    margin: 0 0 12px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--md-sys-color-on-surface);
-}
+    .active-parent {
+        background: var(--md-sys-color-secondary-container);
+        color: var(--md-sys-color-on-secondary-container);
 
-.toc-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+        & > a {
+            color: var(--md-sys-color-secondary, #625b71);
+            font-weight: 500;
+        }
+    }
 
-.toc-nav li {
-    margin: 0;
-}
+    .active {
+        color: var(--md-sys-color-primary, #6750a4);
+        font-weight: 600;
+        background-color: var(--md-sys-color-primary-container, rgba(103, 80, 164, 0.1));
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin: -4px -8px;
+    }
 
-.toc-nav a {
-    display: block;
-    padding: 6px 12px;
-    text-decoration: none;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: 13px;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
+    .toc-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
 
-.toc-nav a:hover {
-    background: var(--md-sys-color-surface-variant);
-    color: var(--md-sys-color-on-surface);
-}
+    h3 {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--md-sys-color-on-surface);
+    }
 
-.toc-nav a.active {
-    background: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
-    font-weight: 500;
-}
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
 
-.toc-nav .nested {
-    margin-left: 16px;
-}
+        &.nested {
+            margin-left: 16px;
+        }
 
-.toc-nav .active-parent {
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-}
+        li {
+            margin: 0;
 
-/* Add margin to main content for demo sections */
-.main-index {
-    max-width: calc(100% - 240px);
-}
+            a {
+                display: block;
+                padding: 6px 12px;
+                text-decoration: none;
+                color: var(--md-sys-color-on-surface-variant);
+                font-size: 13px;
+                border-radius: 4px;
+                transition: all 0.2s ease;
 
-.demo-section {
-    min-height: 400px;
-    padding: 40px 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background: var(--md-sys-color-surface-container-low);
-    border: 1px solid var(--md-sys-color-outline-variant);
-}
+                &:hover {
+                    background: var(--md-sys-color-surface-variant);
+                    color: var(--md-sys-color-on-surface);
+                }
 
-.demo-section h2 {
-    margin-top: 0;
-    color: var(--md-sys-color-primary);
+                &.active {
+                    background: var(--md-sys-color-primary-container);
+                    color: var(--md-sys-color-on-primary-container);
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    a {
+        transition: all 0.2s ease;
+        display: block;
+        padding: 4px 8px;
+        margin: -4px -8px;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: var(--md-sys-color-surface-variant, rgba(103, 80, 164, 0.05));
+        }
+    }
 }
 
 /* Hide TOC on mobile */
@@ -90,20 +105,7 @@
     }
 }
 
-/* Toggle button for mobile */
-.toc-toggle {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 101;
-    display: none;
-}
-
 @media (max-width: 768px) {
-    .toc-toggle {
-        display: block;
-    }
-
     .toc-nav.mobile-hidden {
         display: none;
     }
@@ -118,68 +120,40 @@
     }
 }
 
-/* Active navigation styles */
-#tableOfContents .active {
-    color: var(--md-sys-color-primary, #6750a4);
-    font-weight: 600;
-    background-color: var(--md-sys-color-primary-container, rgba(103, 80, 164, 0.1));
-    border-radius: 4px;
-    padding: 4px 8px;
-    margin: -4px -8px;
-}
-
-#tableOfContents .active-parent > a {
-    color: var(--md-sys-color-secondary, #625b71);
-    font-weight: 500;
-}
-
-/* Smooth transitions */
-#tableOfContents a {
-    transition: all 0.2s ease;
-    display: block;
-    padding: 4px 8px;
-    margin: -4px -8px;
-    border-radius: 4px;
-}
-
-#tableOfContents a:hover {
-    background-color: var(--md-sys-color-surface-variant, rgba(103, 80, 164, 0.05));
-}
-
 .main-playground {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-
-  .md-editor,
-  .md-body {
-    flex: 1 1 45%;
-    margin: 1%;
-    box-sizing: border-box;
-    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
     @media (max-width: 768px) {
-      flex: 1 1 100%;
+        flex-direction: column;
     }
-  }
 
-  .md-editor {
-    position: sticky;
-    top: 80px;
-    height: calc(100vh - 8rem);
-    overflow: auto;
-    field-sizing: content;
-  }
+    .md-editor,
+    .md-body {
+        flex: 1 1 45%;
+        margin: 1%;
+        box-sizing: border-box;
+        height: 100%;
 
-  .md-body {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    padding: 0.5rem;
-  }
+        @media (max-width: 768px) {
+            flex: 1 1 100%;
+        }
+    }
+
+    .md-editor {
+        position: sticky;
+        top: 80px;
+        height: calc(100vh - 8rem);
+        overflow: auto;
+        field-sizing: content;
+    }
+
+    .md-body {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        padding: 0.5rem;
+    }
 }

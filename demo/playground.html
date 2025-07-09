@@ -78,35 +78,10 @@
 
 <!-- Table of Contents Navigation -->
 <nav id="tableOfContents" class="toc-nav">
-  <h3>Table of Contents</h3>
-  <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#basic-usage">Basic Usage</a></li>
-    <li>
-      <a href="#configuration">Configuration</a>
-      <ul class="nested">
-        <li><a href="#options">Options</a></li>
-        <li><a href="#events">Events</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#examples">Examples</a>
-      <ul class="nested">
-        <li><a href="#simple-example">Simple Example</a></li>
-        <li><a href="#nested-navigation">Nested Navigation</a></li>
-        <li><a href="#custom-offset">Custom Offset</a></li>
-      </ul>
-    </li>
-    <li><a href="#api-reference">API Reference</a></li>
-    <li><a href="#browser-support">Browser Support</a></li>
-  </ul>
+  <div class="toc-header">
+    <h3>Table of Contents</h3>
+  </div>
 </nav>
-
-<!-- Mobile TOC Toggle -->
-<md-icon-button id="tocToggle" class="toc-toggle">
-  <md-icon>menu</md-icon>
-</md-icon-button>
 
 <nav id="tabLinkContainer" class="tab-link-container">
   <div id="tabLinkContent" class="tab-link-content">
@@ -118,116 +93,34 @@
   </md-icon-button>
 </nav>
 
-<main class="main-index">
-  <div id="markdown-body" class="markdown-body">
-
-    <section id="introduction" class="demo-section" data-gumshoe>
-      <h2>Introduction</h2>
-      <p>A lightweight, dependency-free scrollspy library that automatically highlights navigation items based on scroll
-        position. Perfect for documentation sites, landing pages, and any content with table of contents navigation.</p>
-      <p>This library provides smooth scroll tracking and intelligent navigation highlighting with minimal setup and
-        maximum performance.</p>
-    </section>
-
-    <section id="installation" class="demo-section">
-      <h2>Installation</h2>
-      <p>Install the package via npm:</p>
-      <pre><code>npm install @fsegurai/scrollspy</code></pre>
-      <p>Or include it directly in your HTML:</p>
-      <pre><code>&lt;script type="module" src="path/to/scrollspy.esm.js"&gt;&lt;/script&gt;</code></pre>
-    </section>
-
-    <section id="basic-usage" class="demo-section">
-      <h2>Basic Usage</h2>
-      <p>Initialize scrollspy with minimal configuration:</p>
-      <pre><code>import scrollspy from '@fsegurai/scrollspy';
-
-// Initialize with navigation selector
-const spy = new scrollspy('#navigation');
-
-// Clean up when done
-spy.destroy();</code></pre>
-    </section>
-
-    <section id="configuration" class="demo-section">
-      <h2>Configuration</h2>
-      <p>Customize scrollspy behavior with various options:</p>
-
-      <div id="options" style="margin-top: 40px;">
-        <h3>Options</h3>
-        <p>Available configuration options:</p>
-        <ul>
-          <li><strong>offset</strong>: Number of pixels to offset scroll position (default: 0)</li>
-          <li><strong>nested</strong>: Enable nested navigation support (default: false)</li>
-          <li><strong>nestedClass</strong>: CSS class for parent items (default: 'active-parent')</li>
-          <li><strong>reflow</strong>: Recalculate on window resize (default: false)</li>
-          <li><strong>events</strong>: Enable custom events (default: true)</li>
-        </ul>
-      </div>
-
-      <div id="events" style="margin-top: 40px;">
-        <h3>Events</h3>
-        <p>Listen for scrollspy events:</p>
-        <pre><code>document.addEventListener('gumshoeactivate', (event) => {
-  console.log('Active section:', event.detail.target);
-});</code></pre>
-      </div>
-    </section>
-
-    <section id="examples" class="demo-section">
-      <h2>Examples</h2>
-      <p>Common usage patterns and examples:</p>
-
-      <div id="simple-example" style="margin-top: 40px;">
-        <h3>Simple Example</h3>
-        <p>Basic scrollspy setup:</p>
-        <pre><code>const spy = new scrollspy('#nav', {
-  offset: 50
-});</code></pre>
-      </div>
-
-      <div id="nested-navigation" style="margin-top: 40px;">
-        <h3>Nested Navigation</h3>
-        <p>Enable nested navigation highlighting:</p>
-        <pre><code>const spy = new scrollspy('#nav', {
-  nested: true,
-  nestedClass: 'parent-active',
-  offset: 100
-});</code></pre>
-      </div>
-
-      <div id="custom-offset" style="margin-top: 40px;">
-        <h3>Custom Offset</h3>
-        <p>Adjust scroll position with custom offset:</p>
-        <pre><code>const spy = new scrollspy('#nav', {
-  offset: 120, // Account for fixed header
-  reflow: true // Recalculate on resize
-});</code></pre>
-      </div>
-    </section>
-
-    <section id="api-reference" class="demo-section">
-      <h2>API Reference</h2>
-      <p>Complete API documentation:</p>
-      <ul>
-        <li><strong>setup()</strong>: Refresh content detection</li>
-        <li><strong>destroy()</strong>: Clean up event listeners</li>
-        <li><strong>detect()</strong>: Manually trigger position detection</li>
-      </ul>
-    </section>
-
-    <section id="browser-support" class="demo-section">
-      <h2>Browser Support</h2>
-      <p>Modern browser support with ES6+ features:</p>
-      <ul>
-        <li>Chrome 60+</li>
-        <li>Firefox 55+</li>
-        <li>Safari 12+</li>
-        <li>Edge 79+</li>
-      </ul>
-    </section>
-
-  </div>
+<main class="main-playground">
+  <md-filled-text-field
+      id="md-editor"
+      class="md-editor"
+      type="textarea"
+      label="Markdown Editor">
+  </md-filled-text-field>
+  <div id="md-body" class="md-body"></div>
 </main>
+
+<footer
+    style="margin-top: 4rem; text-align: center; font-size: 0.9rem; color: #555; background: #f9f9f9; padding: 2rem 1rem; line-height: 1.5;">
+  <svg width="100%" height="80" viewBox="0 0 100 20" preserveAspectRatio="none"
+       style="display:block; margin-bottom: -1px;">
+    <path d="M0,20 C20,0 80,0 100,20 L100,0 L0,0 Z" fill="#e0e0e0"></path>
+  </svg>
+
+  <p>🕵️‍♂️ <strong>ScrollSpy</strong> — silently judging your scroll since... now.</p>
+  <p>💻 Made with <code>&lt;3</code>, JavaScript, and occasional rage quits.</p>
+  <p>⚠️ Warning: Excessive scrolling may cause uncontrollable bouts of inspiration.</p>
+  <p>🎉 Pro tip: The more you scroll, the more active your TOC feels.</p>
+  <p>🤓 Fun fact: This footer exists solely to make your TOC behave like a champ.</p>
+  <p>🐢 Slow scrollers get extra love. 🐇 Fast scrollers, buckle up!</p>
+
+  <p style="margin-top: 2rem; font-size: 0.8rem; color: #999;">
+    © 2025 ScrollSpy Inc. All rights reserved. May your scroll bars never jam.
+  </p>
+</footer>
+
 </body>
 </html>
