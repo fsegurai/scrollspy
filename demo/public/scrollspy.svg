@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+    <!-- Background box -->
+    <rect width="200" height="200" rx="16" fill="#101010"/>
+
+    <!-- Scroll element -->
+    <rect x="70" y="40" width="60" height="120" rx="8" fill="#ffffff"/>
+    <rect x="80" y="55" width="40" height="10" fill="#101010"/>
+    <rect x="80" y="80" width="40" height="10" fill="#101010"/>
+    <rect x="80" y="105" width="40" height="10" fill="#101010"/>
+
+    <!-- Spy eye -->
+    <circle cx="160" cy="160" r="20" fill="#ffffff"/>
+    <circle cx="160" cy="160" r="8" fill="#101010"/>
+    <circle cx="160" cy="160" r="3" fill="#ffffff"/>
+
+    <!-- Text Label (Optional) -->
+    <text x="20" y="190" font-family="Arial, sans-serif" font-size="14" fill="#ffffff">ScrollSpy</text>
+</svg>
