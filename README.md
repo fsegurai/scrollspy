@@ -1,9 +1,52 @@
-# @fsegurai/scrollspy
+<p align="center" class="intro">
+  <img alt="ScrollSpy Logo" src="https://raw.githubusercontent.com/fsegurai/scrollspy/main/demo/public/scrollspy.svg">
+</p>
 
-A dependency-free, lightweight scrollspy library that highlights navigation links based on scroll position. Perfect for
+<p align="center" class="intro">
+  <a href="https://github.com/fsegurai/scrollspy">
+      <img src="https://img.shields.io/azure-devops/build/fsegurai/93779823-473d-4fb3-a5b1-27aaa1a88ea2/26/main?label=Build%20Status&"
+          alt="Build Main Status">
+  </a>
+  <a href="https://github.com/fsegurai/scrollspy/releases/latest">
+      <img src="https://img.shields.io/github/v/release/fsegurai/scrollspy"
+          alt="Latest Release">
+  </a>
+  <br>
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/fsegurai/scrollspy">
+  <img alt="Dependency status for repo" src="https://img.shields.io/librariesio/github/fsegurai/scrollspy">
+  <a href="https://opensource.org/licenses/MIT">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/fsegurai/scrollspy">
+  </a>
+  <br>
+  <img alt="Stars" src="https://img.shields.io/github/stars/fsegurai/scrollspy?style=square&labelColor=343b41"/> 
+  <img alt="Forks" src="https://img.shields.io/github/forks/fsegurai/scrollspy?style=square&labelColor=343b41"/>
+</p>
+
+**A library for scrollspy functionality**
+
+`@fsegurai/scrollspy` is a dependency-free, lightweight scrollspy library that highlights navigation links based on
+scroll position. Perfect for
 documentation sites, blogs, and landing pages with sticky tables of contents.
 
 ---
+
+## 📋 Table of Contents
+
+- [🚀 Features](#-features)
+- [📦 Installation](#-installation)
+    - [NPM](#npm)
+    - [CDN / HTML](#cdn--html)
+- [🧠 Usage](#-usage)
+    - [HTML Example](#html-example)
+    - [JavaScript/TypeScript Example](#javascripttypescript-example)
+- [⚙️ Options](#️-options)
+- [📡 Events](#-events)
+    - [`gumshoeactivate`](#gumshoeactivate)
+    - [`gumshoedeactivate`](#gumshoedeactivate)
+- [🔁 Dynamic Content Support](#-dynamic-content-support)
+- [📘 API](#-api)
+- [✅ Browser Support](#-browser-support)
+- [🧼 License](#-license)
 
 ## 🚀 Features
 
