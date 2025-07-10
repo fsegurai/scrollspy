@@ -2,7 +2,7 @@ import { mdRender } from './utils/markdown';
 
 const mdBody = document.querySelector('.markdown-body') as HTMLElement;
 const readmeURL =
-  'https://raw.githubusercontent.com/fsegurai/ngx-markdown/refs/heads/main/README.md';
+  'https://raw.githubusercontent.com/fsegurai/scrollspy/refs/heads/main/README.md';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (mdBody) {
