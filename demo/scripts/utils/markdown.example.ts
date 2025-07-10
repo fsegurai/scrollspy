@@ -1,242 +1,158 @@
-const mdSample = `# Markdown Extended Accordion
+const mdSample = `
+# 🎢 ScrollSpy Playground Sample
 
-::::accordion{title="Click to expand" expanded="true"}
-This is the content inside the accordion.
-
-- You can include **bold text**
-- Or _italic text_
-- Or even [links](https://example.com)
-::::accordionend
-
-::::accordion{title="Code Preview"}
-  \`\`\` javascript
-  const foo = 'bar';
-  
-  console.log(foo);
-  \`\`\`
-::::accordionend
-
-::::accordion{title="Image Preview"}
-![Test image](https://plus.unsplash.com/premium_photo-1669829646756-083a328c0abb?q=80&w=2118&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "test image")
-::::accordionend
-
-::::accordion{title="Another Section" level="2" class="important"}
-This is another section with a different heading level and custom class.
-::::accordionend
+Welcome to the playground! Scroll around and watch the navigation glow like a disco floor on a Saturday night. 💃🕺
 
 ---
 
-# Markdown Extended Alert
+# Introduction
 
-> [!IMPORTANT]
-> This is an important alert.
-
-> [!WARNING]
-> This is a warning alert.
+Hey there! This playground is designed to push ScrollSpy to its limits.  
+Scroll through the sections, nested content, and funny notes, and see how the TOC stays perfectly in sync — no matter how wild the ride!
 
 ---
 
-# Markdown Extended Footnotes
+# Chapter 1 - The Basics
 
-This is a paragraph with a footnote reference[^1].
+## Section 1.1 - Hello World
 
-Here's another paragraph with a footnote[^4].
+Let’s start simple: scrollspy tracks the section currently in view and highlights the corresponding nav link.
 
-This statement needs a citation[^source].
-
-This needs further explanation[^explanation].
-
-This has an important caveat[^note].
-
-## Custom Footnotes Section
-
-[footnotes]
-
-## Additional Content
-
-This content appears after the footnotes.
-
-[^1]: This is the first footnote.
-[^4]: This is the second footnote with **bold** text.
-[^source]: Smith, J. (2023). Research findings.
-[^explanation]: This refers to the process described in section 2.1.
-[^note]: Only applies under specific conditions.
+Did you know?  
+*Scrolling* is like teleportation — but slower.
 
 ---
 
-# Markdown Extended Tables
+## Section 1.2 - Why ScrollSpy?
 
-## Column Spanning
-
-| H1      | H2      | H3      |
-|---------|---------|---------|
-| This cell spans 3 columns |||
-
-## Row Spanning
-
-| H1           | H2      |
-|--------------|---------|
-| This cell    | Cell A  |
-| spans three ^| Cell B  |
-| rows        ^| Cell C  |
-
-## Multi-row headers
-
-| This header spans two   || Header A |
-| columns *and* two rows ^|| Header B |
-|-------------|------------|----------|
-| Cell A      | Cell B     | Cell C   |
+Because no one likes to get lost on a page!  
+ScrollSpy keeps your navigation alive and kicking.
 
 ---
 
-# Markdown Extended Tabs
+# Chapter 2 - Advanced Techniques
 
-::::tabs
-:::tab{label="JS Code" icon="♻️"}
-\`\`\`js
-console.log("Hello from JS");
-\`\`\`
-:::tabend
-
-:::tab{label="Python Code" icon="🐍"}
-\`\`\`python
-print("Hello from Python")
-\`\`\`
-:::tabend
-
-:::tab{label="Image"}
-![Test image](https://plus.unsplash.com/premium_photo-1669829646756-083a328c0abb?q=80&w=2118&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "test image")
-
-You can also include a brief description or caption here.
-:::tabend
-
-:::tab{label="Text"}
-Some text here.
-:::tabend
-::::tabsend
+Welcome to the deeper end of the pool. 🏊‍♀️
 
 ---
 
-# Markdown Extended Timeline
+## Section 2.1 - Nested Navigation
 
-::::timeline
-:::event{date="2023-01-15"}
-# Product Launch
-Initial release of our software with the following features:
-- User authentication
-- Basic dashboard
-- File uploads
-:::eventend
+This section shows nested navigation support:
 
-:::event{date="2023-03-20"}
-# Version 1.1
-## Feature Updates
-Added new capabilities and fixed several bugs:
+- Parent item gets highlighted when any child is active.
+- Smooth behavior for complex TOCs.
 
-\`\`\`js
-// New API endpoint example
-app.get('/api/v1.1/stats', (req, res) => {
-  return res.json({ uptime: '99.9%', users: 1250 });
-});
-\`\`\`
-:::eventend
-
-:::event{date="2023-06-10" active="true"}
-# Version 2.0
-Major architecture overhaul with improved performance:
-
-1. Migrated to microservices
-2. Implemented Redis caching
-3. Added real-time notifications
-:::eventend
-
-:::event{date="2023-12-01"}
-# Year End Update
-Planning for next year's roadmap
-:::eventend
-::::timelineend
+Scroll down slowly to watch the magic.
 
 ---
 
-# Markdown Extended Lists
+## Section 2.2 - Dynamic Offset
 
-## Ordered lists
-
-1. Item 1
-2. Item 2
-    1. Item 2.1
-    2. Item 2.2
-        1. Item 2.2.1
-        2. Item 2.2.2
-    3. Item 2.3
-3. Item 3
-
-## Ordered lists with different types
-
-1. Numeric
-    1. Item 1
-2. Alphabetic
-    a. Item 1
-3. Roman
-    i. Item 1
-    ii. Item 2
-
-## Task lists
-
-- [x] Task 1
-- [ ] Task 2
-- [x] Task 3
-
-## Mixed lists
-
-1. Item 1
-    - Subitem 1
-    - Subitem 2
-2. Item 2
-    - Subitem 1
-    - Subitem 2
-        1. Subsubitem 1
-        2. Subsubitem 2
-    - Subitem 3
-        - [x] Task 4
+Adjust the scroll offset to handle fixed headers or sticky navbars.
 
 ---
 
-# Markdown Extended Spoiler
+## Section 2.3 - Edge Cases
 
-## Text Spoiler
+What if two sections overlap or the page ends?
 
-::::spoiler{title="Hover on text" theme="info"}
-This is a hidden code block that will only appear on hover. Some text later it will be all over again and again, so be sure that it will work
-::::spoilerend
-
-## Image Spoiler
-
-::::spoiler{title="Hover on image"}
-![Test image](https://plus.unsplash.com/premium_photo-1669829646756-083a328c0abb?q=80&w=2118&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "test image")
-::::spoilerend
-
-## Code Spoiler
-
-::::spoiler{title="Hover on code"}
-  \`\`\` javascript
-  const foo = 'bar';
-  
-  console.log(foo);
-  \`\`\`
-::::spoilerend
+ScrollSpy handles those gracefully (we hope).
 
 ---
 
-# Markdown Extended Typography
+# Chapter 3 - Fun with ScrollSpy
 
-He said, (--) \\"A 'simple' sentence. . .\\" (---) unknown
+## Section 3.1 - Easter Eggs
 
-(Omega) - (alpha) - (beta) (--) (smile) (--) (check) (---) (pi)
-
-Copyright (C^) 2025. All rights reserved.
+If you spot any bugs, they're *undocumented features*. 😎
 
 ---
+
+## Section 3.2 - Party Mode
+
+Imagine if scrollspy triggered confetti every time you reach a new section. 🎉
+
+(Pssst… maybe you should add that yourself!)
+
+---
+
+# Chapter 4 - The Final Frontier
+
+Last chapter, but not least.
+
+Keep scrolling — you’re almost there!
+
+---
+
+# Conclusion
+
+Thanks for visiting the ScrollSpy playground!
+
+Now go forth and build amazing docs, blogs, or websites —  
+and never let your users get lost in the scroll abyss again.
+
+---
+
+# Appendix: Bonus Content
+
+Just because we can…
+
+- Item 1: Lorem ipsum dolor sit amet.
+- Item 2: Consectetur adipiscing elit.
+- Item 3: ScrollSpy rules! 🚀
+
+---
+
+# Huge Section for Scroll Testing
+
+The Tale of ScrollSpy: The Navigator's Best Friend
+
+Once upon a time, in the vast lands of the Internet, users wandered through endless pages, lost in the wilderness of long content and sprawling documents. They clicked and scrolled, but their navigation menus lay silent, never telling them where they were or where to go next.
+
+Enter ScrollSpy, the vigilant guardian of the navigation realm. Born from the need to keep explorers oriented, ScrollSpy watched the user’s scroll position like a lighthouse keeper watches the sea. With every flick of the wheel or swipe of the finger, ScrollSpy lit up the correct path in the navigation, guiding travelers safely through nested forests of headings and vast deserts of paragraphs.
+
+No longer did users stumble or get confused. With ScrollSpy’s watchful eye, the active section was always highlighted — a friendly beacon shining bright — making the journey smooth, intuitive, and delightful.
+
+And so, ScrollSpy became the navigator’s best friend, silently working behind the scenes, ensuring no one ever got lost again in the endless scroll.
+
+---
+
+# Thanks for scrolling! 👏 
+
+Huge shoutout to all the wonderful folks who make the web a better place every day:
+
+- 🚀 Developers who tirelessly build open source projects that inspire and empower us all.
+- 📚 Writers and educators who share knowledge generously, helping us learn and grow.
+- 🎨 Designers crafting beautiful, intuitive interfaces that make our digital journeys delightful.
+- 🐞 Bug reporters who help us squash those pesky issues before they multiply.
+- ☕ Coffee and tea — the real MVPs fueling late-night coding marathons.
+- 🐱‍💻 Everyone who’s ever tried, tested, debugged, and pushed the boundaries of what’s possible on the web.
+
+And a special thanks to:
+
+- The creators of the scrolling libraries that paved the way.
+- The browsers that faithfully render our code with every update.
+- The internet itself — a wild, wonderful place where ideas meet reality.
+- Your cat, dog, or pet of choice, who patiently tolerates your coding sessions.
+- The cosmic forces that align to keep our bits flowing and bytes buzzing.
+
+Without you, this project would be just a bunch of code lines. Instead, it’s a little beacon of navigation joy!
+
+---
+
+Feel free to take a moment and appreciate the magic of scrolling — it’s a simple act that connects us all.
+
+Keep scrolling, keep exploring, and keep being awesome! 🚀✨
+
+
+---
+
+### Notes
+
+- Nested sections show how parent highlighting works.
+- Long sections test offset and bottom-of-page logic.
 `;
+
 
 export default mdSample;

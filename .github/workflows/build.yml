@@ -1,0 +1,64 @@
+name: Build Lib-Demo
+
+on:
+  workflow_call:
+
+env:
+  LIB_ARTIFACT_NAME: 'build-lib-artifact'
+
+jobs:
+  build_library:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    environment: FSI_DEP_NodeJs
+    strategy:
+      matrix:
+        package: [
+          marked-extended-accordion,
+          marked-extended-footnote,
+          marked-extended-lists,
+          marked-extended-spoiler,
+          marked-extended-tables,
+          marked-extended-typographic,
+        ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Bun - Version ${{ vars.BUN_VERSION }}
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ vars.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build ${{ matrix.package }} package
+        run: |
+          cd packages/${{ matrix.package }}
+          bun run prepare
+
+  build_demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    environment: github-pages
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Bun - Version ${{ vars.BUN_VERSION }}
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ vars.BUN_VERSION }}
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build demo
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          HOST_URL: ${{ secrets.HOST_URL }}
+        run: |
+          bun run build:demo
+          bun run postBuild:demo

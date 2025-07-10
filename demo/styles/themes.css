@@ -104,30 +104,6 @@ html {
                 color: #d1d5da;
                 background-color: transparent;
 
-                /* Custom Extensions */
-                /* Marked Extended Accordion */
-                & .marked-extended-accordion {
-                    & .marked-extended-accordion-header {
-                        background: #2d333b;
-                    }
-                }
-
-                /* Marked Extended Tabs */
-                & .marked-extended-tabs-container {
-                    & .marked-extended-tabs-nav {
-                        background: #2d333b;
-                        border-bottom: 1px solid #444c56;
-
-                        & .marked-extended-tabs-label {
-                            &:hover {
-                                background: #444c56 !important;
-                            }
-                        }
-                    }
-                }
-
-                /* END */
-
                 & a {
                     color: #58a6ff;
                 }
@@ -145,6 +121,12 @@ html {
                     color: #d1d5da;
                     background-color: #2d333b;
                 }
+            }
+
+            /* Footer */
+            & .footer {
+                color: #fff;
+                background: #1e1e1e;
             }
         }
 
@@ -224,30 +206,6 @@ html {
                 color: #24292e;
                 background-color: transparent;
 
-                /* Custom Extensions */
-                /* Marked Extended Accordion */
-                & .marked-extended-accordion {
-                    & .marked-extended-accordion-header {
-                        background: #f5f5f5;
-                    }
-                }
-
-                /* Marked Extended Tabs */
-                & .marked-extended-tabs-container {
-                    & .marked-extended-tabs-nav {
-                        background: #f5f5f5;
-                        border-bottom: 1px solid #ddd;
-
-                        & .marked-extended-tabs-label {
-                            &:hover {
-                                background: #e8e8e8 !important;
-                            }
-                        }
-                    }
-                }
-
-                /* END */
-
                 & a {
                     color: #0366d6;
                 }
@@ -264,6 +222,12 @@ html {
                 & th {
                     background-color: #f6f8fa;
                 }
+            }
+
+            /* Footer */
+            & .footer {
+                color: #555;
+                background: #f9f9f9;
             }
         }
     }

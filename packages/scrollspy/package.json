@@ -14,7 +14,7 @@
   "exports": {
     ".": {
       "import": "./src/index.js",
-      "require": "./lib/index.cjs"
+      "require": "./dist/index.cjs"
     }
   },
   "keywords": [

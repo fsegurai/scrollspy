@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "infra"
+    open-pull-requests-limit: 10
+    assignees:
+      - fsegurai
+    commit-message:
+      prefix: "ci"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "infra"
+    open-pull-requests-limit: 10
+    assignees:
+      - fsegurai
+    commit-message:
+      prefix: "npm"

@@ -4,13 +4,14 @@ import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['**/demo/dist', '**/*.min.js', '**/lib/*/dist'],
+    ignores: ['**/demo/dist', '**/*.min.js', '**/packages/*/dist'],
   },
   {
     languageOptions: {
       globals: {
         ...globals.node,
         ...globals.jest,
+        ...globals.browser,
       },
     },
     rules: {
