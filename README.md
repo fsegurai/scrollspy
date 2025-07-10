@@ -24,8 +24,7 @@
 
 **A library for scrollspy functionality**
 
-`@fsegurai/scrollspy` is a dependency-free, lightweight scrollspy library that highlights navigation links based on
-scroll position. Perfect for
+`@fsegurai/scrollspy` is a dependency-free, lightweight scrollspy library that highlights navigation links based on scroll position. Perfect for
 documentation sites, blogs, and landing pages with sticky tables of contents.
 
 ---
@@ -47,6 +46,8 @@ documentation sites, blogs, and landing pages with sticky tables of contents.
 - [📘 API](#-api)
 - [✅ Browser Support](#-browser-support)
 - [🧼 License](#-license)
+
+---
 
 ## 🚀 Features
 

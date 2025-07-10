@@ -47,6 +47,8 @@ documentation sites, blogs, and landing pages with sticky tables of contents.
 - [✅ Browser Support](#-browser-support)
 - [🧼 License](#-license)
 
+---
+
 ## 🚀 Features
 
 - ⚡️ Lightweight (no dependencies)
