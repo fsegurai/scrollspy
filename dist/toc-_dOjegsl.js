@@ -4879,4 +4879,516 @@ const insertCopyElement = () => {
     new ClipboardJS('.copy-btn');
 };
 
-export { mdRender as m };
+class scrollspy {
+  constructor(selector, options = {}) {
+    this.settings = {
+      nav: selector,
+      content: '[data-gumshoe]',
+      nested: false,
+      nestedClass: 'active-parent',
+      offset: 0,
+      bottomThreshold: 100,
+      reflow: false,
+      events: true,
+      observe: false, // *  watch for dynamic changes
+      ...options,
+    };
+
+    this.nav = null;
+    this.contents = [];
+    this.current = [];
+    this.navMap = new Map(); // Cache of content.id => nav anchor element
+    this._observer = null; // MutationObserver reference
+
+    this.init();
+  }
+
+  /**
+   * Initializes the navigation system by selecting the navigation element
+   * based on the provided settings, verifying its existence, and then
+   * invoking helper methods to perform the necessary operations: retrieving content,
+   * detecting changes, and setting up event listeners.
+   *
+   * @return {void} Does not return a value. This is an initialization method
+   *                 that prepares the component for operation.
+   */
+  init() {
+    this.nav = document.querySelector(this.settings.nav);
+    if (!this.nav) return;
+
+    this.getContents();
+    this.detect();
+    this.setupListeners();
+
+    if (this.settings.observe) this.observeChanges();
+  }
+
+  /**
+   * Retrieves and stores DOM elements referenced by anchor tags within the navigation.
+   * Identifies links containing hash fragments and resolves the corresponding DOM objects.
+   * Filters out any invalid or null references.
+   * Updates the `contents` property with an array of resolved DOM elements.
+   *
+   * @return {void} This method does not return a value.
+   */
+  getContents() {
+    const navItems = this.nav?.querySelectorAll('a[href*="#"]') || [];
+    this.contents = [];
+    this.navMap.clear();
+
+    navItems.forEach(item => {
+      const href = item.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+
+      const target = document.querySelector(href);
+      if (target && target.id) {
+        this.contents.push(target);
+        this.navMap.set(target.id, item);
+      }
+    });
+  }
+
+  /**
+   * Detects the current active position based on viewport and updates the active state if necessary.
+   * The method determines the list of positions and identifies the current viewport position.
+   * It checks for any changes in the active state and updates the status accordingly by deactivating all and activating the new active position.
+   *
+   * @return {void} This method does not return a value.
+   */
+  detect() {
+    const positions = this.getPositions();
+    const position = this.getViewportPosition();
+    const active = this.getCurrentActive(positions, position);
+
+    if (this.isNewActive(active)) {
+      this.deactivateAll();
+      this.activate(active);
+    }
+  }
+
+  /**
+   * Retrieves an array of positions for the content elements.
+   * Each position includes the content element and its vertical offset.
+   *
+   * @return {Array<{content: HTMLElement, offset: number}>} An array of objects containing the content element and its corresponding top offset.
+   */
+  getPositions() {
+    return this.contents.map(content => ({
+      content,
+      offset: this.getOffsetTop(content),
+    }));
+  }
+
+  /**
+   * Computes the total offset top value of a given DOM element relative to its offset parent chain.
+   *
+   * @param {HTMLElement} element - The DOM element for which to calculate the offset top value.
+   * @return {number} The total offset top in pixels relative to the document.
+   */
+  getOffsetTop(element) {
+    let offset = 0;
+    let current = element;
+
+    while (current && current.offsetParent) {
+      offset += current.offsetTop;
+      current = current.offsetParent;
+    }
+
+    return offset;
+  }
+
+  /**
+   * Calculates and returns the current viewport position, taking into account the scroll position
+   * and a dynamic offset based on proximity to the bottom of the document.
+   *
+   * @return {number} The calculated viewport position.
+   */
+  getViewportPosition() {
+    const scrollTop = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    const nearBottom = (scrollTop + windowHeight) >= (documentHeight - 50);
+    const dynamicOffset = nearBottom ? this.settings.offset - 100 : this.settings.offset;
+
+    return scrollTop + dynamicOffset;
+  }
+
+  /**
+   * Determines the currently active sections based on the provided positions and the current scroll position.
+   *
+   * @param {Array} positions - An array of objects representing sections, each including an `offset` for its position and `content` for its HTML element.
+   * @param {number} position - The current scroll position or offset of the viewport.
+   * @return {Array} An array of HTML elements representing the currently active sections. If near the bottom, includes the most visible section.
+   */
+  getCurrentActive(positions, position) {
+    const scrollTop = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const nearBottom = (scrollTop + windowHeight) >= (documentHeight - this.settings.bottomThreshold);
+
+    if (nearBottom && this.settings.bottomThreshold > 0) {
+      return [positions[positions.length - 1].content];
+    }
+
+    for (let i = positions.length - 1; i >= 0; i--) {
+      if (position >= positions[i].offset) {
+        return [positions[i].content];
+      }
+    }
+
+    return [];
+  }
+
+  /**
+   * Compares the provided active object with the current object to determine if the active object represents a new state.
+   *
+   * @param {Object} active - The active object to compare with the current object.
+   * @return {boolean} Returns true if the active object is different from the current object, otherwise false.
+   */
+  isNewActive(active) {
+    return active[0] !== this.current[0];
+  }
+
+  /**
+   * Deactivates all elements marked as active within the navigation element.
+   * Removes the 'active' class from all elements. If nested settings are enabled,
+   * it also removes the specified nested class from those elements.
+   *
+   * @return {void} This method does not return a value.
+   */
+  deactivateAll() {
+    this.nav?.querySelectorAll('.active').forEach(item => {
+      item.classList.remove('active');
+      if (this.settings.nested) {
+        item.classList.remove(this.settings.nestedClass);
+      }
+    });
+  }
+
+  /**
+   * Activates the provided content items by adding an 'active' class to corresponding navigation items,
+   * handling nested navigation, and emitting an 'activate' event.
+   *
+   * @param {Array} active - An array of elements to be activated. Each element represents a piece of
+   * content that corresponds to a navigation item.
+   * @return {void}
+   */
+  activate(active) {
+    active.forEach(content => {
+      const navItem = this.getNavItem(content);
+      if (navItem) {
+        navItem.classList.add('active');
+        this.addNestedNavigation(navItem);
+        this.emitEvent('activate', content, navItem);
+      }
+    });
+
+    this.current = active;
+  }
+
+  /**
+   * Retrieves the navigation list item (`li`) containing the anchor element that references the provided content's ID
+   * within the navigation.
+   *
+   * @param {Object} content - The content object, which should contain an `id` property used to locate the corresponding navigation item.
+   * @return {HTMLElement|null} The closest list item (`li`) containing the matching anchor, or the anchor element itself if no list item is found. Returns null if no matching element is found.
+   */
+  getNavItem(content) {
+    const anchor = this.navMap.get(content.id);
+    return anchor?.closest('li') || anchor;
+  }
+
+  /**
+   * Adds nested navigation functionality by applying a specified class to parent list items.
+   * This method ensures that parent `<li>` elements of the provided item are assigned a nested class
+   * if the `nested` setting is enabled.
+   *
+   * @param {HTMLElement} item - The navigation item for which parent hierarchy should be processed for adding nested classes.
+   * @return {void} This method does not return any value.
+   */
+  addNestedNavigation(item) {
+    if (!this.settings.nested) return;
+
+    let parent = item.parentElement;
+    while (parent && parent !== this.nav) {
+      if (parent.tagName.toLowerCase() === 'li') {
+        parent.classList.add(this.settings.nestedClass);
+      }
+      parent = parent.parentElement;
+    }
+  }
+
+  /**
+   * Emits a custom event with the specified type, content, and navigation details.
+   *
+   * @param {string} type - The type of the event to be emitted.
+   * @param {Object} content - The content associated with the event.
+   * @param {Object} nav - The navigation-related details to be included in the event.
+   * @return {void} The method does not return a value.
+   */
+  emitEvent(type, content, nav) {
+    if (!this.settings.events) return;
+
+    const event = new CustomEvent(`gumshoe${ type }`, {
+      bubbles: true,
+      detail: { target: content, content, nav },
+    });
+
+    document.dispatchEvent(event);
+  }
+
+  /**
+   * Sets up event listeners for scroll and, optionally, resize events.
+   * These events trigger the detect method after debouncing via requestAnimationFrame.
+   *
+   * @return {void} Does not return a value.
+   */
+  setupListeners() {
+    let timeout = null;
+    const onScrollOrResize = () => {
+      if (timeout) cancelAnimationFrame(timeout);
+      timeout = requestAnimationFrame(() => this.detect());
+    };
+
+    window.addEventListener('scroll', onScrollOrResize, false);
+    if (this.settings.reflow) window.addEventListener('resize', onScrollOrResize, false);
+  }
+
+
+  /**
+   * Initializes and configures the necessary parts for the system setup.
+   * This method orchestrates the process of gathering the content and detecting required system elements.
+   *
+   * @return {void} Does not return a value.
+   */
+  setup() {
+    this.getContents();
+    this.detect();
+  }
+
+  /**
+   * Refreshes the current state by retrieving the latest contents and performing necessary updates.
+   *
+   * @return {void} This method does not return a value.
+   */
+  refresh() {
+    this.getContents();
+    this.detect();
+  }
+
+  /**
+   * Observes changes in the DOM structure, such as the addition or removal of child elements,
+   * within specific target elements and triggers a refresh when mutations occur.
+   *
+   * @return {void} Does not return a value.
+   */
+  observeChanges() {
+    const observer = new MutationObserver(() => this.refresh());
+    const config = { childList: true, subtree: true };
+
+    if (this.nav) observer.observe(this.nav, config);
+
+    this.contents.forEach(content => {
+      const parent = content.parentElement;
+      if (parent) observer.observe(parent, config);
+    });
+
+    this._observer = observer;
+  }
+
+  /**
+   * Cleans up and removes any active event listeners or data associated with the instance.
+   * Resets the current state and deactivates all active components or tasks.
+   *
+   * @return {void} This method does not return a value.
+   */
+  destroy() {
+    this.current = [];
+    this.deactivateAll();
+
+    document.removeEventListener('scroll', () => this.detect(), false);
+    document.removeEventListener('resize', () => this.detect(), false);
+
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+  }
+}
+
+let spy;
+/**
+ * Generates a table of contents (TOC) dynamically based on the headings within a provided HTML content element.
+ * It creates links to each heading and appends the TOC to an element with the ID `tableOfContents`.
+ *
+ * @param {HTMLElement} content - The HTML element containing the headings to be included in the TOC.
+ * @return {void} This function does not return a value. It modifies the DOM by creating and appending a TOC structure.
+ */
+const generateTOC = (content) => {
+    const tocNav = document.getElementById('tableOfContents');
+    if (!tocNav)
+        return;
+    // Find all headings in the content
+    const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    // Clear existing TOC content except the header
+    const existingUl = tocNav.querySelector('ul');
+    if (existingUl) {
+        existingUl.remove();
+    }
+    // Create a new TOC structure
+    const tocUl = document.createElement('ul');
+    let currentLevel = 0;
+    let currentParent = tocUl;
+    const levelStack = [tocUl];
+    headings.forEach((heading) => {
+        const level = parseInt(heading.tagName.charAt(1));
+        const text = heading.textContent || '';
+        // Generate ID if not exists
+        if (!heading.id) {
+            heading.id = text.toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-')
+                .trim();
+        }
+        // Add data-gumshoe attribute for scrollspy
+        heading.setAttribute('data-gumshoe', '');
+        heading.classList.add('demo-section');
+        // Adjust nesting based on heading level
+        if (level > currentLevel) {
+            // Going deeper - create nested ul
+            const nestedUl = document.createElement('ul');
+            nestedUl.classList.add('nested');
+            const lastLi = currentParent.lastElementChild;
+            if (lastLi) {
+                lastLi.appendChild(nestedUl);
+            }
+            else {
+                currentParent.appendChild(nestedUl);
+            }
+            currentParent = nestedUl;
+            levelStack.push(nestedUl);
+        }
+        else if (level < currentLevel) {
+            // Going up - pop from stack
+            const levelDiff = currentLevel - level;
+            for (let i = 0; i < levelDiff; i++) {
+                levelStack.pop();
+            }
+            currentParent = levelStack[levelStack.length - 1];
+        }
+        currentLevel = level;
+        // Create a TOC item
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `#${heading.id}`;
+        a.textContent = text;
+        li.appendChild(a);
+        currentParent.appendChild(li);
+    });
+    // Append the generated TOC to the nav
+    tocNav.appendChild(tocUl);
+};
+/**
+ * Initializes the mobile toggle functionality for the table of contents (TOC).
+ *
+ * This function sets up an event listener on the toggle button that controls
+ * the visibility of the TOC on mobile devices. When the button is clicked, the
+ * corresponding classes are added or removed to handle the visibility state
+ * of the TOC.
+ *
+ * Classes toggled:
+ * - `mobile-visible`: Indicates the TOC is visible on mobile devices.
+ * - `mobile-hidden`: Indicates the TOC is hidden on mobile devices.
+ *
+ * Elements involved:
+ * - `#tocToggle`: The toggle button element.
+ * - `#tableOfContents`: The TOC element to show or hide.
+ *
+ * This function assumes the relevant elements exist in the DOM.
+ */
+const setupMobileToggle = () => {
+    const tocToggle = document.getElementById('tocToggle');
+    const toc = document.getElementById('tableOfContents');
+    tocToggle === null || tocToggle === void 0 ? void 0 : tocToggle.addEventListener('click', () => {
+        toc === null || toc === void 0 ? void 0 : toc.classList.toggle('mobile-visible');
+        toc === null || toc === void 0 ? void 0 : toc.classList.toggle('mobile-hidden');
+    });
+};
+/**
+ * Initializes smooth scrolling functionality for the Table of Contents (TOC).
+ * This function uses event delegation to handle click events on the dynamically
+ * generated TOC links. Smoothly scrolls to the linked section and adjusts for
+ * a predefined offset to account for any fixed headers or spacing. Also manages
+ * TOC visibility on mobile devices by toggling corresponding CSS classes.
+ *
+ * The target TOC element must have the ID `tableOfContents` and contain anchor tags (`<a>`)
+ * with `href` attributes referencing valid section IDs (e.g., `#sectionId`).
+ *
+ * Behavior:
+ * - Prevents default browser action for TOC link clicks.
+ * - Scrolls smoothly to the section referenced by the link.
+ * - Hides the mobile TOC navigation menu after selecting a link, if the viewport width
+ *   is 768px or less.
+ *
+ * Note:
+ * - Sections being linked to by the TOC must have corresponding IDs matching the `href` values.
+ * - Assumes the global `window.innerWidth` to determine the current viewport size.
+ */
+const setupSmoothScroll = () => {
+    // Use event delegation since TOC is generated dynamically
+    const toc = document.getElementById('tableOfContents');
+    toc === null || toc === void 0 ? void 0 : toc.addEventListener('click', (e) => {
+        var _a, _b;
+        const target = e.target;
+        if (target.tagName === 'A' && ((_a = target.getAttribute('href')) === null || _a === void 0 ? void 0 : _a.startsWith('#'))) {
+            e.preventDefault();
+            const targetId = (_b = target.getAttribute('href')) === null || _b === void 0 ? void 0 : _b.substring(1);
+            const targetElement = targetId ? document.getElementById(targetId) : null;
+            if (targetElement) {
+                const offsetTop = targetElement.offsetTop - 100;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth',
+                });
+            }
+            // Hide mobile TOC after click
+            if (window.innerWidth <= 768) {
+                const tocNav = document.getElementById('tableOfContents');
+                tocNav === null || tocNav === void 0 ? void 0 : tocNav.classList.remove('mobile-visible');
+                tocNav === null || tocNav === void 0 ? void 0 : tocNav.classList.add('mobile-hidden');
+            }
+        }
+    });
+};
+/**
+ * Initializes the scrollspy instance for the element with the ID 'tableOfContents'.
+ * If a scrollspy instance already exists, it is destroyed before creating a new one.
+ *
+ * The scrollspy is configured with the following options:
+ * - offset: Sets the offset value for observing elements.
+ * - bottomThreshold: Defines the threshold from the bottom where the scrollspy is triggered.
+ * - nested: Indicates whether nested scrolling is enabled (false by default).
+ * - nestedClass: Specifies a class name for nested elements (empty by default).
+ * - reflow: Ensures the scrollspy recalculates positions (enabled by default).
+ * - events: Enables or disables event dispatching (enabled by default).
+ *
+ * @return {void} This method does not return a value.
+ */
+const initScrollspy = () => {
+    // Destroy an existing instance
+    if (spy)
+        spy.destroy();
+    spy = new scrollspy('#tableOfContents', {
+        content: '[data-gumshoe]',
+        offset: 120,
+        bottomThreshold: 10,
+        nested: false,
+        nestedClass: '',
+        reflow: true,
+        events: true,
+    });
+};
+
+export { setupSmoothScroll as a, generateTOC as g, initScrollspy as i, mdRender as m, setupMobileToggle as s };

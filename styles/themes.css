@@ -99,7 +99,7 @@ html {
 
             /* Markdown Content */
 
-            & .markdown-body,
+            & .md-body,
             & .md-body {
                 color: #d1d5da;
                 background-color: transparent;
@@ -201,7 +201,7 @@ html {
 
             /* Markdown Content */
 
-            & .markdown-body,
+            & .md-body,
             & .md-body {
                 color: #24292e;
                 background-color: transparent;
