@@ -18,11 +18,11 @@
     "web-development"
   ],
   "workspaces": [
-    "lib/*"
+    "packages/*"
   ],
   "scripts": {
     "clean:demo": "rimraf --glob ./demo/dist && rimraf --glob ./demo/README.md && rimraf --glob ./demo/LICENSE",
-    "clean:packages": "rimraf --glob ./lib/*/dist",
+    "clean:packages": "rimraf --glob ./packages/*/dist",
     "clean": "bun run clean:demo && bun run clean:packages",
     "start": "rollup -w -c rollup.config.js",
     "start:doppler": "doppler run bun run start",
@@ -37,7 +37,7 @@
     "test-types:packages": "bun --filter '*' test:types",
     "lint": "bun run lint:demo && bun run lint:packages",
     "lint:demo": "eslint ./demo",
-    "lint:packages": "eslint ./lib/*/src/**"
+    "lint:packages": "eslint ./packages/*/src/**"
   },
   "dependencies": {
     "@material/web": "^2.3.0",

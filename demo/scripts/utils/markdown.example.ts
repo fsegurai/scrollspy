@@ -118,7 +118,7 @@ And so, ScrollSpy became the navigator’s best friend, silently working behind 
 
 ---
 
-# Thanks for scrolling! 👏 {#thanks data-gumshoe}
+# Thanks for scrolling! 👏 
 
 Huge shoutout to all the wonderful folks who make the web a better place every day:
 

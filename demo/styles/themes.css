@@ -122,6 +122,12 @@ html {
                     background-color: #2d333b;
                 }
             }
+
+            /* Footer */
+            & .footer {
+                color: #fff;
+                background: #1e1e1e;
+            }
         }
 
         &.light {
@@ -216,6 +222,12 @@ html {
                 & th {
                     background-color: #f6f8fa;
                 }
+            }
+
+            /* Footer */
+            & .footer {
+                color: #555;
+                background: #f9f9f9;
             }
         }
     }

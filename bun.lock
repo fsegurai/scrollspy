@@ -38,7 +38,7 @@
         "typescript-eslint": "^8.36.0",
       },
     },
-    "lib/scrollspy": {
+    "packages/scrollspy": {
       "name": "@fsegurai/scrollspy",
       "version": "0.0.0-alpha.0",
     },
@@ -308,7 +308,7 @@
 
     "@fastify/static": ["@fastify/static@5.0.2", "", { "dependencies": { "content-disposition": "^0.5.3", "encoding-negotiator": "^2.0.1", "fastify-plugin": "^3.0.0", "glob": "^7.1.4", "p-limit": "^3.1.0", "readable-stream": "^3.4.0", "send": "^0.17.1" } }, "sha512-HvyXZ5a7hUHoSBRq9jKUuKIUCkHMkCDcmiAeEmixXlGOx8pEWx3NYOIaiivcjWa6/NLvfdUT+t/jzfVQ2PA7Gw=="],
 
-    "@fsegurai/scrollspy": ["@fsegurai/scrollspy@workspace:lib/scrollspy"],
+    "@fsegurai/scrollspy": ["@fsegurai/scrollspy@workspace:packages/scrollspy"],
 
     "@hapi/hoek": ["@hapi/hoek@9.3.0", "", {}, "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="],
 
@@ -718,7 +718,7 @@
 
     "ee-first": ["ee-first@1.1.1", "", {}, "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="],
 
-    "electron-to-chromium": ["electron-to-chromium@1.5.180", "", {}, "sha512-ED+GEyEh3kYMwt2faNmgMB0b8O5qtATGgR4RmRsIp4T6p7B8vdMbIedYndnvZfsaXvSzegtpfqRMDNCjjiSduA=="],
+    "electron-to-chromium": ["electron-to-chromium@1.5.181", "", {}, "sha512-+ISMj8OIQ+0qEeDj14Rt8WwcTOiqHyAB+5bnK1K7xNNLjBJ4hRCQfUkw8RWtcLbfBzDwc15ZnKH0c7SNOfwiyA=="],
 
     "emittery": ["emittery@0.13.1", "", {}, "sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ=="],
 
