@@ -14,12 +14,7 @@ jobs:
     strategy:
       matrix:
         package: [
-          marked-extended-accordion,
-          marked-extended-footnote,
-          marked-extended-lists,
-          marked-extended-spoiler,
-          marked-extended-tables,
-          marked-extended-typographic,
+          scrollspy,
         ]
 
     steps:
