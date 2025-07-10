@@ -1,7 +1,7 @@
 import { mdRender } from './utils/markdown';
 import mdSample from './utils/markdown.example';
 import { debounce } from './utils/debounce';
-import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from "./utils/toc";
+import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from './utils/toc';
 
 // Debug event listener
 document.addEventListener('gumshoeactivate', (event: CustomEvent) => {

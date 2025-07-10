@@ -1,11 +1,11 @@
 import { mdRender } from './utils/markdown';
-import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from "./utils/toc";
+import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from './utils/toc';
 
 const mdBody = document.querySelector('.md-body') as HTMLElement;
 const readmeURL =
   'https://raw.githubusercontent.com/fsegurai/scrollspy/refs/heads/main/README.md';
 
-const fetchReadme = async () => {
+const fetchReadme = async() => {
   try {
     const response = await fetch(readmeURL);
     const text = await response.text();
@@ -17,12 +17,12 @@ const fetchReadme = async () => {
         <p>${ error }</p>
         `;
   }
-}
+};
 
 const stripContent = () => {
   // Remove the "Table of Contents" heading and the next sibling (the list)
   const tocHeading = Array.from(mdBody.querySelectorAll('h2')).find(
-    (h) => h.textContent?.trim().toLowerCase().includes('table of contents')
+    (h) => h.textContent?.trim().toLowerCase().includes('table of contents'),
   );
 
   if (tocHeading) {
@@ -30,9 +30,9 @@ const stripContent = () => {
     tocHeading.remove();
     if (tocList && tocList.tagName.toLowerCase() === 'ul') tocList.remove();
   }
-}
+};
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async() => {
   if (mdBody) {
     await fetchReadme().then(() => {
       // Hide the TOC for the README.md

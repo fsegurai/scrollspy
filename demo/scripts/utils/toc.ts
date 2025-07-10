@@ -83,7 +83,7 @@ export const generateTOC = (content: HTMLElement): void => {
 
   // Append the generated TOC to the nav
   tocNav.appendChild(tocUl);
-}
+};
 
 /**
  * Initializes the mobile toggle functionality for the table of contents (TOC).
@@ -190,4 +190,4 @@ export const initScrollspy = (): void => {
     reflow: true,
     events: true,
   });
-}
+};
