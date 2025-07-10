@@ -24,7 +24,11 @@
     "javascript",
     "typescript",
     "framework-agnostic",
-    "web-development"
+    "web-development",
+    "lightweight",
+    "table-of-contents",
+    "toc",
+    "accessibility"
   ],
   "author": {
     "name": "Fabián Segura",
