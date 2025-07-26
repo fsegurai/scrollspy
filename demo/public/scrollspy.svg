@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
-    <!-- Background -->
-    <rect width="200" height="200" rx="16" fill="#0f0f0f"/>
+    <!-- Circular Background -->
+    <circle cx="100" cy="100" r="100" fill="#0f0f0f"/>
 
     <!-- Scroll shape -->
     <rect x="85" y="40" width="30" height="120" rx="6" fill="#ffffff"/>

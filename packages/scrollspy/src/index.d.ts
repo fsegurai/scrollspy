@@ -16,7 +16,7 @@ export interface ScrollspyEvent {
   nav: Element;
 }
 
-declare class scrollspy {
+declare class ScrollSpy {
   constructor(selector: string, options?: ScrollspyOptions);
 
   /**

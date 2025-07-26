@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import scrollspy from '../src/index.js';
+import ScrollSpy from '../src/index.js';
 
 describe('scrollspy', () => {
   let nav;
@@ -91,11 +91,11 @@ describe('scrollspy', () => {
   });
 
   test('initializes and finds navigation element', () => {
-    const spyGetContents = jest.spyOn(scrollspy.prototype, 'getContents');
-    const spyDetect = jest.spyOn(scrollspy.prototype, 'detect');
-    const spySetupListeners = jest.spyOn(scrollspy.prototype, 'setupListeners');
+    const spyGetContents = jest.spyOn(ScrollSpy.prototype, 'getContents');
+    const spyDetect = jest.spyOn(ScrollSpy.prototype, 'detect');
+    const spySetupListeners = jest.spyOn(ScrollSpy.prototype, 'setupListeners');
 
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     expect(sp.nav).toBe(nav);
     expect(sp.contents.length).toBe(3);
     expect(sp.navMap.size).toBe(3);
@@ -105,7 +105,7 @@ describe('scrollspy', () => {
   });
 
   test('getContents finds and maps content correctly', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     sp.getContents();
     expect(sp.contents).toContain(section1);
     expect(sp.contents).toContain(section2);
@@ -114,7 +114,7 @@ describe('scrollspy', () => {
   });
 
   test('getOffsetTop sums offsetTop correctly', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     // For this test, override offsetParent chain to simulate
     const mockOffsetParent = document.createElement('div');
     Object.defineProperty(mockOffsetParent, 'offsetTop', { configurable: true, get: () => 20 });
@@ -127,7 +127,7 @@ describe('scrollspy', () => {
   });
 
   test('getViewportPosition uses offset and bottom detection', () => {
-    const sp = new scrollspy('#nav', { offset: 50 });
+    const sp = new ScrollSpy('#nav', { offset: 50 });
 
     // Case: Not near bottom
     window.pageYOffset = 200;
@@ -143,7 +143,7 @@ describe('scrollspy', () => {
   });
 
   test('getCurrentActive returns last section when near bottom', () => {
-    const sp = new scrollspy('#nav', { bottomThreshold: 100 });
+    const sp = new ScrollSpy('#nav', { bottomThreshold: 100 });
     const positions = [
       { content: section1, offset: 0 },
       { content: section2, offset: 150 },
@@ -159,7 +159,7 @@ describe('scrollspy', () => {
   });
 
   test('getCurrentActive returns correct active section when not near bottom', () => {
-    const sp = new scrollspy('#nav', { bottomThreshold: 100 });
+    const sp = new ScrollSpy('#nav', { bottomThreshold: 100 });
     const positions = [
       { content: section1, offset: 0 },
       { content: section2, offset: 150 },
@@ -179,14 +179,14 @@ describe('scrollspy', () => {
   });
 
   test('isNewActive returns true when different, false when same', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     sp.current = [section1];
     expect(sp.isNewActive([section2])).toBe(true);
     expect(sp.isNewActive([section1])).toBe(false);
   });
 
   test('activate adds active class and emits event', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     sp.getContents();
 
     const navItem = sp.getNavItem(section1);
@@ -206,7 +206,7 @@ describe('scrollspy', () => {
   });
 
   test('deactivateAll removes active classes', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     sp.getContents();
 
     const navItem1 = sp.getNavItem(section1);
@@ -218,7 +218,7 @@ describe('scrollspy', () => {
   });
 
   test('addNestedNavigation adds nested class to parent li if nested enabled', () => {
-    const sp = new scrollspy('#nav', { nested: true, nestedClass: 'nested-active' });
+    const sp = new ScrollSpy('#nav', { nested: true, nestedClass: 'nested-active' });
     sp.getContents();
 
     const navItem = sp.getNavItem(section1);
@@ -236,7 +236,7 @@ describe('scrollspy', () => {
   });
 
   test('setupListeners registers scroll and resize events', () => {
-    const sp = new scrollspy('#nav', { reflow: true });
+    const sp = new ScrollSpy('#nav', { reflow: true });
     sp.setupListeners();
 
     expect(spyScroll).toHaveBeenCalledWith('scroll', expect.any(Function), false);
@@ -244,7 +244,7 @@ describe('scrollspy', () => {
   });
 
   test('destroy clears current, removes active, and disconnects observer', () => {
-    const sp = new scrollspy('#nav');
+    const sp = new ScrollSpy('#nav');
     sp.getContents();
     sp.activate([section1]);
 

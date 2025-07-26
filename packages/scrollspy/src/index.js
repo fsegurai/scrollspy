@@ -1,6 +1,6 @@
 'use strict';
 
-export default class scrollspy {
+export default class ScrollSpy {
   constructor(selector, options = {}) {
     this.settings = {
       nav: selector,
