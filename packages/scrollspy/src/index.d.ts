@@ -3,11 +3,21 @@ export interface ScrollspyOptions {
   content?: string;
   nested?: boolean;
   nestedClass?: string;
-  offset?: number;
+  offset?: number | (() => number);
   bottomThreshold?: number;
   reflow?: boolean;
   events?: boolean;
   observe?: boolean;
+  /**
+   * Custom attribute to use for fragment mapping (e.g., 'data-scrollspy-fragment').
+   * If set, ScrollSpy will use this attribute instead of href for mapping nav to content.
+   * Can also be a function: (item: Element) => string | null
+   */
+  fragmentAttribute?: string | ((item: Element) => string | null);
+  /**
+   * Selector for nav items (anchors). Defaults to 'a[href*="#"]'.
+   */
+  navItemSelector?: string;
 }
 
 export interface ScrollspyEvent {

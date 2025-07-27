@@ -12,6 +12,8 @@ export default class ScrollSpy {
       reflow: false,
       events: true,
       observe: false, // *  watch for dynamic changes
+      fragmentAttribute: null,
+      navItemSelector: 'a[href*="#"]',
       ...options,
     };
 
@@ -20,6 +22,7 @@ export default class ScrollSpy {
     this.current = [];
     this.navMap = new Map(); // Cache of content.id => nav anchor element
     this._observer = null; // MutationObserver reference
+    this._listeners = [];
 
     this.init();
   }
@@ -45,23 +48,40 @@ export default class ScrollSpy {
   }
 
   /**
-   * Retrieves and stores DOM elements referenced by anchor tags within the navigation.
-   * Identifies links containing hash fragments and resolves the corresponding DOM objects.
-   * Filters out any invalid or null references.
-   * Updates the `contents` property with an array of resolved DOM elements.
+   * Retrieves the elements specified by anchor tags in the navigation
+   * and maps them to corresponding target elements within the document based on their ID.
+   * Populates the `contents` and `navMap` properties with the targets and their references.
+   * This method uses the `fragmentAttribute` setting to determine how to find the target elements.
    *
-   * @return {void} This method does not return a value.
+   * @return {void} This method does not return a value. Updates internal properties `contents` and `navMap`.
    */
   getContents() {
-    const navItems = this.nav?.querySelectorAll('a[href*="#"]') || [];
+    let navItems;
+    const { fragmentAttribute, navItemSelector } = this.settings;
+    if (fragmentAttribute) {
+      navItems = this.nav?.querySelectorAll(navItemSelector || 'a') || [];
+    } else {
+      navItems = this.nav?.querySelectorAll(navItemSelector || 'a[href*="#"]') || [];
+    }
     this.contents = [];
     this.navMap.clear();
 
     navItems.forEach(item => {
-      const href = item.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-
-      const target = document.querySelector(href);
+      let fragment = null;
+      if (typeof fragmentAttribute === 'function') {
+        fragment = fragmentAttribute(item);
+      } else if (typeof fragmentAttribute === 'string' && fragmentAttribute) {
+        fragment = item.getAttribute(fragmentAttribute);
+      } else {
+        const href = item.getAttribute('href');
+        if (!href) return;
+        // Support both #fragment and /route#fragment
+        const hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+        fragment = href.slice(hashIndex + 1);
+      }
+      if (!fragment) return;
+      const target = document.getElementById(fragment);
       if (target && target.id) {
         this.contents.push(target);
         this.navMap.set(target.id, item);
@@ -271,11 +291,22 @@ export default class ScrollSpy {
       if (timeout) cancelAnimationFrame(timeout);
       timeout = requestAnimationFrame(() => this.detect());
     };
-
     window.addEventListener('scroll', onScrollOrResize, false);
-    if (this.settings.reflow) window.addEventListener('resize', onScrollOrResize, false);
+    this._listeners.push(['scroll', onScrollOrResize]);
+    if (this.settings.reflow) {
+      window.addEventListener('resize', onScrollOrResize, false);
+      this._listeners.push(['resize', onScrollOrResize]);
+    }
   }
 
+  destroyListeners() {
+    if (this._listeners) {
+      this._listeners.forEach(([event, handler]) => {
+        window.removeEventListener(event, handler, false);
+      });
+      this._listeners = [];
+    }
+  }
 
   /**
    * Initializes and configures the necessary parts for the system setup.
@@ -327,10 +358,7 @@ export default class ScrollSpy {
   destroy() {
     this.current = [];
     this.deactivateAll();
-
-    document.removeEventListener('scroll', () => this.detect(), false);
-    document.removeEventListener('resize', () => this.detect(), false);
-
+    this.destroyListeners();
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;

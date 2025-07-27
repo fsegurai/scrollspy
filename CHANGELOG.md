@@ -7,8 +7,6 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
-- Initial development phase, no public releases yet.
-
 ---
 
 ## [1.0.0] - 2025-07-09
@@ -31,6 +29,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - **Intelligent bottom detection** — adjusts behavior near the bottom of the page to ensure last section activation.
 - **Flexible activation logic** — supports multiple active sections and custom offset calculation.
 - **Clean API** — class-based usage with simple initialization and teardown.
+- **SPA support** — works seamlessly with single-page applications (SPA) and dynamic content using the `fragmentAttribute` option.
 
 ### 🛠 Changed
 
@@ -38,6 +37,12 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - Improved internal caching via `Map` for faster DOM lookup.
 - Scroll tracking logic improved for edge cases (e.g. last item not being activated).
 - Internal method names and structure are reorganized for clarity.
+- Support for both hash and full URLs in `href` for navigation anchors.
+- Defensive checks in `getContents` to avoid errors with missing fragments or targets.
+- `fragmentAttribute` now accepts a function for advanced mapping scenarios.
+- Added `destroyListeners` method for proper cleanup of scroll/resize listeners.
+- Added `navItemSelector` option to customize which anchors are considered navigation items.
+- Improved documentation for SPA/Angular scenarios and advanced usage in README.
 
 ---
 
