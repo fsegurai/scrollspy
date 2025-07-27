@@ -1,6 +1,6 @@
-import scrollspy from '@fsegurai/scrollspy';
+import ScrollSpy from '@fsegurai/scrollspy';
 
-let spy: scrollspy;
+let spy: ScrollSpy;
 
 /**
  * Generates a table of contents (TOC) dynamically based on the headings within a provided HTML content element.
@@ -181,7 +181,7 @@ export const initScrollspy = (): void => {
   // Destroy an existing instance
   if (spy) spy.destroy();
 
-  spy = new scrollspy('#tableOfContents', {
+  spy = new ScrollSpy('#tableOfContents', {
     content: '[data-gumshoe]',
     offset: 120,
     bottomThreshold: 10,

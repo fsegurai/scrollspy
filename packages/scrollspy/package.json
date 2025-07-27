@@ -1,6 +1,6 @@
 {
   "name": "@fsegurai/scrollspy",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "description": "A simple, framework-agnostic scrollspy script.",
   "main": "./dist/index.cjs",
   "module": "./src/index.js",
@@ -24,7 +24,11 @@
     "javascript",
     "typescript",
     "framework-agnostic",
-    "web-development"
+    "web-development",
+    "lightweight",
+    "table-of-contents",
+    "toc",
+    "accessibility"
   ],
   "author": {
     "name": "Fabián Segura",

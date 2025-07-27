@@ -1,6 +1,6 @@
 {
   "name": "@fsegurai/scrollspy",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "description": "A simple, framework-agnostic scrollspy script.",
   "type": "module",
   "license": "MIT",
@@ -15,7 +15,11 @@
     "javascript",
     "typescript",
     "framework-agnostic",
-    "web-development"
+    "web-development",
+    "lightweight",
+    "table-of-contents",
+    "toc",
+    "accessibility"
   ],
   "workspaces": [
     "packages/*"

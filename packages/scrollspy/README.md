@@ -24,7 +24,8 @@
 
 **A library for scrollspy functionality**
 
-`@fsegurai/scrollspy` is a dependency-free, lightweight scrollspy library that highlights navigation links based on scroll position. Perfect for
+`@fsegurai/scrollspy` is a dependency-free, lightweight scrollspy library that highlights navigation links based on
+scroll position. Perfect for
 documentation sites, blogs, and landing pages with sticky tables of contents.
 
 ## 📋 Table of Contents
@@ -131,20 +132,43 @@ const spy = new scrollspy('#toc', {
 
 All available options for customizing behavior:
 
-| Option            | Type                     | Default           | Description                                                                                                                                                                                                                                               |
-|-------------------|--------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `nav`             | `string`                 | —                 | **(Required)** Selector for the navigation container. Specifies where to find the navigation links (usually your Table of Contents or sidebar).                                                                                                           |
-| `content`         | `string`                 | `[data-gumshoe]`  | Selector for scrollable content sections (matched by ID from nav href). Used for observing DOM mutations (if observe: true) and for internal mapping. <br/>**You don’t usually need to change this unless your content isn’t identified by IDs directly** |
-| `nested`          | `boolean`                | `false`           | Add a class to parent `<li>` items in nested TOC structures                                                                                                                                                                                               |
-| `nestedClass`     | `string`                 | `'active-parent'` | Class name for parent `<li>` elements when nested is `true`                                                                                                                                                                                               |
-| `offset`          | `number \| () => number` | `0`               | Scroll offset in pixels or a function returning an offset (e.g. fixed headers)                                                                                                                                                                            |
-| `bottomThreshold` | `number`                 | `100`             | Distance (in px) from bottom of page where last section is auto-activated.                                                                                                                                                                                |
-| `reflow`          | `boolean`                | `false`           | If `true`, recomputes layout on window resize                                                                                                                                                                                                             |
-| `events`          | `boolean`                | `true`            | Emits custom DOM events (`gumshoeactivate`, `gumshoedeactivate`)                                                                                                                                                                                          |
-| `observe`         | `boolean`                | `false`           | Enables a `MutationObserver` to track DOM changes and refresh content                                                                                                                                                                                     |
+| Option              | Type                              | Default           | Description                                                                                                                                                                                                                                               |
+|---------------------|-----------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `nav`               | `string`                          | —                 | **(Required)** Selector for the navigation container. Specifies where to find the navigation links (usually your Table of Contents or sidebar).                                                                                                           |
+| `content`           | `string`                          | `[data-gumshoe]`  | Selector for scrollable content sections (matched by ID from nav href). Used for observing DOM mutations (if observe: true) and for internal mapping. <br/>**You don’t usually need to change this unless your content isn’t identified by IDs directly** |
+| `nested`            | `boolean`                         | `false`           | Add a class to parent `<li>` items in nested TOC structures                                                                                                                                                                                               |
+| `nestedClass`       | `string`                          | `'active-parent'` | Class name for parent `<li>` elements when nested is `true`                                                                                                                                                                                               |
+| `offset`            | `number \| () => number`          | `0`               | Scroll offset in pixels or a function returning an offset (e.g. fixed headers)                                                                                                                                                                            |
+| `bottomThreshold`   | `number`                          | `100`             | Distance (in px) from bottom of page where last section is auto-activated.                                                                                                                                                                                |
+| `reflow`            | `boolean`                         | `false`           | If `true`, recomputes layout on window resize                                                                                                                                                                                                             |
+| `events`            | `boolean`                         | `true`            | Emits custom DOM events (`gumshoeactivate`, `gumshoedeactivate`)                                                                                                                                                                                          |
+| `observe`           | `boolean`                         | `false`           | Enables a `MutationObserver` to track DOM changes and refresh content                                                                                                                                                                                     |
+| `fragmentAttribute` | `string \| (item: Element) => string \| null` | `null`            | Attribute or function used to map nav items to content sections, instead of relying on the `href` attribute.                                                                                                                                              |
+| `navItemSelector`   | `string`                          | `'a[href*="#"]'`| Selector for nav items (anchors). Use to further filter which anchors are considered navigation items.                                                                                                              |
 
 > If you're using `observe: true`, make sure your headings or section wrappers have a consistent structure, and set a
-> data-gumshoe attribute if you change the default selector.
+data-gumshoe attribute if you change the default selector.
+
+---
+
+### Advanced Fragment Mapping (SPA/Angular)
+
+If you need to support full URLs in `href` (e.g. `/route#fragment`) or use a custom attribute (e.g. `data-scrollspy-fragment`), use the `fragmentAttribute` option:
+
+```js
+// Use a custom attribute
+const spy = new scrollspy('#toc', {
+  fragmentAttribute: 'data-scrollspy-fragment',
+});
+
+// Or use a function for advanced mapping
+const spy = new scrollspy('#toc', {
+  fragmentAttribute: (item) => item.getAttribute('data-scrollspy-fragment') || null,
+});
+```
+
+- The library will now match anchors using the custom attribute or function, not just `href`.
+- This is useful for Angular/SPA scenarios where you want the user to see the full URL in the browser, but scrollspy to map by fragment only.
 
 ---
 
