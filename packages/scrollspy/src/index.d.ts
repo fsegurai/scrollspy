@@ -15,7 +15,7 @@ export interface ScrollspyOptions {
    */
   fragmentAttribute?: string | ((item: Element) => string | null);
   /**
-   * Selector for nav items (anchors). Defaults to 'a[href*="#"]'.
+   * Selector for nav items (anchors). Defaults to 'a[href*= "#"]'.
    */
   navItemSelector?: string;
 }
@@ -120,7 +120,7 @@ declare class ScrollSpy {
   destroy(): void;
 }
 
-export default scrollspy;
+export default ScrollSpy;
 
 declare global {
   interface DocumentEventMap {
