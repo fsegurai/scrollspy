@@ -9,7 +9,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-## [1.0.0] - 2025-07-09
+## [1.0.0] - 2025-09-20
 
 ### 🚀 Added
 
@@ -83,7 +83,6 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - ✅ Firefox
 - ✅ Safari
 - ✅ Edge
-- ✅ ES6+ support required
 - ⚠️ IE is **not supported**
 
 ---
