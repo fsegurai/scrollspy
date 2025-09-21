@@ -4,11 +4,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import dev from 'rollup-plugin-dev';
 import process from 'process';
-// import dotenv from 'dotenv';
-//
-// dotenv.config();
+import dotenv from 'dotenv';
 
-process.loadEnvFile();
+dotenv.config();
 
 const { NODE_ENV, HOST_URL } = process.env;
 const OUTPUT_DIR = './demo/dist';
