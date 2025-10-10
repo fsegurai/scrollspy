@@ -1,6 +1,6 @@
 {
   "name": "@fsegurai/scrollspy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple, framework-agnostic scrollspy script.",
   "main": "./dist/index.cjs",
   "module": "./src/index.js",
