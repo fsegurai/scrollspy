@@ -1,6 +1,6 @@
 <p align="center" class="intro">
   <img alt="ScrollSpy Logo" src="https://raw.githubusercontent.com/fsegurai/scrollspy/main/demo/public/scrollspy.svg">
-</p> 
+</p>
 
 <p align="center" class="intro">
   <a href="https://github.com/fsegurai/scrollspy">
