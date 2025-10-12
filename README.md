@@ -12,7 +12,7 @@
           alt="Latest Release">
   </a>
   <br>
-  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/fsegurai/scrollspy">
+  <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/fsegurai/scrollspy">
   <img alt="Dependency status for repo" src="https://img.shields.io/librariesio/github/fsegurai/scrollspy">
   <a href="https://opensource.org/licenses/MIT">
     <img alt="GitHub License" src="https://img.shields.io/github/license/fsegurai/scrollspy">
