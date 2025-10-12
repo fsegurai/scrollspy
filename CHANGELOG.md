@@ -9,6 +9,34 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
+## [1.0.1] - 2025-10-11
+
+### 🔐 Security
+
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+    - Dependencies
+        - `marked` from `16.3.0` to `16.4.0`
+    - Dev Dependencies
+        - `@eslint/js` from `9.36.0` to `9.37.0`
+        - `@rollup/plugin-node-resolve` from `16.0.1` to `16.0.2`
+        - `@types/node` from `24.5.2` to `24.7.1`
+        - `@typescript-eslint/eslint-plugin` from `8.44.0` to `8.46.0`
+        - `@typescript-eslint/parser` from `8.44.0` to `8.46.0`
+        - `babel-jest` from `30.1.2` to `30.2.0`
+        - `dotenv` from `17.2.2` to `17.2.3`
+        - `eslint` from `9.36.0` to `9.37.0`
+        - `jest` from `30.1.3` to `30.2.0`
+        - `jest-cli` from `30.1.3` to `30.2.0`
+        - `jest-environment-jsdom` from `30.1.2` to `30.2.0`
+        - `rollup` from `4.52.0` to `4.52.4`
+        - `typescript` from `5.9.2` to `5.9.3`
+        - `typescript-eslint` from `8.44.0` to `8.46.0`
+
+### 🛠 Changed
+
+- Implemented new dev dependency for `eslint.config.js` configuration file.
+    - `globals` --> `16.4.0`
+
 ## [1.0.0] - 2025-09-20
 
 ### 🚀 Added
@@ -29,7 +57,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - **Intelligent bottom detection** — adjusts behavior near the bottom of the page to ensure last section activation.
 - **Flexible activation logic** — supports multiple active sections and custom offset calculation.
 - **Clean API** — class-based usage with simple initialization and teardown.
-- **SPA support** — works seamlessly with single-page applications (SPA) and dynamic content using the `fragmentAttribute` option.
+- **SPA support** — works seamlessly with single-page applications (SPA) and dynamic content using the
+  `fragmentAttribute` option.
 
 ### 🛠 Changed
 
@@ -64,6 +93,11 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## 🔁 Migration Guide
 
+### From 1.0.0 -> 1.0.1
+
+- This release includes only dependency updates and no breaking changes.
+- ✅ Migration recommended but not required.
+
 ### From 0.x → 1.0.0
 
 - This is the first stable release of the `scrollspy` library.
@@ -87,6 +121,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.1...HEAD
+
+[1.0.1]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.1
 
 [1.0.0]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.0
