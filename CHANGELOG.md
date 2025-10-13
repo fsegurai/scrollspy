@@ -9,7 +9,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-## [1.0.1] - 2025-10-11
+## [1.0.1] - 2025-10-13
 
 ### 🔐 Security
 
@@ -18,10 +18,10 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
         - `marked` from `16.3.0` to `16.4.0`
     - Dev Dependencies
         - `@eslint/js` from `9.36.0` to `9.37.0`
-        - `@rollup/plugin-node-resolve` from `16.0.1` to `16.0.2`
-        - `@types/node` from `24.5.2` to `24.7.1`
-        - `@typescript-eslint/eslint-plugin` from `8.44.0` to `8.46.0`
-        - `@typescript-eslint/parser` from `8.44.0` to `8.46.0`
+        - `@rollup/plugin-node-resolve` from `16.0.1` to `16.0.3`
+        - `@types/node` from `24.5.2` to `24.7.2`
+        - `@typescript-eslint/eslint-plugin` from `8.44.0` to `8.46.1`
+        - `@typescript-eslint/parser` from `8.44.0` to `8.46.1`
         - `babel-jest` from `30.1.2` to `30.2.0`
         - `dotenv` from `17.2.2` to `17.2.3`
         - `eslint` from `9.36.0` to `9.37.0`
@@ -30,7 +30,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
         - `jest-environment-jsdom` from `30.1.2` to `30.2.0`
         - `rollup` from `4.52.0` to `4.52.4`
         - `typescript` from `5.9.2` to `5.9.3`
-        - `typescript-eslint` from `8.44.0` to `8.46.0`
+        - `typescript-eslint` from `8.44.0` to `8.46.1`
 
 ### 🛠 Changed
 
