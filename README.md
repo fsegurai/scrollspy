@@ -4,7 +4,7 @@
 
 <p align="center" class="intro">
   <a href="https://github.com/fsegurai/scrollspy">
-      <img src="https://img.shields.io/azure-devops/build/fsegurai/93779823-473d-4fb3-a5b1-27aaa1a88ea2/26/main?label=Build%20Status&"
+      <img src="https://img.shields.io/azure-devops/build/fsegurai/93779823-473d-4fb3-a5b1-27aaa1a88ea2/37/main?label=Build%20Status&"
           alt="Build Main Status">
   </a>
   <a href="https://github.com/fsegurai/scrollspy/releases/latest">
