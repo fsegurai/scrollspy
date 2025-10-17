@@ -9,6 +9,17 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
+## [1.0.2] - 2025-10-16
+
+### 🔐 Security
+
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+    - Dev Dependencies
+        - `@rollup/plugin-commonjs` from `28.0.6` to `28.0.8`
+        - `@types/node` from `24.7.2` to `24.8.1`
+
+---
+
 ## [1.0.1] - 2025-10-13
 
 ### 🔐 Security
@@ -36,6 +47,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 - Implemented new dev dependency for `eslint.config.js` configuration file.
     - `globals` --> `16.4.0`
+
+---
 
 ## [1.0.0] - 2025-09-20
 
@@ -93,6 +106,11 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## 🔁 Migration Guide
 
+### From 1.0.1 -> 1.0.2
+
+- This release includes only dependency updates and no breaking changes.
+- ✅ Migration recommended but not required.
+
 ### From 1.0.0 -> 1.0.1
 
 - This release includes only dependency updates and no breaking changes.
@@ -121,7 +139,9 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.1...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.2...HEAD
+
+[1.0.2]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.2
 
 [1.0.1]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.1
 
