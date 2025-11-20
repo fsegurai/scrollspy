@@ -259,4 +259,441 @@ describe('scrollspy', () => {
     expect(navItem.classList.contains('active')).toBe(false);
     expect(sp._observer).toBeNull();
   });
+
+  test('fragmentAttribute with function extracts fragment correctly', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a data-target="section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const fragmentFn = jest.fn((item) => item.getAttribute('data-target'));
+    const sp = new ScrollSpy('#nav', { fragmentAttribute: fragmentFn, navItemSelector: 'a' });
+    
+    expect(fragmentFn).toHaveBeenCalled();
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('fragmentAttribute with string extracts fragment from attribute', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a data-section="section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { fragmentAttribute: 'data-section', navItemSelector: 'a' });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('deactivateAll removes nested class when nested enabled', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li class="active active-parent"><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { nested: true, nestedClass: 'active-parent' });
+    sp.deactivateAll();
+
+    const li = nav.querySelector('li');
+    expect(li.classList.contains('active')).toBe(false);
+    expect(li.classList.contains('active-parent')).toBe(false);
+  });
+
+  test('addNestedNavigation adds nested class to parent li elements', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li id="parent-li">
+            <a href="#section0">Parent</a>
+            <ul>
+              <li id="child-li"><a href="#section1">Section 1</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { nested: true, nestedClass: 'active-parent' });
+    sp.getContents();
+    
+    const childLi = document.getElementById('child-li');
+    sp.addNestedNavigation(childLi);
+
+    const parentLi = document.getElementById('parent-li');
+    expect(parentLi.classList.contains('active-parent')).toBe(true);
+  });
+
+  test('setupListeners uses cancelAnimationFrame on rapid scrolls', () => {
+    const cancelSpy = jest.spyOn(window, 'cancelAnimationFrame');
+    const rafSpy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => 123);
+    
+    const sp = new ScrollSpy('#nav', { reflow: true });
+    
+    // Trigger scroll multiple times rapidly
+    const scrollHandler = spyScroll.mock.calls.find(call => call[0] === 'scroll')?.[1];
+    scrollHandler();
+    scrollHandler();
+    
+    expect(cancelSpy).toHaveBeenCalled();
+    
+    cancelSpy.mockRestore();
+    rafSpy.mockRestore();
+  });
+
+  test('setup method calls getContents and detect', () => {
+    const sp = new ScrollSpy('#nav');
+    const spyGetContents = jest.spyOn(sp, 'getContents');
+    const spyDetect = jest.spyOn(sp, 'detect');
+    
+    sp.setup();
+    
+    expect(spyGetContents).toHaveBeenCalled();
+    expect(spyDetect).toHaveBeenCalled();
+  });
+
+  test('refresh method calls getContents and detect', () => {
+    const sp = new ScrollSpy('#nav');
+    const spyGetContents = jest.spyOn(sp, 'getContents');
+    const spyDetect = jest.spyOn(sp, 'detect');
+    
+    sp.refresh();
+    
+    expect(spyGetContents).toHaveBeenCalled();
+    expect(spyDetect).toHaveBeenCalled();
+  });
+
+  test('observeChanges sets up MutationObserver', () => {
+    const observeMock = jest.fn();
+    const disconnectMock = jest.fn();
+    
+    global.MutationObserver = jest.fn().mockImplementation((callback) => ({
+      observe: observeMock,
+      disconnect: disconnectMock,
+    }));
+
+    const sp = new ScrollSpy('#nav', { observe: true });
+    
+    expect(MutationObserver).toHaveBeenCalled();
+    expect(sp._observer).not.toBeNull();
+    expect(observeMock).toHaveBeenCalled();
+  });
+
+  test('observeChanges observes nav and content parents', () => {
+    const observeMock = jest.fn();
+    
+    global.MutationObserver = jest.fn().mockImplementation((callback) => ({
+      observe: observeMock,
+      disconnect: jest.fn(),
+    }));
+
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="container">
+        <div id="section1"></div>
+      </div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    sp.observeChanges();
+    
+    // Should observe nav and content parents (2 calls total)
+    expect(observeMock).toHaveBeenCalledTimes(2);
+    expect(observeMock).toHaveBeenCalledWith(
+      expect.any(Object),
+      { childList: true, subtree: true }
+    );
+  });
+
+  test('init does not proceed if nav element is not found', () => {
+    document.body.innerHTML = '<div></div>';
+    const sp = new ScrollSpy('#nonexistent');
+    
+    expect(sp.nav).toBeNull();
+    expect(sp.contents.length).toBe(0);
+  });
+
+  test('getContents handles href without hash', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="page.html">No hash</a></li>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('getContents handles href without value', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a>No href</a></li>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('getContents handles route with hash fragment', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="/page#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('getContents skips links where target element does not exist', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="#nonexistent">Missing</a></li>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('activate handles empty navMap gracefully', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    sp.navMap.clear(); // Clear the map
+    
+    const mockSection = { id: 'nonexistent' };
+    sp.activate([mockSection]);
+    
+    expect(sp.current).toEqual([mockSection]);
+  });
+
+  test('emitEvent does nothing when events are disabled', () => {
+    const sp = new ScrollSpy('#nav', { events: false });
+    const eventListener = jest.fn();
+    document.addEventListener('gumshoeactivate', eventListener);
+    
+    sp.emitEvent('activate', section1, null);
+    
+    expect(eventListener).not.toHaveBeenCalled();
+    document.removeEventListener('gumshoeactivate', eventListener);
+  });
+
+  test('destroyListeners handles empty listeners array', () => {
+    const sp = new ScrollSpy('#nav');
+    sp._listeners = [];
+    
+    expect(() => sp.destroyListeners()).not.toThrow();
+  });
+
+  test('getCurrentActive with bottomThreshold of 0 uses normal logic', () => {
+    const sp = new ScrollSpy('#nav', { bottomThreshold: 0 });
+    const positions = [
+      { content: section1, offset: 0 },
+      { content: section2, offset: 150 },
+    ];
+
+    window.pageYOffset = 600;
+    window.innerHeight = 600;
+    document.documentElement.scrollHeight = 1200;
+
+    const active = sp.getCurrentActive(positions, 700);
+    // Should not return last section due to bottomThreshold = 0
+    expect(active).toEqual([section2]);
+  });
+
+  test('getNavItem returns anchor when no li parent exists', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <a href="#section1">Section 1</a>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav');
+    const navItem = sp.getNavItem(section1);
+    
+    expect(navItem.tagName).toBe('A');
+    expect(navItem.getAttribute('href')).toBe('#section1');
+  });
+
+  test('fragmentAttribute uses custom navItemSelector', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><button data-target="section1">Section 1</button></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { 
+      fragmentAttribute: 'data-target', 
+      navItemSelector: 'button' 
+    });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('fragmentAttribute returns null fragment', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a data-target="">Empty</a></li>
+          <li><a data-target="section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { 
+      fragmentAttribute: 'data-target',
+      navItemSelector: 'a'
+    });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('setupListeners without reflow only registers scroll', () => {
+    const sp = new ScrollSpy('#nav', { reflow: false });
+    const scrollListener = spyScroll.mock.calls.find(call => call[0] === 'scroll');
+    const resizeListener = spyScroll.mock.calls.find(call => call[0] === 'resize');
+    
+    expect(scrollListener).toBeDefined();
+    expect(resizeListener).toBeUndefined();
+  });
+
+  test('destroyListeners removes all registered listeners', () => {
+    const removeSpy = jest.spyOn(window, 'removeEventListener');
+    const sp = new ScrollSpy('#nav', { reflow: true });
+    
+    sp.destroyListeners();
+    
+    expect(removeSpy).toHaveBeenCalledWith('scroll', expect.any(Function), false);
+    expect(removeSpy).toHaveBeenCalledWith('resize', expect.any(Function), false);
+    expect(sp._listeners.length).toBe(0);
+    
+    removeSpy.mockRestore();
+  });
+
+  test('destroy without observer does not throw', () => {
+    const sp = new ScrollSpy('#nav');
+    sp._observer = null;
+    
+    expect(() => sp.destroy()).not.toThrow();
+    expect(sp._observer).toBeNull();
+  });
+
+  test('fragmentAttribute with null navItemSelector uses default selector', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a data-target="section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { 
+      fragmentAttribute: 'data-target',
+      navItemSelector: null
+    });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('null navItemSelector uses default href selector', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a href="#section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const sp = new ScrollSpy('#nav', { navItemSelector: null });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('fragmentAttribute function returning empty string', () => {
+    document.body.innerHTML = `
+      <nav id="nav">
+        <ul>
+          <li><a data-id="">Empty</a></li>
+          <li><a data-id="section1">Section 1</a></li>
+        </ul>
+      </nav>
+      <div id="section1"></div>
+    `;
+
+    const fragmentFn = (item) => item.getAttribute('data-id') || null;
+    const sp = new ScrollSpy('#nav', { 
+      fragmentAttribute: fragmentFn,
+      navItemSelector: 'a'
+    });
+    
+    expect(sp.contents.length).toBe(1);
+    expect(sp.contents[0].id).toBe('section1');
+  });
+
+  test('destroyListeners when listeners is falsy', () => {
+    const sp = new ScrollSpy('#nav');
+    sp._listeners = null;
+    
+    expect(() => sp.destroyListeners()).not.toThrow();
+  });
 });

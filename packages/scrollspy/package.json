@@ -18,17 +18,19 @@
     }
   },
   "keywords": [
+    "accessibility",
+    "framework-agnostic",
+    "javascript",
+    "javascript-library",
+    "lightweight",
+    "library",
+    "navigation",
     "scrollspy",
     "scroll",
-    "navigation",
-    "javascript",
-    "typescript",
-    "framework-agnostic",
-    "web-development",
-    "lightweight",
     "table-of-contents",
     "toc",
-    "accessibility"
+    "typescript",
+    "typescript-library"
   ],
   "author": {
     "name": "Fabián Segura",
