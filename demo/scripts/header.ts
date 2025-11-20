@@ -2,7 +2,10 @@ import ENV_REFERENCE from './const/const-env-reference';
 
 const isProdEnv = ENV_REFERENCE.CMT_NODE_ENV === 'production';
 const hostUrl = ENV_REFERENCE.CMT_HOST_URL_ENV;
-const lsTheme = 'marked-extension:fsegurai';
+const lsTheme = 'scrollspy:fsegurai';
+
+// Generate URL based on environment
+const urlGenerator = (path: string) => (isProdEnv ? `${ hostUrl }${ path }` : path);
 
 document.addEventListener('DOMContentLoaded', () => {
   interface Route {
@@ -15,15 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const routes: Route[] = [
     {
-      path: isProdEnv && hostUrl ? `${hostUrl}/` : '/',
+      path: urlGenerator('/'),
       label: 'Get Started',
       icon: 'play_arrow',
     },
     {
-      path:
-        isProdEnv && hostUrl
-          ? `${hostUrl}/playground.html`
-          : '/playground.html',
+      path: urlGenerator('/playground.html'),
       label: 'Playground',
       icon: 'ar_stickers',
     },
