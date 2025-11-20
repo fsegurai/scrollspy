@@ -9,6 +9,41 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
+## [1.0.3] - 2025-11-20
+
+### 🐛 Fixed
+
+- For rollout configuration file, fixed `process` import reference to point to `node:process` directly.
+
+### 🔧 Changed
+
+- Refactored the local storage theme keyword to a more accurate one based on the project.
+- Improved keywords declared in the `package.json` files.
+
+### 🔐 Security
+
+- Improved test coverage to %90 +.
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+    - Dependencies
+        - `@material/web` from `2.4.0` to `2.4.1`
+        - `marked` from `16.4.0` to `17.0.0`
+        - `marked-highlight` from `2.2.2` to `2.2.3`
+    - Dev Dependencies
+        - `@babel/core` from `7.28.4` to `7.28.5`
+        - `@babel/preset-env` from `7.28.3` to `7.28.5`
+        - `@eslint/js` from `9.37.0` to `9.39.1`
+        - `@rollup/plugin-commonjs` from `28.0.8` to `29.0.0`
+        - `@rollup/plugin-replace` from `6.0.2` to `6.0.3`
+        - `@rollup/plugin-typescript` from `12.1.4` to `12.3.0`
+        - `@types/node` from `24.8.1` to `24.10.1`
+        - `@typescript-eslint/eslint-plugin` from `8.46.1` to `8.46.4`
+        - `@typescript-eslint/parser` from `8.46.1` to `8.46.4`
+        - `eslint` from `9.37.0` to `9.39.1`
+        - `globals` from `16.4.0` to `16.5.0`
+        - `rimraf` from `6.0.1` to `6.1.0`
+        - `rollup` from `4.52.4` to `4.53.2`
+        - `typescript-eslint` from `8.46.1` to `8.46.4`
+
 ## [1.0.2] - 2025-10-16
 
 ### 🔐 Security
@@ -139,7 +174,9 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.2...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...HEAD
+
+[1.0.3]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.3
 
 [1.0.2]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.2
 
