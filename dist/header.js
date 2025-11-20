@@ -3,17 +3,18 @@ const ENV_REFERENCE = {
 };
 
 const hostUrl = ENV_REFERENCE.CMT_HOST_URL_ENV;
-const lsTheme = 'marked-extension:fsegurai';
+const lsTheme = 'scrollspy:fsegurai';
+// Generate URL based on environment
+const urlGenerator = (path) => (`${hostUrl}${path}` );
 document.addEventListener('DOMContentLoaded', () => {
     const routes = [
         {
-            path: `${hostUrl}/` ,
+            path: urlGenerator('/'),
             label: 'Get Started',
             icon: 'play_arrow',
         },
         {
-            path: `${hostUrl}/playground.html`
-                ,
+            path: urlGenerator('/playground.html'),
             label: 'Playground',
             icon: 'ar_stickers',
         },

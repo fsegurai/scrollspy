@@ -1,4 +1,4 @@
-import { m as mdRender, g as generateTOC, s as setupMobileToggle, a as setupSmoothScroll, i as initScrollspy } from './toc-CFJeyLJc.js';
+import { m as mdRender, g as generateTOC, s as setupMobileToggle, a as setupSmoothScroll, i as initScrollspy } from './toc-BaAAtinT.js';
 
 const mdSample = `
 # 🎢 ScrollSpy Playground Sample
