@@ -34,7 +34,7 @@ export default {
         strict: false,
       },
       allowSyntheticDefaultImports: true,
-      exclude: ['**/*.test-d.ts', '**/*.test.js', '**/*.spec.ts', '**/*.spec.js']
+      exclude: ['**/*.test-d.ts', '**/*.test.js', '**/*.spec.ts', '**/*.spec.js'],
     }),
     resolve(),
     commonjs(),

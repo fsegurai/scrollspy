@@ -13,7 +13,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ### 🐛 Fixed
 
-- For rollout configuration file, fixed `process` import reference to point to `node:process` directly.
+- For rollup configuration file, fixed `process` import reference to point to `node:process` directly.
 
 ### 🔧 Changed
 
