@@ -7,6 +7,13 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### 🔐 Security
+
+- **Removed dependencies** — removed unused dependencies.
+    - Dev Dependencies
+        - Removed `ts-node` dependency.
+        - Removed `tsd` dependency.
+
 ---
 
 ## [1.0.3] - 2025-11-20

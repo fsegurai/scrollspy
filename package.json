@@ -36,7 +36,7 @@
     "build_post:demo": "cpy ./README.md ./demo && cpy ./LICENSE ./demo",
     "build_doppler:demo": "doppler run bun run build:demo && bun run build_post:demo",
     "build:packages": "bun --filter '*' prepare",
-    "build": "bun run build:demo && bun run build:packages",
+    "build:all": "bun run build:packages && bun run build:demo",
     "test:packages": "jest --verbose",
     "test-clean:packages": "jest --updateSnapshot",
     "test-cover:packages": "jest --coverage",
@@ -76,8 +76,6 @@
     "rimraf": "^6.1.0",
     "rollup": "^4.53.2",
     "rollup-plugin-dev": "^2.1.0",
-    "ts-node": "^10.9.2",
-    "tsd": "^0.33.0",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.47.0"
   }
