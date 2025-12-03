@@ -41,9 +41,9 @@
     "test-clean:packages": "jest --updateSnapshot",
     "test-cover:packages": "jest --coverage",
     "test-types:packages": "bun --filter '*' test:types",
-    "lint": "bun run lint:demo && bun run lint:packages",
     "lint:demo": "eslint ./demo",
-    "lint:packages": "eslint ./packages/*/src/**"
+    "lint:packages": "eslint ./packages/*/src/**",
+    "lint:all": "bun run lint:demo && bun run lint:packages"
   },
   "dependencies": {
     "@material/web": "^2.4.1",
