@@ -1,22 +1,22 @@
 {
   "name": "@fsegurai/scrollspy",
-  "version": "1.0.2",
-  "description": "A simple, framework-agnostic scrollspy script.",
-  "main": "./dist/index.cjs",
-  "module": "./src/index.js",
-  "browser": "./dist/index.umd.js",
+  "version": "2.0.0-beta.0",
+  "description": "A simple, framework-agnostic Scrollspy script for navigation and table of contents.",
   "type": "module",
-  "types": "./src/index.d.ts",
-  "files": [
-    "lib/",
-    "src/"
-  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.umd.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/types/index.d.ts"
     }
   },
+  "files": [
+    "dist/"
+  ],
   "keywords": [
     "accessibility",
     "framework-agnostic",
@@ -38,8 +38,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "prepare": "rollup -c rollup.config.js",
-    "test:types": "tsd -f spec/index.test-d.ts -t src/index.d.ts"
+    "build": "rollup -c rollup.config.js",
+    "test:package": "bun test",
+    "test:coverage": "bun test --coverage"
   },
   "peerDependencies": {}
 }
