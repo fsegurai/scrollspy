@@ -7,12 +7,70 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### ⚠️ BREAKING CHANGES ⚠️
+
+- Migrated a project from `Javascript` to `Typescript`. **(Note**: This change is not backward compatible.)
+    - Supported declaration files:
+        - `ESM`
+        - `CommonJS`
+        - `UMD`
+        - `Typescript`
+
+### 🚀 Features
+
+- Added a dedicated interface extending the global Window type to safely expose Scrollspy without overwriting existing
+  globals used by extensions or the demo playground.
+
+### 🔧 Changes
+
+- Refactored extensions tests to support the new `Typescript` project.
+- Refactored tests to use `Bun test` instead of `Jest`
+- Improved keywords declared in the `package.json` files.
+- Improved README files structure and content.
+
 ### 🔐 Security
 
+- **Added dependencies**.
+    - Dev Dependencies
+        - `@types/jsdom` - `28.0.1` - needed for testing purposes only.
+        - `@types/prismjs` - `1.26.6` - needed for demo purposes only.
+        - `bun-types` - `1.3.11` - needed for testing purposes only.
+        - `jsdom` - `29.0.1` - needed for testing purposes only.
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+    - Dependencies
+        - `marked` from `17.0.0` to `17.0.5`
+    - Dev Dependencies
+        - `@eslint/js` from `9.39.1` to `10.0.1`
+        - `@rollup/plugin-commonjs` from `29.0.0` to `29.0.2`
+        - `@types/node` from `24.10.1` to `25.5.0`
+        - `@typescript-eslint/eslint-plugin` from `8.47.0` to `8.57.2`
+        - `@typescript-eslint/parser` from `8.47.0` to `8.57.2`
+        - `cpy-cli` from `6.0.0` to `7.0.0`
+        - `dotenv` from `17.2.3` to `17.3.1`
+        - `eslint` from `9.39.1` to `10.1.0`
+        - `globals` from `16.5.0` to `17.4.0`
+        - `rimraf` from `6.1.0` to `6.1.3`
+        - `rollup` from `4.53.2` to `4.60.0`
+        - `typescript-eslint` from `8.47.0` to `8.57.2`
 - **Removed dependencies** — removed unused dependencies.
     - Dev Dependencies
-        - Removed `ts-node` dependency.
-        - Removed `tsd` dependency.
+        - `@babel/core`
+        - `@babel/preset-env`
+        - `@types/jest`
+        - `babel-jest`
+        - `jest`
+        - `jest-cli`
+        - `jest-environment-jsdom`
+        - `ts-node`.
+        - `tsd`.
+
+---
+
+[//]: # (## [2.0.0] - 2026-xx-xx)
+
+[//]: # ()
+
+[//]: # (**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0)
 
 ---
 
@@ -51,6 +109,10 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
         - `rollup` from `4.52.4` to `4.53.2`
         - `typescript-eslint` from `8.46.1` to `8.46.4`
 
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.3
+
+---
+
 ## [1.0.2] - 2025-10-16
 
 ### 🔐 Security
@@ -59,6 +121,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
     - Dev Dependencies
         - `@rollup/plugin-commonjs` from `28.0.6` to `28.0.8`
         - `@types/node` from `24.7.2` to `24.8.1`
+
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.2
 
 ---
 
@@ -89,6 +153,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 - Implemented new dev dependency for `eslint.config.js` configuration file.
     - `globals` --> `16.4.0`
+
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.1
 
 ---
 
@@ -144,6 +210,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - [`eslint`](https://eslint.org/) — code linting and formatting
 - [`jest`](https://jestjs.io/) — testing framework
 
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.0
+
 ---
 
 ## 🔁 Migration Guide
@@ -181,12 +249,14 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v2.0.0...HEAD
 
-[1.0.3]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.3
+[2.0.0]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...v2.0.0
 
-[1.0.2]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.2
+[1.0.3]: https://github.com/fsegurai/scrollspy/compare/v1.0.2...v1.0.3
 
-[1.0.1]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.1
+[1.0.2]: https://github.com/fsegurai/scrollspy/compare/v1.0.1...v1.0.2
+
+[1.0.1]: https://github.com/fsegurai/scrollspy/compare/v1.0.0...v1.0.1
 
 [1.0.0]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.0

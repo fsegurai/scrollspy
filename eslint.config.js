@@ -10,7 +10,6 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.jest,
         ...globals.browser,
       },
     },
@@ -50,6 +49,7 @@ export default [
       '@typescript-eslint/dot-notation': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/consistent-generic-constructors': 'off',
       'comma-dangle': ['error', 'always-multiline'],
       'comma-spacing': [
         'error',

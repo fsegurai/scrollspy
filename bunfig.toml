@@ -1,0 +1,27 @@
+[test]
+# Enable coverage by default
+coverage = true
+
+# Set the coverage threshold to 90%
+# When tests run, Bun will AUTOMATICALLY fail (exit code 1) if coverage is below this threshold
+coverageThreshold = 0.9
+
+# Coverage reporters - text for console, lcov for CI/CD
+coverageReporter = ["text", "lcov"]
+
+# Output directory for coverage reports
+coverageDir = "coverage"
+
+# Skip test files in coverage reports as they should not be included in coverage calculations
+coverageSkipTestFiles = true
+
+# Exclude paths from coverage
+coveragePathIgnorePatterns = [
+    "node_modules/**",
+    "vendor/**",
+    "generated/**",
+    "dist/**",
+    "demo/**",
+    "**/*.config.js",
+    "**/*.config.ts"
+]
