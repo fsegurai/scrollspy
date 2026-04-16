@@ -38,9 +38,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c rollup.config.js",
-    "test:package": "bun test",
-    "test:coverage": "bun test --coverage"
+    "pkg:build": "vite build",
+    "pkg:test": "bun test",
+    "pkg:test:coverage": "bun test --coverage"
   },
   "peerDependencies": {}
 }
