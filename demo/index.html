@@ -14,12 +14,20 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
   />
 
-  <!-- Local Styles -->
+  <!-- CSS Variables (must load first) -->
+  <link rel="stylesheet" href="./styles/variables.css"/>
+
+  <!-- Base App Styles -->
   <link rel="stylesheet" href="./styles/themes.css"/>
+
+  <!-- App Component Styles -->
   <link rel="stylesheet" href="./styles/header.css"/>
   <link rel="stylesheet" href="./styles/markdown.css"/>
   <link rel="stylesheet" href="./styles/toc.css"/>
   <link rel="stylesheet" href="./styles/prism-theme.css"/>
+
+  <!-- App Theme Styles (light/dark) -->
+  <link rel="stylesheet" href="./styles/app-theme.css"/>
 
   <!-- Import Map for @material/web -->
   <script type="importmap">
@@ -36,10 +44,16 @@
   </script>
 
   <!-- Local Scripts -->
-  <script type="module" defer src="./dist/header.js"></script>
-  <script type="module" defer src="./dist/index.js"></script>
+  <script type="module" defer src="./scripts/header.ts"></script>
+  <script type="module" defer src="./scripts/index.ts"></script>
 </head>
 <body>
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+  <div class="spinner-circle"></div>
+  <p>Loading content...</p>
+</div>
+
 <header class="header">
   <div class="menu-horizontal">
     <h1 class="menu-heading">@fsegurai/scrollspy</h1>
@@ -47,16 +61,17 @@
     <span class="divider-header"></span>
 
     <ul class="menu-list">
-      <li class="menu-item menu-selected">
-        <md-icon-button id="themeToggle">
+      <li class="menu-item">
+        <md-icon-button id="themeToggle" aria-label="Toggle theme">
           <md-icon></md-icon>
         </md-icon-button>
       </li>
-      <li class="menu-item menu-selected">
+      <li class="menu-item">
         <md-icon-button
             id="github"
             href="https://github.com/fsegurai/scrollspy"
             target="_blank"
+            aria-label="View on GitHub"
         >
           <md-icon>
             <svg
@@ -87,13 +102,13 @@
     <!-- Routes will be injected here -->
   </div>
 
-  <md-icon-button id="scrollUpButton" class="scroll-up-button">
+  <md-icon-button id="scrollUpButton" class="scroll-up-button" aria-label="Scroll to top">
     <md-icon>keyboard_arrow_up</md-icon>
   </md-icon-button>
 </nav>
 
 <main class="main-index">
-  <div id="md-body" class="md-body"></div>
+  <div id="markdown-body" class="markdown-body"></div>
 </main>
 
 <footer class="footer">

@@ -1,7 +1,7 @@
 import ENV_REFERENCE from './const/const-env-reference';
 
-const isProdEnv = ENV_REFERENCE.CMT_NODE_ENV === 'production';
-const hostUrl = ENV_REFERENCE.CMT_HOST_URL_ENV;
+const isProdEnv = ENV_REFERENCE.MODE === 'production';
+const hostUrl = ENV_REFERENCE.HOST_URL;
 const lsTheme = 'scrollspy:fsegurai';
 
 // Generate URL based on environment
