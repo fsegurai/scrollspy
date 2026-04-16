@@ -1,0 +1,39 @@
+[install]
+# Only install package versions published at least 3 days ago
+minimumReleaseAge = 259200 # seconds
+
+[test]
+# Reduce memory usage during test runs
+smol = true
+
+# Don't use sourcemaps for coverage analysis
+coverageIgnoreSourcemaps = true
+
+# Enable coverage by default
+coverage = true
+coverageThreshold = { lines = 0.9, functions = 0.9, statements = 0.9 }
+
+# Coverage reporters - text for console, lcov for CI/CD
+coverageReporter = ["text", "lcov"]
+
+# Output directory for coverage reports
+coverageDir = "coverage"
+
+# Skip test files in coverage reports as they should not be included in coverage calculations
+coverageSkipTestFiles = true
+
+# Exclude paths from coverage
+coveragePathIgnorePatterns = [
+    "node_modules/**",
+    "vendor/**",
+    "generated/**",
+    "**/dist/**",
+    "demo/**",
+    "**/*.config.js",
+    "**/*.config.ts",
+    "**/spec/**",
+    "**/tests/**"
+]
+
+[test.reporter]
+junit = "./coverage/junit.xml"

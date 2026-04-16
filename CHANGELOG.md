@@ -7,13 +7,112 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+### ⚠️ BREAKING CHANGES ⚠️
+
+- Migrated project from `Javascript` to `Typescript`. **(Note**: This change is not backward compatible.)
+    - Supported declaration files:
+        - `ESM`
+        - `CommonJS`
+        - `UMD`
+        - `Typescript`
+
+### 🚀 Features
+
+- Added a dedicated interface extending the global Window type to safely expose Scrollspy without overwriting existing
+  globals used by extensions or the demo playground.
+- Introduced shared helper utilities to improve code reuse, readability, and long-term maintainability across the
+  codebase.
+- Package was migrated to `TypeScript`, improving type safety, tooling support, and maintainability.
+
+### 🔧 Changes
+
+- Refactored extensions tests to support the new `Typescript` project.
+- Refactored tests to use `Bun test` instead of `Jest`
+- Improved keywords declared in the `package.json` files.
+- Improved README files structure and content.
+
+### 🔐 Security
+
+- **Added dependencies**.
+    - Dev Dependencies
+        - `@types/jsdom` - `28.0.1` - needed for testing purposes only.
+        - `@types/prismjs` - `1.26.6` - needed for demo purposes only.
+        - `bun-types` - `1.3.12` - needed for testing purposes only.
+        - `jsdom` - `29.0.2` - needed for testing purposes only.
+        - `portless` - `0.10.3` - needed for local development. Replace port numbers with stable names.
+        - `terser` - `5.46.1` - needed for production builds as part of Vite.
+        - `vite` - `8.0.8` - needed for development and build processes. Replacement of Rollup.
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+    - Dependencies
+        - `marked` from `17.0.0` to `17.0.6`
+    - Dev Dependencies
+        - `@eslint/js` from `9.39.1` to `10.0.1`
+        - `@types/node` from `24.10.1` to `25.6.0`
+        - `@typescript-eslint/eslint-plugin` from `8.47.0` to `8.58.2`
+        - `@typescript-eslint/parser` from `8.47.0` to `8.58.2`
+        - `eslint` from `9.39.1` to `10.2.0`
+        - `globals` from `16.5.0` to `17.5.0`
+        - `rimraf` from `6.1.0` to `6.1.3`
+        - `typescript` from `5.9.3` to `6.0.2`
+        - `typescript-eslint` from `8.47.0` to `8.58.2`
+- **Removed dependencies** — removed unused dependencies.
+    - Dev Dependencies
+        - `@babel/core`
+        - `@babel/preset-env`
+        - `@rollup/plugin-commonjs`
+        - `@rollup/plugin-node-resolve`
+        - `@rollup/plugin-replace`
+        - `@rollup/plugin-typescript`
+        - `@types/jest`
+        - `babel-jest`
+        - `cpy-cli`
+        - `dotenv`
+        - `github-slugger`
+        - `jest`
+        - `jest-cli`
+        - `jest-environment-jsdom`
+        - `rollup`
+        - `rollup-plugin-dev`
+        - `ts-node`.
+        - `tsd`.
+
+### 🔧 Infrastructure
+
+- **Build System Migration**: Migrated from Rollup to Vite
+    - Replaced `rollup` + `rollup-plugin-dev` with `vite`
+    - Removed all Rollup plugins (`@rollup/plugin-*`)
+    - Added `vite.config.js` for cleaner configuration
+    - Benefits:
+        - Faster dev server with better HMR (Hot Module Replacement)
+        - Built-in environment variable support (`.env` files)
+        - Native TypeScript compilation
+        - Better CSS/asset handling for future scalability
+        - Simplified build configuration
+    - Updated dev commands:
+        - `bun run dev` now uses `vite serve` (was `rollup -w`)
+        - `bun run build:demo` now uses `vite build` (was `rollup -c`)
+    - Removed `rollup.config.js` (replaced by `vite.config.js`)
+    - Removed build helper script `scripts/build-demo.mjs` (Vite handles env vars natively)
+
+### 📝 Documentation
+
+- Updated GitHub labeler configuration to track `vite.config.js` changes instead of `rollup.config.js`
+
+---
+
+[//]: # (## [2.0.0] - 2026-xx-xx)
+
+[//]: # ()
+
+[//]: # (**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0)
+
 ---
 
 ## [1.0.3] - 2025-11-20
 
 ### 🐛 Fixed
 
-- For rollout configuration file, fixed `process` import reference to point to `node:process` directly.
+- For rollup configuration file, fixed `process` import reference to point to `node:process` directly.
 
 ### 🔧 Changed
 
@@ -44,6 +143,10 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
         - `rollup` from `4.52.4` to `4.53.2`
         - `typescript-eslint` from `8.46.1` to `8.46.4`
 
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.3
+
+---
+
 ## [1.0.2] - 2025-10-16
 
 ### 🔐 Security
@@ -52,6 +155,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
     - Dev Dependencies
         - `@rollup/plugin-commonjs` from `28.0.6` to `28.0.8`
         - `@types/node` from `24.7.2` to `24.8.1`
+
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.2
 
 ---
 
@@ -82,6 +187,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 - Implemented new dev dependency for `eslint.config.js` configuration file.
     - `globals` --> `16.4.0`
+
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.1
 
 ---
 
@@ -137,30 +244,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 - [`eslint`](https://eslint.org/) — code linting and formatting
 - [`jest`](https://jestjs.io/) — testing framework
 
----
-
-## 🔁 Migration Guide
-
-### From 1.0.1 -> 1.0.2
-
-- This release includes only dependency updates and no breaking changes.
-- ✅ Migration recommended but not required.
-
-### From 1.0.0 -> 1.0.1
-
-- This release includes only dependency updates and no breaking changes.
-- ✅ Migration recommended but not required.
-
-### From 0.x → 1.0.0
-
-- This is the first stable release of the `scrollspy` library.
-- ✅ No migration needed.
-
----
-
-## 💥 Breaking Changes
-
-- N/A — initial release
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v1.0.0
 
 ---
 
@@ -174,12 +258,14 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v2.0.0...HEAD
 
-[1.0.3]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.3
+[2.0.0]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...v2.0.0
 
-[1.0.2]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.2
+[1.0.3]: https://github.com/fsegurai/scrollspy/compare/v1.0.2...v1.0.3
 
-[1.0.1]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.1
+[1.0.2]: https://github.com/fsegurai/scrollspy/compare/v1.0.1...v1.0.2
+
+[1.0.1]: https://github.com/fsegurai/scrollspy/compare/v1.0.0...v1.0.1
 
 [1.0.0]: https://github.com/fsegurai/scrollspy/releases/tag/v1.0.0

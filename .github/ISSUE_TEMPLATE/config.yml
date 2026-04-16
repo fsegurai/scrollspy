@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: @fsegurai/scrollspy Issues
-    url: https://github.com/fsegurai/marked-extensions/issues
-    about: This is for development, support and technical issues/questions.
+  - name: Usage Questions and Ideas (GitHub Discussions)
+    url: https://github.com/fsegurai/scrollspy/issues
+    about: Ask support questions, share ideas, or start a conversation before opening an issue.
+  - name: Security Vulnerability Reporting
+    url: https://github.com/fsegurai/scrollspy/security/policy
+    about: Report suspected vulnerabilities through GitHub Security Advisories instead of public issues.
+  - name: Contributing and Local Setup Guide
+    url: https://github.com/fsegurai/scrollspy/blob/HEAD/README.md
+    about: Review contributor workflow, local setup, and project conventions.

@@ -14,7 +14,7 @@
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "Bundler",
-    "importHelpers": true,
+    "importHelpers": false,
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
@@ -23,11 +23,9 @@
       "dom"
     ],
     "types": [
+      "bun-types",
       "node",
-      "jest"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
+      "vite/client"
     ]
   }
 }

@@ -1,59 +1,113 @@
-name: Bug Report
-description: File a bug report for @fsegurai/scrollspy.
-title: "[Bug]"
-labels: bug
+name: Bug report
+description: Report a reproducible bug in @fsegurai/scrollspy.
+title: "[Bug]: "
+labels:
+  - bug
+  - needs-triage
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use this form for reproducible issues in the `packages/scrollspy` package, the `demo/` app, the docs, or the build/test workflow.
+        If you're not sure whether something is a bug or a support question, start a discussion first.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Where does the bug happen?
+      description: Pick the area that best matches the problem.
+      options:
+        - package API
+        - demo app
+        - documentation
+        - build / CI
+        - tests
+        - other
+    validations:
+      required: true
   - type: textarea
     id: issue
     attributes:
-      label: Description of the issue
-      description: What's the issue you encountered?
+      label: What happened?
+      description: Describe the bug and include the unexpected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      description: Describe the correct behavior or outcome.
     validations:
       required: true
   - type: textarea
     id: repro
     attributes:
       label: Reproduction steps
-      description: How can the issue be reproduced?
-      placeholder: Describe each step as precisely as possible
+      description: List the exact steps needed to reproduce the issue.
+      placeholder: |
+        1. Run `bun install`
+        2. Start the demo with `bun run dev`
+        3. Open the page in Chrome and scroll to the second heading
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Failing command or workflow
+      description: Include the command, browser action, or CI job where the bug appears.
+      placeholder: "Examples: `bun run test`, `bun run dev`, browser scroll interaction, build output"
     validations:
       required: true
   - type: textarea
     id: log
     attributes:
-      label: Log file
-      description: A log file will help our developers to better diagnose and fix the issue.
-      placeholder: Paste the log file here
+      label: Console output, stack trace, or screenshot
+      description: Add any logs, error messages, screenshots, or other useful evidence.
+      placeholder: Paste the output here or attach a screenshot.
     validations:
-      required: true
+      required: false
   - type: input
     id: version
     attributes:
-      label: Version
-      description: Which version of the software are you using?
-      placeholder: 1.0.0
+      label: ScrollSpy version
+      description: Which version of `@fsegurai/scrollspy` are you using?
+      placeholder: 2.0.0
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: "e.g. 22.14.0"
+    validations:
+      required: true
+  - type: input
+    id: bun
+    attributes:
+      label: Bun version
+      placeholder: "e.g. 1.3.0"
     validations:
       required: true
   - type: input
     id: os
     attributes:
-      label: OS
-      placeholder: "e.g. Windows 10"
+      label: Operating system
+      placeholder: "e.g. Ubuntu 24.04, macOS 15, Windows 11"
     validations:
       required: true
   - type: input
     id: browser
     attributes:
       label: Browser
-      placeholder: "e.g. Chrome"
+      description: Only fill this in for demo or browser-specific bugs.
+      placeholder: "e.g. Chrome 136"
     validations:
-      required: true
+      required: false
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context?
+      label: Additional context
       description: |
-        - Additional info about your environment:
-        - Any other information relevant to your issue.
+        - Include screenshots, code snippets, or links to a minimal reproduction.
+        - Mention whether this is isolated to `demo/` or the `packages/scrollspy` package.
     validations:
       required: false

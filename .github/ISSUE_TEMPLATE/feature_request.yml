@@ -1,31 +1,88 @@
-name: Feature Request
-description: Suggest a new feature for @fsegurai/scrollspy.
-title: "[Feature Request]"
-labels: enhancement
+name: Feature request
+description: Propose a new capability for @fsegurai/scrollspy.
+title: "[Feature]: "
+labels:
+  - enhancement
+  - needs-triage
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for feature ideas in the `packages/scrollspy` API, the `demo/` app, the docs, the playground, or the build/test tooling.
+        If the idea is still exploratory, start a discussion first so we can shape it before turning it into an issue.
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Where should this change live?
+      description: Choose the part of the repository this request affects most.
+      options:
+        - package API
+        - demo UX
+        - documentation
+        - playground
+        - tooling / build
+        - tests
+        - other
+    validations:
+      required: true
   - type: textarea
     id: overview
     attributes:
-      label: Overview
-      description: Include the basic, high-level concepts for this feature here.
+      label: Problem statement
+      description: What problem are you trying to solve?
+      placeholder: Describe the limitation, pain point, or missing capability.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What should `ScrollSpy` do differently?
+      placeholder: Explain the behavior, API, or workflow you would like to see.
     validations:
       required: true
   - type: textarea
     id: details
     attributes:
-      label: Smaller details
-      description: These may include specific methods of implementation etc.
-    validations:
-      required: true
-  - type: textarea
-    id: request
-    attributes:
-      label: Nature of request
+      label: Implementation details
+      description: Include any specific methods, options, events, or demo changes this may touch.
+      placeholder: |
+        - `ScrollSpyOptions`
+        - `gumshoeactivate` / `gumshoedeactivate`
+        - `demo/scripts/utils/toc.ts`
+        - README examples
     validations:
       required: true
   - type: textarea
     id: feature
     attributes:
       label: Why would this feature be useful?
+      description: Describe the value for users of the package or demo.
     validations:
       required: true
+  - type: dropdown
+    id: compatibility
+    attributes:
+      label: Would this be a breaking change?
+      description: Tell us whether the request changes existing behavior or public APIs.
+      options:
+        - no
+        - maybe
+        - yes
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches have you considered?
+      placeholder: List any workarounds, alternate APIs, or implementation ideas.
+    validations:
+      required: false
+  - type: textarea
+    id: request
+    attributes:
+      label: Additional context
+      description: Add links, mockups, examples, or anything else that would help.
+    validations:
+      required: false

@@ -1,7 +1,11 @@
+/packages
 /src
+/styles
 /spec
 /test
 /node_modules
+README.custom.md
 .tern-*
-rollup.config.js
+vite.config.js
 tsconfig.json
+*.map

@@ -1,52 +1,118 @@
-import { mdRender } from './utils/markdown';
 import mdSample from './utils/markdown.example';
-import { debounce } from './utils/debounce';
+import { mdRender } from './utils/markdown';
 import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from './utils/toc';
 
-// Debug event listener
-document.addEventListener('gumshoeactivate', (event: CustomEvent) => {
-  console.log('Scrollspy activated section:', event.detail.target.id);
-  console.log('Nav item:', event.detail.nav);
-});
+type MarkdownEditorElement = HTMLElement & { value: string };
 
-const mdBody = document.querySelector('.md-body') as HTMLElement;
-const mdEditor = document.querySelector('.md-editor');
+interface ScrollSpyEventDetail {
+  target?: HTMLElement;
+  nav?: HTMLElement;
+}
 
-/**
- * Handles changes in the Markdown editor with a debounced function.
- *
- * This function retrieves the current value of the Markdown editor, processes it
- * to render the Markdown content, generates a table of contents (TOC),
- * and initializes the scrollspy functionality. It is debounced to delay invocation
- * by 300 milliseconds to optimize performance and reduce unnecessary executions
- * during rapid input changes.
- */
-const handleEditorChange = debounce(() => {
-  const value = (mdEditor as HTMLTextAreaElement).value || '';
-  mdRender(value, mdBody);
+const editor = document.querySelector('#md-editor') as MarkdownEditorElement | null;
+const body = document.querySelector('#md-body') as HTMLElement | null;
+const loadingSpinner = document.querySelector('#loadingSpinner') as HTMLElement | null;
+const copyMarkdownButton = document.querySelector('#copyMarkdown') as HTMLElement | null;
+const clearEditorButton = document.querySelector('#clearEditor') as HTMLElement | null;
+const resetExampleButton = document.querySelector('#resetExample') as HTMLElement | null;
+const copyHtmlButton = document.querySelector('#copyHtml') as HTMLElement | null;
 
-  generateTOC(mdBody);
+const FEEDBACK_DURATION = 2000;
+
+const render = (): void => {
+  if (!editor || !body) return;
+
+  mdRender(editor.value, body);
+  generateTOC(body);
   initScrollspy();
-}, 250);
+};
 
-// Initialize the Markdown editor and render the initial content
-document.addEventListener('DOMContentLoaded', () => {
-  if (mdEditor && mdBody) {
-    // Render Markdown content
-    (mdEditor as HTMLTextAreaElement).value = mdSample;
-    mdRender(mdSample, mdBody);
+const setContent = (markdown: string): void => {
+  if (!editor) return;
 
-    // Watch the textarea for changes
-    mdEditor.addEventListener('input', handleEditorChange);
+  editor.value = markdown;
+  render();
+};
 
-    // Generate TOC from rendered content
-    generateTOC(mdBody);
+const hideSpinner = (): void => {
+  if (!loadingSpinner) return;
 
-    // Setup functionality
-    setupMobileToggle();
-    setupSmoothScroll();
+  loadingSpinner.classList.add('hidden');
+  setTimeout(() => {
+    loadingSpinner.style.display = 'none';
+  }, 300);
+};
 
-    // Initialize scrollspy after TOC is generated
-    initScrollspy(); // Start with the progressive mode
+const showCopyFeedback = (button: HTMLElement | null, iconName: string): void => {
+  if (!button) return;
+
+  const icon = button.querySelector('md-icon');
+  if (!icon) return;
+
+  const previous = icon.textContent;
+  icon.textContent = iconName;
+
+  setTimeout(() => {
+    icon.textContent = previous;
+  }, FEEDBACK_DURATION);
+};
+
+const copyText = async(text: string, button: HTMLElement | null): Promise<void> => {
+  try {
+    await navigator.clipboard.writeText(text);
+    showCopyFeedback(button, 'check');
+  } catch (error) {
+    console.error('Failed to copy:', error);
+    showCopyFeedback(button, 'error');
   }
+};
+
+const setupDebugListeners = (): void => {
+  document.addEventListener('gumshoeactivate', (event: Event) => {
+    const customEvent = event as CustomEvent<ScrollSpyEventDetail>;
+    const targetId = customEvent.detail?.target?.id;
+
+    if (!targetId) return;
+
+    console.log('Scrollspy activated section:', targetId);
+    console.log('Nav item:', customEvent.detail.nav);
+  });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!editor || !body) {
+    console.error('Required DOM elements not found');
+    hideSpinner();
+    return;
+  }
+
+  setupDebugListeners();
+  setContent(mdSample);
+
+  setTimeout(() => {
+    hideSpinner();
+  }, 300);
+
+  editor.addEventListener('input', () => {
+    render();
+  });
+
+  setupMobileToggle();
+  setupSmoothScroll();
+
+  copyMarkdownButton?.addEventListener('click', () => {
+    void copyText(editor.value, copyMarkdownButton);
+  });
+
+  copyHtmlButton?.addEventListener('click', () => {
+    void copyText(body.innerHTML, copyHtmlButton);
+  });
+
+  clearEditorButton?.addEventListener('click', () => {
+    setContent('');
+  });
+
+  resetExampleButton?.addEventListener('click', () => {
+    setContent(mdSample);
+  });
 });
