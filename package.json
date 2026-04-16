@@ -66,7 +66,7 @@
     "@fsegurai/scrollspy": "workspace:*",
     "@material/web": "^2.4.1",
     "clipboard": "^2.0.11",
-    "marked": "^17.0.6",
+    "marked": "^18.0.0",
     "marked-highlight": "^2.2.3",
     "prismjs": "^1.30.0"
   },
