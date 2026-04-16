@@ -3,6 +3,7 @@ description: Report a reproducible bug in @fsegurai/scrollspy.
 title: "[Bug]: "
 labels:
   - bug
+  - needs-triage
 body:
   - type: markdown
     attributes:

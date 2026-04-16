@@ -3,6 +3,7 @@ description: Propose a new capability for @fsegurai/scrollspy.
 title: "[Feature]: "
 labels:
   - enhancement
+  - needs-triage
 body:
   - type: markdown
     attributes:
