@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <title>&#64;fsegurai/scrollspy | Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/x-icon" href="public/favicon.ico"/>
+  <link rel="icon" type="image/x-icon" href="./assets/favicon-C8nEap1c.ico"/>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -14,14 +14,20 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
   />
 
-  <!-- Local Styles -->
-  <link rel="stylesheet" href="./styles/themes.css"/>
-  <link rel="stylesheet" href="./styles/header.css"/>
-  <link rel="stylesheet" href="./styles/markdown.css"/>
-  <link rel="stylesheet" href="./styles/toc.css"/>
-  <link rel="stylesheet" href="./styles/prism-theme.css"/>
+  <!-- CSS Variables (must load first) -->
+
+  <!-- Base App Styles -->
+
+  <!-- App Component Styles -->
+
+  <!-- App Theme Styles (light/dark) -->
 
   <!-- Import Map for @material/web -->
+
+
+  <!-- Material Web Components -->
+
+  <!-- Local Scripts -->
   <script type="importmap">
     {
       "imports": {
@@ -29,17 +35,17 @@
       }
     }
   </script>
-
-  <!-- Material Web Components -->
-  <script type="module">
-    import '@material/web/all.js'
-  </script>
-
-  <!-- Local Scripts -->
-  <script type="module" defer src="./dist/header.js"></script>
-  <script type="module" defer src="./dist/index.js"></script>
+  <script type="module" crossorigin src="./assets/main-Lv5IVkht.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/toc-CK5X9FKK.js">
+  <link rel="stylesheet" crossorigin href="./assets/toc-BqFxm6Kf.css">
 </head>
 <body>
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+  <div class="spinner-circle"></div>
+  <p>Loading content...</p>
+</div>
+
 <header class="header">
   <div class="menu-horizontal">
     <h1 class="menu-heading">@fsegurai/scrollspy</h1>
@@ -47,16 +53,17 @@
     <span class="divider-header"></span>
 
     <ul class="menu-list">
-      <li class="menu-item menu-selected">
-        <md-icon-button id="themeToggle">
+      <li class="menu-item">
+        <md-icon-button id="themeToggle" aria-label="Toggle theme">
           <md-icon></md-icon>
         </md-icon-button>
       </li>
-      <li class="menu-item menu-selected">
+      <li class="menu-item">
         <md-icon-button
             id="github"
             href="https://github.com/fsegurai/scrollspy"
             target="_blank"
+            aria-label="View on GitHub"
         >
           <md-icon>
             <svg
@@ -87,13 +94,13 @@
     <!-- Routes will be injected here -->
   </div>
 
-  <md-icon-button id="scrollUpButton" class="scroll-up-button">
+  <md-icon-button id="scrollUpButton" class="scroll-up-button" aria-label="Scroll to top">
     <md-icon>keyboard_arrow_up</md-icon>
   </md-icon-button>
 </nav>
 
 <main class="main-index">
-  <div id="md-body" class="md-body"></div>
+  <div id="markdown-body" class="markdown-body"></div>
 </main>
 
 <footer class="footer">
