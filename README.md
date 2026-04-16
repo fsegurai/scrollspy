@@ -39,6 +39,7 @@ scroll position. Perfect for documentation sites, blogs, and landing pages with 
     - [HTML Example](#html-example)
     - [JavaScript Example](#javascript-example)
     - [TypeScript Example](#typescript-example)
+- [🧪 Demo Integration](#-demo-integration)
 - [⚙️ Options](#️-options)
 - [📡 Events](#-events)
     - [`gumshoeactivate`](#gumshoeactivate)
@@ -62,7 +63,7 @@ scroll position. Perfect for documentation sites, blogs, and landing pages with 
 - 🎯 Scroll offset for fixed headers
 - 🔄 Automatic DOM mutation observer (optional)
 - 🎉 Type-safe custom activation events
-- 🧼 Clean API with setup/destroy
+- 🧼 Clean API with init/refresh/destroy
 
 ---
 
@@ -77,7 +78,12 @@ npm install @fsegurai/scrollspy
 ### CDN / HTML
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@fsegurai/scrollspy/dist/index.umd.js"></script>
+
+<script type="module">
+    import ScrollSpy from '@fsegurai/scrollspy';
+
+    const spy = new ScrollSpy('#toc');
+</script>
 ```
 
 ---
@@ -87,6 +93,7 @@ npm install @fsegurai/scrollspy
 ### HTML Example
 
 ```html
+
 <nav id="toc">
     <ul>
         <li><a href="#intro">Intro</a></li>
@@ -160,26 +167,59 @@ document.addEventListener('gumshoeactivate', (event: Event) => {
 
 ---
 
+## 🧪 Demo Integration
+
+The demo in `demo/scripts/utils/toc.ts` builds a nested table of contents from headings, marks each heading with
+`data-gumshoe`, and then initializes ScrollSpy against `#tableOfContents`.
+
+```ts
+import {
+    generateTOC,
+    initScrollspy,
+    setupMobileToggle,
+    setupSmoothScroll,
+} from './utils/toc';
+
+const content = document.querySelector('#content') as HTMLElement;
+
+generateTOC(content);
+setupMobileToggle();
+setupSmoothScroll();
+initScrollspy();
+```
+
+In that demo flow, the generated headings look like this:
+
+```html
+<h2 id="intro" data-gumshoe>Intro</h2>
+```
+
+`initScrollspy()` configures the instance with `content: '[data-gumshoe]'`, `offset: 120`, `bottomThreshold: 10`,
+`reflow: true`, and `events: true`.
+
+---
+
 ## ⚙️ Options
 
 All available options for customizing behavior:
 
-| Option              | Type                                          | Default           | Description                                                                                                                                                                                                                                               |
-|---------------------|-----------------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `nav`               | `string`                                      | —                 | **(Required)** Selector for the navigation container. Specifies where to find the navigation links (usually your Table of Contents or sidebar).                                                                                                           |
-| `content`           | `string`                                      | `[data-gumshoe]`  | Selector for scrollable content sections (matched by ID from nav href). Used for observing DOM mutations (if observe: true) and for internal mapping. <br/>**You don’t usually need to change this unless your content isn’t identified by IDs directly** |
-| `nested`            | `boolean`                                     | `false`           | Add a class to parent `<li>` items in nested TOC structures                                                                                                                                                                                               |
-| `nestedClass`       | `string`                                      | `'active-parent'` | Class name for parent `<li>` elements when nested is `true`                                                                                                                                                                                               |
-| `offset`            | `number \| () => number`                      | `0`               | Scroll offset in pixels or a function returning an offset (e.g. fixed headers)                                                                                                                                                                            |
-| `bottomThreshold`   | `number`                                      | `100`             | Distance (in px) from bottom of page where last section is auto-activated.                                                                                                                                                                                |
-| `reflow`            | `boolean`                                     | `false`           | If `true`, recomputes layout on window resize                                                                                                                                                                                                             |
-| `events`            | `boolean`                                     | `true`            | Emits custom DOM events (`gumshoeactivate`, `gumshoedeactivate`) with full TypeScript support                                                                                                                                                             |                                                                                                                                                                                          |
-| `observe`           | `boolean`                                     | `false`           | Enables a `MutationObserver` to track DOM changes and refresh content                                                                                                                                                                                     |
-| `fragmentAttribute` | `string \| (item: Element) => string \| null` | `null`            | Attribute or function used to map nav items to content sections, instead of relying on the `href` attribute.                                                                                                                                              |
-| `navItemSelector`   | `string`                                      | `'a[href*="#"]'`  | Selector for nav items (anchors). Use to further filter which anchors are considered navigation items.                                                                                                                                                    |
+| Option              | Type                                          | Default           | Description                                                                                                                                                                    |
+|---------------------|-----------------------------------------------|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `nav`               | `string`                                      | —                 | **(Required)** Selector for the navigation container. This is the element ScrollSpy scans for links.                                                                           |
+| `content`           | `string`                                      | `[data-gumshoe]`  | Default selector used by the demo and dynamic-content workflows. The core lookup still resolves targets from nav fragments and `fragmentAttribute`.                            |
+| `nested`            | `boolean`                                     | `false`           | Adds a class to parent `<li>` items in nested TOC structures.                                                                                                                  |
+| `nestedClass`       | `string`                                      | `'active-parent'` | Class name for parent `<li>` elements when `nested` is `true`.                                                                                                                 |
+| `offset`            | `number \| () => number`                      | `0`               | Scroll offset in pixels or a function returning an offset, useful for fixed headers.                                                                                           |
+| `bottomThreshold`   | `number`                                      | `100`             | Distance in pixels from the bottom of the page where the last section is auto-activated.                                                                                       |
+| `reflow`            | `boolean`                                     | `false`           | If `true`, ScrollSpy also re-detects on window resize.                                                                                                                         |
+| `events`            | `boolean`                                     | `true`            | Emits `gumshoeactivate` when the active section changes. `gumshoedeactivate` is part of the typings, but the current runtime does not dispatch it.                             |
+| `observe`           | `boolean`                                     | `false`           | Enables a `MutationObserver` that calls `refresh()` when observed DOM nodes change.                                                                                            |
+| `fragmentAttribute` | `string \| (item: Element) => string \| null` | `null`            | Attribute or function used to map nav items to content sections instead of relying on `href`. Supports full URLs like `/route#fragment` through the default hash parsing path. |
+| `navItemSelector`   | `string`                                      | `'a[href*="#"]'`  | Selector for nav items (anchors or other elements) that should be considered by ScrollSpy.                                                                                     |
 
-> If you're using `observe: true`, make sure your headings or section wrappers have a consistent structure, and set a
-> data-gumshoe attribute if you change the default selector.
+> If you're using `observe: true`, make sure your headings or section wrappers have a consistent structure. The
+> `data-gumshoe` attribute is used by the demo and matches the default `content` selector, but section matching still
+> starts from the nav fragments themselves.
 
 ---
 
@@ -208,7 +248,7 @@ const spy = new ScrollSpy('#toc', {
 
 ## 📡 Events
 
-These custom events are fired on the document when scrollspy updates:
+These custom events are available on `document` when ScrollSpy updates the active section.
 
 ### `gumshoeactivate`
 
@@ -222,15 +262,10 @@ document.addEventListener('gumshoeactivate', (e) => {
 });
 ```
 
-### `gumshoedeactivate`
+### About `gumshoedeactivate`
 
-Triggered when a section is deactivated (not currently visible).
-
-```js
-document.addEventListener('gumshoedeactivate', (e) => {
-    console.log('Deactivated:', e.detail.target.id);
-});
-```
+`gumshoedeactivate` is included in the type definitions, but the current implementation does not dispatch it. If you
+need deactivation hooks, listen for `gumshoeactivate` and compare the previous active section yourself.
 
 Event `detail` includes:
 
@@ -240,8 +275,9 @@ Event `detail` includes:
 
 ### Type-Safe Event Listeners
 
-The library includes full TypeScript type definitions for all events. The `DocumentEventMap` is automatically augmented
-to include `gumshoeactivate` and `gumshoedeactivate`:
+The library includes full TypeScript type definitions for the custom events that ship with the package. The
+`DocumentEventMap` is augmented to include both `gumshoeactivate` and `gumshoedeactivate`, even though only
+`gumshoeactivate` is emitted by the current runtime:
 
 ```ts
 import type {ScrollSpyEvent} from '@fsegurai/scrollspy';
@@ -268,18 +304,23 @@ If you update the TOC or headings dynamically, call:
 spy.refresh();
 ```
 
-Or initialize with `observe: true` to let it auto-refresh using a `MutationObserver`.
+Or initialize with `observe: true` to let ScrollSpy refresh itself using a `MutationObserver`.
 
 ---
 
 ## 📘 API
 
-| Method      | Description                                                         |
-|-------------|---------------------------------------------------------------------|
-| `setup()`   | Manually sets up the scrollspy instance again from scratch          |
-| `detect()`  | Re-runs detection logic based on current scroll position            |
-| `refresh()` | Rebuilds internal nav/content map (used after dynamic updates)      |
-| `destroy()` | Tears down scrollspy instance, removes listeners and DOM references |
+| Method          | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `init()`        | Performs the initial DOM lookup, content mapping, detection, and listeners. |
+| `getContents()` | Rebuilds the internal nav-to-target map from the current DOM.               |
+| `getNavItem()`  | Resolves the nav element associated with a content section.                 |
+| `detect()`      | Re-runs detection logic based on current scroll position.                   |
+| `setup()`       | Rebuilds contents and runs detection again.                                 |
+| `refresh()`     | Same rebuild/detect cycle as `setup()`; use this after dynamic updates.     |
+| `destroy()`     | Removes listeners, clears active classes, and disconnects the observer.     |
+
+> `setup()` and `refresh()` currently perform the same rebuild/detect pass.
 
 ---
 
@@ -311,7 +352,8 @@ document.addEventListener('gumshoeactivate', (event: Event) => {
 });
 ```
 
-**All public APIs include JSDoc comments** for IDE autocomplete and inline documentation.
+`ScrollSpyOptions` includes the navigation selector, offset controls, nested-navigation classes, fragment mapping, and
+the optional MutationObserver toggle. `ScrollSpyEvent` is the shared detail payload for the activation event.
 
 ---
 
