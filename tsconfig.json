@@ -24,7 +24,8 @@
     ],
     "types": [
       "bun-types",
-      "node"
+      "node",
+      "vite/client"
     ]
   }
 }

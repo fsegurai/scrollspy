@@ -51,8 +51,6 @@ typings/
 **/test/*.d.ts.map
 **/test/*.spec.ts
 **/test/*.spec.js
-**/__snapshots__/
-**/__tests__/*.ts
 
 # Optional npm cache
 .npm
@@ -104,6 +102,7 @@ chrome-profiler-events*.json
 # System/package locks
 .lock-wscript
 connect.lock
+package-lock.json
 
 # Environment variables
 .env
