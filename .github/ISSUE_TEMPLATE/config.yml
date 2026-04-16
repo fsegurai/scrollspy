@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: @fsegurai/scrollspy Issues
-    url: https://github.com/fsegurai/marked-extensions/issues
-    about: This is for development, support and technical issues/questions.
+  - name: ScrollSpy Discussions
+    url: https://github.com/fsegurai/scrollspy/issues
+    about: Ask support questions, share ideas, or start a conversation before opening an issue.
+  - name: ScrollSpy README and demo
+    url: https://github.com/fsegurai/scrollspy#readme
+    about: Review the package docs, demo app, and examples to confirm the issue is reproducible.

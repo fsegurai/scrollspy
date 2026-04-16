@@ -1,6 +1,6 @@
 infra:
   - fsegurai
-  
+
 dependencies:
   - fsegurai
 
@@ -10,7 +10,13 @@ ci-cd:
 demo:
   - fsegurai
 
-assets:
+demo-assets:
+  - fsegurai
+
+demo-styles:
+  - fsegurai
+
+demo-scripts:
   - fsegurai
 
 styles:
@@ -19,11 +25,14 @@ styles:
 library:
   - fsegurai
 
-tests-library:
+scrollspy-helper:
   - fsegurai
 
-tests-demo:
-    - fsegurai
+scrollspy:
+  - fsegurai
+
+tests-library:
+  - fsegurai
 
 documentation:
   - fsegurai
