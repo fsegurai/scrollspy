@@ -77,7 +77,6 @@ npm install @fsegurai/scrollspy
 ### CDN / HTML
 
 ```html
-
 <script type="module" src="https://cdn.jsdelivr.net/npm/@fsegurai/scrollspy/dist/index.umd.js"></script>
 ```
 
@@ -88,7 +87,6 @@ npm install @fsegurai/scrollspy
 ### HTML Example
 
 ```html
-
 <nav id="toc">
     <ul>
         <li><a href="#intro">Intro</a></li>
