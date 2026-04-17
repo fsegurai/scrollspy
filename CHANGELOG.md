@@ -7,6 +7,12 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+No changes have been made yet.
+
+---
+
+## [2.0.0] - 2026-04-18
+
 ### ⚠️ BREAKING CHANGES ⚠️
 
 - Migrated project from `Javascript` to `Typescript`. **(Note**: This change is not backward compatible.)
@@ -99,13 +105,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 - Updated GitHub labeler configuration to track `vite.config.js` changes instead of `rollup.config.js`
 
----
-
-[//]: # (## [2.0.0] - 2026-xx-xx)
-
-[//]: # ()
-
-[//]: # (**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0)
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0
 
 ---
 
