@@ -1,6 +1,6 @@
 {
   "name": "@fsegurai/scrollspy-monorepo",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "A simple, framework-agnostic Scrollspy script for navigation and table of contents.",
   "type": "module",
   "license": "MIT",
@@ -66,8 +66,8 @@
     "@fsegurai/scrollspy": "workspace:*",
     "@material/web": "^2.4.1",
     "clipboard": "^2.0.11",
-    "marked": "^17.0.6",
-    "marked-highlight": "^2.2.3",
+    "marked": "^18.0.0",
+    "marked-highlight": "^2.2.4",
     "prismjs": "^1.30.0"
   },
   "devDependencies": {

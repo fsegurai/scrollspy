@@ -7,6 +7,12 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+No changes have been made yet.
+
+---
+
+## [2.0.0] - 2026-04-18
+
 ### ⚠️ BREAKING CHANGES ⚠️
 
 - Migrated project from `Javascript` to `Typescript`. **(Note**: This change is not backward compatible.)
@@ -44,7 +50,8 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
         - `vite` - `8.0.8` - needed for development and build processes. Replacement of Rollup.
 - **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
     - Dependencies
-        - `marked` from `17.0.0` to `17.0.6`
+        - `marked` from `17.0.0` to `18.0.0`
+        - `marked-highlight` from `2.2.3` to `2.2.4`
     - Dev Dependencies
         - `@eslint/js` from `9.39.1` to `10.0.1`
         - `@types/node` from `24.10.1` to `25.6.0`
@@ -98,13 +105,7 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 - Updated GitHub labeler configuration to track `vite.config.js` changes instead of `rollup.config.js`
 
----
-
-[//]: # (## [2.0.0] - 2026-xx-xx)
-
-[//]: # ()
-
-[//]: # (**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0)
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.0.0
 
 ---
 
