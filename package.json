@@ -9,9 +9,9 @@
     "url": "https://fsegurai.com"
   },
   "engines": {
-    "node": ">=22",
-    "bun": ">=1.3.0",
-    "npm": ">=10"
+    "node": ">=24",
+    "bun": ">=1.4.0",
+    "npm": ">=11"
   },
   "keywords": [
     "accessibility",
