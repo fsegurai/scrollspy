@@ -37,7 +37,7 @@
     "build": "bun run build:packages && bun run build:packages:metadata && bun run build:demo && bun run build:demo:metadata",
     "build:packages": "bun run --filter '*' pkg:build",
     "build:demo": "vite build",
-    "build:packages:metadata": "find ./packages -maxdepth 1 -type d ! -name '.helper' ! -name 'packages' -exec cp ./LICENSE {} \\;",
+    "build:packages:metadata": "find ./packages -maxdepth 1 -type d ! -name '.helper' ! -name 'packages' -exec cp ./README.md ./LICENSE {}/dist/ \\;",
     "build:demo:metadata": "cp ./README.md ./demo/dist/README.md && cp ./LICENSE ./demo/dist/LICENSE",
     "clean": "bun run clean:packages && bun run clean:demo && bun run clean:coverage",
     "clean:packages": "rimraf --glob ./packages/*/dist",
