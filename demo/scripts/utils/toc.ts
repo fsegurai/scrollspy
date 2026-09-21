@@ -29,7 +29,7 @@ export const generateTOC = (content: HTMLElement): void => {
   const levelStack: HTMLElement[] = [tocUl];
 
   headings.forEach((heading) => {
-    const level = parseInt(heading.tagName.charAt(1));
+    const level = parseInt(heading.tagName.charAt(1), 10);
     const text = heading.textContent || '';
 
     // Generate ID if not exists

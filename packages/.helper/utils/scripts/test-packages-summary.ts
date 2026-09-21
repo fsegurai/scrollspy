@@ -41,8 +41,8 @@ function parseTestOutput(output: string): { passed: number; failed: number } {
   const passMatch = output.match(/(\d+)\s+pass/);
   const failMatch = output.match(/(\d+)\s+fail/);
 
-  if (passMatch) passed = parseInt(passMatch[1]);
-  if (failMatch) failed = parseInt(failMatch[1]);
+  if (passMatch) passed = parseInt(passMatch[1], 10);
+  if (failMatch) failed = parseInt(failMatch[1], 10);
 
   return { passed, failed };
 }
@@ -53,7 +53,7 @@ function runPackageTest(packageName: string, showOutput = true): PackageTestResu
   if (showOutput) {
     console.log(`\n${'='.repeat(70)}`);
     console.log(`📦 Testing: ${packageName}`);
-    console.log('='.repeat(70) + '\n');
+    console.log(`${'='.repeat(70)}\n`);
   }
 
   const startTime = Date.now();
@@ -86,7 +86,7 @@ function runPackageTest(packageName: string, showOutput = true): PackageTestResu
 }
 
 function printSummary(results: PackageTestResult[]) {
-  console.log('\n\n' + '═'.repeat(80));
+  console.log(`\n\n${'═'.repeat(80)}`);
   console.log('📊 GLOBAL TEST SUMMARY');
   console.log('═'.repeat(80));
 

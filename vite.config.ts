@@ -24,15 +24,6 @@ export default defineConfig(({ mode }) => {
           playground: 'demo/playground.html',
           changelog: 'demo/changelog.html',
         },
-        output: {
-          // Isolate the local extension styles into their own chunk so Vite emits a
-          // dedicated, predictable stylesheet (assets/extensions-<hash>.css) instead
-          // of merging them into the shared markdown chunk.
-          manualChunks(id) {
-            if (id.includes('/demo/scripts/utils/extension-styles')) return 'extensions';
-            return undefined;
-          },
-        },
       },
     },
   };

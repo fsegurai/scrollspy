@@ -211,6 +211,7 @@ describe('Scrollspy', () => {
 
   test('isNewActive returns true when different, false when same', () => {
     const sp = new ScrollSpy('#nav');
+    // biome-ignore lint/complexity/useLiteralKeys: root tsconfig requires bracket access for index-signature types
     (sp as unknown as Record<string, unknown>)['current'] = [section1];
     expect(sp.isNewActive([section2!])).toBe(true);
     expect(sp.isNewActive([section1!])).toBe(false);
@@ -287,6 +288,7 @@ describe('Scrollspy', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       disconnect: () => {},
     };
+    // biome-ignore lint/complexity/useLiteralKeys: root tsconfig requires bracket access for index-signature types
     (sp as unknown as Record<string, unknown>)['_observer'] = mockObserver;
     sp.destroy();
 
@@ -583,6 +585,7 @@ describe('Scrollspy', () => {
 
   test('destroyListeners handles empty listeners array', () => {
     const sp = new ScrollSpy('#nav');
+    // biome-ignore lint/complexity/useLiteralKeys: root tsconfig requires bracket access for index-signature types
     (sp as unknown as Record<string, unknown>)['_listeners'] = [];
 
     expect(() => sp.destroyListeners()).not.toThrow();
@@ -691,6 +694,7 @@ describe('Scrollspy', () => {
 
   test('destroy without observer does not throw', () => {
     const sp = new ScrollSpy('#nav');
+    // biome-ignore lint/complexity/useLiteralKeys: root tsconfig requires bracket access for index-signature types
     (sp as unknown as Record<string, unknown>)['_observer'] = null;
 
     expect(() => sp.destroy()).not.toThrow();
@@ -763,6 +767,7 @@ describe('Scrollspy', () => {
 
   test('destroyListeners when listeners is falsy', () => {
     const sp = new ScrollSpy('#nav');
+    // biome-ignore lint/complexity/useLiteralKeys: root tsconfig requires bracket access for index-signature types
     (sp as unknown as Record<string, unknown>)['_listeners'] = null;
 
     expect(() => sp.destroyListeners()).not.toThrow();

@@ -119,7 +119,7 @@ export default class ScrollSpy {
       if (!fragment) return;
 
       const target = document.getElementById(fragment);
-      if (target && target.id) {
+      if (target?.id) {
         this.contents.push(target);
         this.navMap.set(target.id, item);
       }
