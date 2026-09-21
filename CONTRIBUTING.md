@@ -1,14 +1,13 @@
-# 🙌 Contributing to ScrollSpy
+# 🙌 Contributing to Scrollspy
 
-Thanks for your interest in improving the **ScrollSpy** project! Whether it's fixing bugs, improving documentation, or
-suggesting new features—your help is welcome 🙏
+Thanks for your interest in improving the **Scrollspy** project! Whether it's fixing bugs, improving documentation, or suggesting new features—your help is welcome 🙏
 
 ---
 
 ## 🚀 Getting Started
 
-> **Requirements**  
-> Ensure you're using **Node.js v20.x** and **Bun v1.1.x** or higher.
+> **Requirements**
+> Ensure you're using **Node.js v24.x** and **Bun v1.4.x** or higher.
 
 ### 1. Clone the Repository
 
@@ -23,11 +22,19 @@ cd scrollspy
 bun install
 ```
 
-### 3. Start Development Server (if applicable)
+### 3. Build the Library
 
 ```bash
-bun start
+bun run build:packages
 ```
+
+### 4. Start Development Server
+
+```bash
+bun run start
+```
+
+This will start the demo in watch mode for development.
 
 ---
 
@@ -44,7 +51,7 @@ bun test
 If you encounter issues, run tests in verbose mode for detailed output:
 
 ```bash
-bun test
+bun test --verbose
 ```
 
 ---
@@ -54,8 +61,20 @@ bun test
 > Linting is enforced as part of the CI pipeline. Please ensure your code is clean before pushing:
 
 ```bash
-bun lint
+bun run lint
+bun run format:audit   # Read-only check (Biome, covers lint + format)
 ```
+
+You can also lint specific parts:
+- Demo: `bun run lint:demo`
+- Packages: `bun run lint:packages`
+
+Run `bun run lint:fix` to auto-fix formatting issues before committing (it is the same command as `format`).
+
+**Git hooks (Husky)** are installed automatically via the `prepare` script on `bun install`:
+- `pre-commit` runs `bun run lint:fix` and re-stages your files, so fixes land inside the commit.
+- `pre-push` runs `bun run format:audit` as a read-only gate that blocks the push if anything is dirty.
+- Bypass with `git commit -n` / `git push -n` (or `HUSKY=0` for everything).
 
 ---
 
@@ -76,7 +95,7 @@ This project follows **[Conventional Commits](https://www.conventionalcommits.or
 Example:
 
 ```bash
-git commit -m "feat: add offset option to scrollspy config"
+git commit -m "feat: add new markdown extension for spoilers"
 ```
 
 ---
@@ -87,10 +106,10 @@ Please follow these steps to ensure a smooth review:
 
 1. **Merge** the latest changes from `main` into your branch:
    ```bash
-    git checkout main
-    git pull origin main
-    git checkout your-feature-branch
-    git merge main
+   git checkout main
+   git pull origin main
+   git checkout your-feature-branch
+   git merge main
    ```
 
 2. Make sure all tests pass:
@@ -98,14 +117,21 @@ Please follow these steps to ensure a smooth review:
    bun test
    ```
 
-3. If you've added functionality:
-    - Include **unit tests**.
-    - Update the **README.md** or relevant documentation.
+3. Build and verify your changes:
+   ```bash
+   bun run build:packages
+   bun run build:demo
+   ```
 
-4. Reference any related issues in your PR comment:
+4. If you've added functionality:
+	- Include **unit tests**.
+	- Update the **README.md** or relevant documentation.
+	- Add extension previews if applicable.
+
+5. Reference any related issues in your PR comment:
    > Example: _"Closes #12"_
 
-5. Ensure your PR title follows the **conventional commit** format.
+6. Ensure your PR title follows the **conventional commit** format.
 
 ---
 
@@ -117,8 +143,10 @@ When submitting a bug report, please include:
 - The **expected vs actual behavior**.
 - A **minimal reproducible example** (CodeSandbox or StackBlitz is ideal).
 - Details about:
-    - Browser(s) and OS
-    - Node and Bun versions
+	- Browser(s) and OS
+	- Node and Bun versions
+	- Marked Extension version
+	- Which extension is affected
 
 ---
 
@@ -129,4 +157,4 @@ or [create an issue](https://github.com/fsegurai/scrollspy/issues) and we'll do 
 
 ---
 
-Thanks for contributing to ScrollSpy! ✨
+Thanks for contributing to scrollspy! ✨
