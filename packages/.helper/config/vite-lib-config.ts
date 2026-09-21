@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 /**
- * Creates a Vite library config for marked-extensions packages
+ * Creates a Vite library config for scrollspy packages
  * Generates ESM, CommonJS, and UMD builds with TypeScript declarations
  *
  * @param {Object} options - Configuration options
