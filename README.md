@@ -212,7 +212,7 @@ All available options for customizing behavior:
 | `offset`            | `number \| () => number`                      | `0`               | Scroll offset in pixels or a function returning an offset, useful for fixed headers.                                                                                           |
 | `bottomThreshold`   | `number`                                      | `100`             | Distance in pixels from the bottom of the page where the last section is auto-activated.                                                                                       |
 | `reflow`            | `boolean`                                     | `false`           | If `true`, ScrollSpy also re-detects on window resize.                                                                                                                         |
-| `events`            | `boolean`                                     | `true`            | Emits `gumshoeactivate` when the active section changes. `gumshoedeactivate` is part of the typings, but the current runtime does not dispatch it.                             |
+| `events`            | `boolean`                                     | `true`            | Emits `gumshoeactivate`/`gumshoedeactivate` when the active section changes.                                                                                                    |
 | `observe`           | `boolean`                                     | `false`           | Enables a `MutationObserver` that calls `refresh()` when observed DOM nodes change.                                                                                            |
 | `fragmentAttribute` | `string \| (item: Element) => string \| null` | `null`            | Attribute or function used to map nav items to content sections instead of relying on `href`. Supports full URLs like `/route#fragment` through the default hash parsing path. |
 | `navItemSelector`   | `string`                                      | `'a[href*="#"]'`  | Selector for nav items (anchors or other elements) that should be considered by ScrollSpy.                                                                                     |
@@ -262,10 +262,15 @@ document.addEventListener('gumshoeactivate', (e) => {
 });
 ```
 
-### About `gumshoedeactivate`
+### `gumshoedeactivate`
 
-`gumshoedeactivate` is included in the type definitions, but the current implementation does not dispatch it. If you
-need deactivation hooks, listen for `gumshoeactivate` and compare the previous active section yourself.
+Triggered on the previously active section right before a new section is activated.
+
+```js
+document.addEventListener('gumshoedeactivate', (e) => {
+    console.log('Deactivated:', e.detail.target.id);
+});
+```
 
 Event `detail` includes:
 
@@ -276,8 +281,7 @@ Event `detail` includes:
 ### Type-Safe Event Listeners
 
 The library includes full TypeScript type definitions for the custom events that ship with the package. The
-`DocumentEventMap` is augmented to include both `gumshoeactivate` and `gumshoedeactivate`, even though only
-`gumshoeactivate` is emitted by the current runtime:
+`DocumentEventMap` is augmented to include both `gumshoeactivate` and `gumshoedeactivate`:
 
 ```ts
 import type {ScrollSpyEvent} from '@fsegurai/scrollspy';
