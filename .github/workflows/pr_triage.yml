@@ -17,7 +17,7 @@ jobs:
         with:
           # Ensure we pin the source origin as pull_request_target run under forks.
           fetch-depth: 0
-          repository: fsegurai/marked-extensions
+          repository: fsegurai/scrollspy
           ref: main
 
       - name: Update labels based on changes
@@ -59,7 +59,7 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const author = pr.user.login;
-            
+
             // Get all PRs from this author
             const userPRs = await github.rest.pulls.list({
               owner: context.repo.owner,
@@ -67,14 +67,14 @@ jobs:
               creator: author,
               state: 'all'
             });
-            
+
             // If this is their first PR, send welcome message
             if (userPRs.data.length === 1) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: pr.number,
-                body: '👋 **Welcome, @' + author + '!**\n\nThank you for your contribution to marked-extensions! Here\'s what to expect:\n\n- **Tests run automatically** - our CI pipeline validates linting and builds\n- **Reviews** - a maintainer will review your changes\n- **Labels** - we auto-tag PRs to help organize discussions\n- **Questions?** - feel free to ask in the comments\n\n📚 **Helpful Resources:**\n- [Contributing Guide](./CONTRIBUTING.md)\n- [AGENTS Guide](./AGENTS.md) - Project architecture\n- [Development Setup](./README.md#development)\n\nWe appreciate your help! 🎉'
+                body: '👋 **Welcome, @' + author + '!**\n\nThank you for your contribution to scrollspy! Here\'s what to expect:\n\n- **Tests run automatically** - our CI pipeline validates linting and builds\n- **Reviews** - a maintainer will review your changes\n- **Labels** - we auto-tag PRs to help organize discussions\n- **Questions?** - feel free to ask in the comments\n\n📚 **Helpful Resources:**\n- [Contributing Guide](./CONTRIBUTING.md)\n- [AGENTS Guide](./AGENTS.md) - Project architecture\n- [Development Setup](./README.md#development)\n\nWe appreciate your help! 🎉'
               });
             }
 
@@ -84,23 +84,23 @@ jobs:
           script: |
             const pr = context.payload.pull_request;
             const author = pr.user.login;
-            
+
             // Check if this is a Dependabot PR
             if (!author.includes('dependabot')) {
               return;
             }
-            
+
             // Check if we already commented
             const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: pr.number
             });
-            
-            const hasDepbotComment = comments.data.some(c => 
+
+            const hasDepbotComment = comments.data.some(c =>
               c.body.includes('Dependabot Update') || c.body.includes('@dependabot')
             );
-            
+
             if (!hasDepbotComment) {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -120,20 +120,20 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number
             });
-            
+
             // Check if it's an extension-specific change
             const extensionFiles = files.data.filter(f => f.filename.startsWith('packages/scrollspy-'));
-            
+
             if (extensionFiles.length > 0 && extensionFiles.length <= 20) {
               const extensions = new Set();
               extensionFiles.forEach(f => {
                 const match = f.filename.match(/packages\/(scrollspy-[^/]+)\//);
                 if (match) extensions.add(match[1]);
               });
-            
+
               if (extensions.size > 0) {
                 const body = `📦 **Extension(s) Modified:** ${Array.from(extensions).join(', ')}`;
-            
+
                 // Add to PR body if not already there
                 if (!pr.body.includes(body)) {
                   await github.rest.pulls.update({
