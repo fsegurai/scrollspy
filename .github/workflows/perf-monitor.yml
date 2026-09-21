@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: ['main']
     paths:
-      - 'packages/scrollspy-*/src/**'
-      - '../../vite.config.ts'
+      - 'packages/*/src/**'
+      - 'vite.config.ts'
       - '.github/workflows/perf-monitor.yml'
   workflow_dispatch:
 

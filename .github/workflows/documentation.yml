@@ -112,23 +112,6 @@ jobs:
 
           echo "✅ README structure validation complete"
 
-      - name: Validate package READMEs
-        run: |
-          echo "Validating extension package README structure..."
-
-          for readme in packages/scrollspy-*/README.md; do
-            if [ -f "$readme" ]; then
-              PKG=$(basename $(dirname "$readme"))
-
-              # Check basic structure
-              if ! head -1 "$readme" | grep -q "^#"; then
-                echo "⚠️ $PKG/README.md: Missing title"
-              fi
-            fi
-          done
-
-          echo "✅ Extension README validation complete"
-
   build-demo-validation:
     name: Validate Demo Build
     runs-on: ubuntu-latest

@@ -4,15 +4,15 @@ on:
   pull_request:
     branches: ['main']
     paths:
-      - 'packages/scrollspy-*/src/**'
-      - 'packages/scrollspy-*/spec/**'
+      - 'packages/*/src/**'
+      - 'packages/*/spec/**'
       - 'demo/scripts/**'
       - '.github/workflows/test.yml'
   push:
     branches: ['main']
     paths:
-      - 'packages/scrollspy-*/src/**'
-      - 'packages/scrollspy-*/spec/**'
+      - 'packages/*/src/**'
+      - 'packages/*/spec/**'
       - 'demo/scripts/**'
   workflow_dispatch:
 
