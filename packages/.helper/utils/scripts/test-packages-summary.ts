@@ -4,9 +4,9 @@
  * Run tests across all packages and provide a consolidated summary
  */
 
-import { spawnSync } from 'child_process';
-import { existsSync, readdirSync } from 'fs';
-import { join } from 'path';
+import { spawnSync } from 'node:child_process';
+import { existsSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 interface PackageTestResult {
   name: string;
@@ -22,9 +22,9 @@ interface PackageTestResult {
 function getPackages(): string[] {
   const packagesDir = join(process.cwd(), 'packages');
   return readdirSync(packagesDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name)
-    .filter(name => {
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name)
+    .filter((name) => {
       // Check if package has a package.json with test script
       const pkgPath = join(packagesDir, name, 'package.json');
       return existsSync(pkgPath);
@@ -90,8 +90,8 @@ function printSummary(results: PackageTestResult[]) {
   console.log('📊 GLOBAL TEST SUMMARY');
   console.log('═'.repeat(80));
 
-  const totalPkgPassed = results.filter(r => r.passed).length;
-  const totalPkgFailed = results.filter(r => !r.passed).length;
+  const totalPkgPassed = results.filter((r) => r.passed).length;
+  const totalPkgFailed = results.filter((r) => !r.passed).length;
   const totalTestsRun = results.reduce((sum, r) => sum + r.testsRun, 0);
   const totalTestsPassed = results.reduce((sum, r) => sum + r.testsPassed, 0);
   const totalTestsFailed = results.reduce((sum, r) => sum + r.testsFailed, 0);
@@ -104,9 +104,7 @@ function printSummary(results: PackageTestResult[]) {
 
   for (const result of results) {
     const status = result.passed ? '  ✅  ' : '  ❌  ';
-    const testInfo = result.testsRun > 0
-      ? `${result.testsPassed}/${result.testsRun}`.padStart(6)
-      : '  N/A ';
+    const testInfo = result.testsRun > 0 ? `${result.testsPassed}/${result.testsRun}`.padStart(6) : '  N/A ';
     const time = `${(result.duration / 1000).toFixed(2)}s`.padStart(8);
     const name = result.name.padEnd(40);
 
@@ -125,14 +123,18 @@ function printSummary(results: PackageTestResult[]) {
   // Overall Statistics
   console.log('\n📈 Overall Statistics:');
   console.log('┌─────────────────────────────────────────────────────────────────────┐');
-  console.log(`│  Packages:       ${String(results.length).padStart(3)} total  |  ${String(totalPkgPassed).padStart(3)} passed  |  ${String(totalPkgFailed).padStart(3)} failed      │`);
-  console.log(`│  Tests:          ${String(totalTestsRun).padStart(3)} total  |  ${String(totalTestsPassed).padStart(3)} passed  |  ${String(totalTestsFailed).padStart(3)} failed      │`);
+  console.log(
+    `│  Packages:       ${String(results.length).padStart(3)} total  |  ${String(totalPkgPassed).padStart(3)} passed  |  ${String(totalPkgFailed).padStart(3)} failed      │`,
+  );
+  console.log(
+    `│  Tests:          ${String(totalTestsRun).padStart(3)} total  |  ${String(totalTestsPassed).padStart(3)} passed  |  ${String(totalTestsFailed).padStart(3)} failed      │`,
+  );
   console.log(`│  Duration:       ${(totalDuration / 1000).toFixed(2)}s total                                      │`);
   console.log('└─────────────────────────────────────────────────────────────────────┘');
 
   // Pass rate
-  const testPassRate = totalTestsRun > 0 ? (totalTestsPassed / totalTestsRun * 100).toFixed(1) : '0.0';
-  const pkgPassRate = results.length > 0 ? (totalPkgPassed / results.length * 100).toFixed(1) : '0.0';
+  const testPassRate = totalTestsRun > 0 ? ((totalTestsPassed / totalTestsRun) * 100).toFixed(1) : '0.0';
+  const pkgPassRate = results.length > 0 ? ((totalPkgPassed / results.length) * 100).toFixed(1) : '0.0';
 
   console.log('\n📊 Success Rate:');
   console.log(`   Tests:    ${testPassRate}% (${totalTestsPassed}/${totalTestsRun})`);
@@ -144,10 +146,10 @@ function printSummary(results: PackageTestResult[]) {
     console.log('\n❌ Some tests failed. Review the output above for details.\n');
 
     // List failed packages
-    const failedPkgs = results.filter(r => !r.passed);
+    const failedPkgs = results.filter((r) => !r.passed);
     if (failedPkgs.length > 0) {
       console.log('Failed packages:');
-      failedPkgs.forEach(pkg => {
+      failedPkgs.forEach((pkg) => {
         console.log(`  • ${pkg.name}`);
       });
       console.log();
@@ -176,7 +178,9 @@ async function main() {
 
   if (!quiet && !summary) {
     console.log(`Found ${packages.length} packages to test:\n`);
-    packages.forEach(pkg => console.log(`  • ${pkg}`));
+    packages.forEach((pkg) => {
+      console.log(`  • ${pkg}`);
+    });
   }
 
   const results: PackageTestResult[] = [];
@@ -197,8 +201,7 @@ async function main() {
   printSummary(results);
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('❌ Fatal error:', error);
   process.exit(1);
 });
-

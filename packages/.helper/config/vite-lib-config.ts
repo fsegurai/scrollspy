@@ -1,10 +1,10 @@
+import { copyFileSync, mkdirSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { defineConfig } from 'vite';
-import { copyFileSync, mkdirSync } from 'fs';
-import { execSync } from 'child_process';
-import { join, resolve } from 'path';
+import dts from 'vite-plugin-dts';
 
 /**
- * Creates a Vite library config for Scrollspy
+ * Creates a Vite library config for marked-extensions packages
  * Generates ESM, CommonJS, and UMD builds with TypeScript declarations
  *
  * @param {Object} options - Configuration options
@@ -20,10 +20,10 @@ export function createLibraryConfig(options: {
   globals?: Record<string, string>;
 }) {
   const { umdGlobalName, styleFiles = [], external = ['marked'], globals = {} } = options;
-  let declarationsGenerated = false;
 
   // Build globals object with defaults for known packages
   const defaultGlobals: Record<string, string> = {
+    marked: 'marked',
     '@fsegurai/scrollspy': 'Scrollspy',
   };
 
@@ -60,31 +60,6 @@ export function createLibraryConfig(options: {
     };
   }
 
-  // Plugin to generate TypeScript declarations
-  function generateDeclarations() {
-    return {
-      name: 'generate-declarations',
-      writeBundle() {
-        // Only generate declarations once per build, not for each format (es, cjs, umd)
-        if (declarationsGenerated) return;
-        declarationsGenerated = true;
-
-        try {
-          // Run tsc to generate declarations only (silently, suppress output)
-          execSync(
-            'tsc --emitDeclarationOnly --declaration --declarationDir dist/types --skipLibCheck 2>/dev/null || true',
-            { stdio: 'pipe', encoding: 'utf-8', shell: '/bin/sh' },
-          );
-          // Always show success since tsc generates declarations despite type lib warnings
-          console.log('✓ Generated TypeScript declarations');
-        } catch {
-          // Silently handle errors as tsc still generates declarations
-          console.log('✓ Generated TypeScript declarations');
-        }
-      },
-    };
-  }
-
   return defineConfig(({ command }) => ({
     build: {
       lib: {
@@ -95,7 +70,7 @@ export function createLibraryConfig(options: {
           if (format === 'es') return 'index.esm.js';
           if (format === 'cjs') return 'index.cjs';
           if (format === 'umd') return 'index.umd.js';
-          return `index.${ format }.js`;
+          return `index.${format}.js`;
         },
       },
       rollupOptions: {
@@ -108,6 +83,13 @@ export function createLibraryConfig(options: {
       sourcemap: command !== 'build',
       emptyOutDir: true,
     },
-    plugins: [copyStyles(), generateDeclarations()],
+    plugins: [
+      copyStyles(),
+      dts({
+        tsconfigPath: './tsconfig.json',
+        outDirs: 'dist/types',
+        entryRoot: 'src',
+      }),
+    ],
   }));
 }
