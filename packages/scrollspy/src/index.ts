@@ -184,10 +184,11 @@ export default class ScrollSpy {
     const scrollTop = window.pageYOffset;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    const { bottomThreshold } = this.settings;
 
-    const nearBottom = scrollTop + windowHeight >= documentHeight - 50;
+    const nearBottom = bottomThreshold > 0 && scrollTop + windowHeight >= documentHeight - bottomThreshold;
     const offsetValue = typeof this.settings.offset === 'function' ? this.settings.offset() : this.settings.offset;
-    const dynamicOffset = nearBottom ? offsetValue - 100 : offsetValue;
+    const dynamicOffset = nearBottom ? offsetValue - bottomThreshold : offsetValue;
 
     return scrollTop + dynamicOffset;
   }
@@ -243,13 +244,19 @@ export default class ScrollSpy {
   }
 
   /**
-   * Activates the provided content items by adding an 'active' class to corresponding navigation items,
-   * handling nested navigation, and emitting an 'activate' event.
+   * Emits a 'deactivate' event for the previously active content, then activates the provided
+   * content items by adding an 'active' class to corresponding navigation items, handling nested
+   * navigation, and emitting an 'activate' event.
    *
    * @param active - An array of elements to be activated. Each element represents a piece of
    * content that corresponds to a navigation item.
    */
   activate(active: Element[]): void {
+    this.current.forEach((content) => {
+      const navItem = this.getNavItem(content);
+      if (navItem) this.emitEvent('deactivate', content, navItem);
+    });
+
     active.forEach((content) => {
       const navItem = this.getNavItem(content);
       if (navItem) {

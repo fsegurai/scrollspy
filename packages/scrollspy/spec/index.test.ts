@@ -165,6 +165,35 @@ describe('Scrollspy', () => {
     expect(sp.getViewportPosition()).toBe(550); // offset - 100 due to nearBottom true
   });
 
+  test('getViewportPosition respects a custom bottomThreshold', () => {
+    const sp = new ScrollSpy('#nav', { offset: 50, bottomThreshold: 40 });
+
+    Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 600 });
+    Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
+
+    // scrollTop + windowHeight (1200) >= documentHeight - bottomThreshold (1160) -> near bottom
+    expect(sp.getViewportPosition()).toBe(610); // scrollTop + (offset - bottomThreshold)
+  });
+
+  test('getViewportPosition ignores near-bottom offset shift when bottomThreshold is 0', () => {
+    const sp = new ScrollSpy('#nav', { offset: 50, bottomThreshold: 0 });
+
+    Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 600 });
+    Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
+
+    expect(sp.getViewportPosition()).toBe(650); // scrollTop + offset, no near-bottom shift at all
+  });
+
   test('getCurrentActive returns last section when near bottom', () => {
     const sp = new ScrollSpy('#nav', { bottomThreshold: 100 });
     const positions = [
@@ -236,6 +265,24 @@ describe('Scrollspy', () => {
     expect(eventFired).toBe(true);
 
     document.removeEventListener('gumshoeactivate', eventListener);
+  });
+
+  test('activate emits gumshoedeactivate for the previously active section', () => {
+    const sp = new ScrollSpy('#nav');
+    sp.getContents();
+
+    if (section1) sp.activate([section1]);
+
+    const captured: { content: Element | null } = { content: null };
+    const eventListener = (event: Event) => {
+      captured.content = (event as CustomEvent<{ content: Element }>).detail.content;
+    };
+    document.addEventListener('gumshoedeactivate', eventListener);
+
+    if (section2) sp.activate([section2]);
+    expect(captured.content).toBe(section1);
+
+    document.removeEventListener('gumshoedeactivate', eventListener);
   });
 
   test('deactivateAll removes active classes', () => {
