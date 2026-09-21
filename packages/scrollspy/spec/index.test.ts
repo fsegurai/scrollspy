@@ -1,5 +1,5 @@
-import { JSDOM } from 'jsdom';
 import { afterEach, beforeEach, describe, expect, spyOn, test } from 'bun:test';
+import { JSDOM } from 'jsdom';
 import ScrollSpy from '../src';
 
 // Initialize JSDOM
@@ -97,12 +97,9 @@ describe('Scrollspy', () => {
   });
 
   // Helper to access private members in tests with proper typing
-  function getPrivateMembers<Obj, K extends PropertyKey>(
-    obj: Obj,
-    ...keys: K[]
-  ): Record<K, unknown> {
+  function getPrivateMembers<Obj, K extends PropertyKey>(obj: Obj, ...keys: K[]): Record<K, unknown> {
     const result: Record<string, unknown> = {};
-    keys.forEach(key => {
+    keys.forEach((key) => {
       result[String(key)] = (obj as unknown as Record<string, unknown>)[String(key)];
     });
     return result as Record<K, unknown>;
@@ -127,7 +124,7 @@ describe('Scrollspy', () => {
     expect(contents).toContain(section1!);
     expect(contents).toContain(section2!);
     expect(contents).toContain(section3!);
-    
+
     expect(navMap.get('section1')?.getAttribute('href')).toBe('#section1');
   });
 
@@ -150,13 +147,21 @@ describe('Scrollspy', () => {
     // Case: Not near bottom
     Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 200 });
     Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { writable: true, configurable: true, value: 1200 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
     expect(sp.getViewportPosition()).toBe(250);
 
     // Case: Near bottom (scrollTop + windowHeight >= documentHeight - 50)
     Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 600 });
     Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { writable: true, configurable: true, value: 1200 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
     expect(sp.getViewportPosition()).toBe(550); // offset - 100 due to nearBottom true
   });
 
@@ -170,7 +175,11 @@ describe('Scrollspy', () => {
 
     Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 600 });
     Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { writable: true, configurable: true, value: 1200 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
 
     const active = sp.getCurrentActive(positions, 700);
     expect(active).toEqual([section3!]);
@@ -186,7 +195,11 @@ describe('Scrollspy', () => {
 
     Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 100 });
     Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { writable: true, configurable: true, value: 1200 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
 
     const active = sp.getCurrentActive(positions, 160);
     expect(active).toEqual([section2!]);
@@ -260,7 +273,7 @@ describe('Scrollspy', () => {
 
     const scrollCall = spyScroll.mock.calls.find((call: readonly unknown[]) => call[0] === 'scroll');
     const resizeCall = spyScroll.mock.calls.find((call: readonly unknown[]) => call[0] === 'resize');
-    
+
     expect(scrollCall).toBeDefined();
     expect(resizeCall).toBeDefined();
   });
@@ -298,7 +311,7 @@ describe('Scrollspy', () => {
 
     const fragmentFn = (item: Element) => item.getAttribute('data-target');
     const sp = new ScrollSpy('#nav', { fragmentAttribute: fragmentFn, navItemSelector: 'a' });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -316,7 +329,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav', { fragmentAttribute: 'data-section', navItemSelector: 'a' });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -360,7 +373,7 @@ describe('Scrollspy', () => {
     nav = document.querySelector('#nav');
     const sp = new ScrollSpy('#nav', { nested: true, nestedClass: 'active-parent' });
     sp.getContents();
-    
+
     const childLi = document.getElementById('child-li');
     sp.addNestedNavigation(childLi!);
 
@@ -375,19 +388,19 @@ describe('Scrollspy', () => {
 
     const originalGetContents = sp.getContents;
     const originalDetect = sp.detect;
-    
-    sp.getContents = function() {
+
+    sp.getContents = function () {
       getContentsCallCount++;
       return originalGetContents.call(this);
     };
-    
-    sp.detect = function() {
+
+    sp.detect = function () {
       detectCallCount++;
       return originalDetect.call(this);
     };
-    
+
     sp.setup();
-    
+
     expect(getContentsCallCount).toBe(1);
     expect(detectCallCount).toBe(1);
   });
@@ -399,26 +412,26 @@ describe('Scrollspy', () => {
 
     const originalGetContents = sp.getContents;
     const originalDetect = sp.detect;
-    
-    sp.getContents = function() {
+
+    sp.getContents = function () {
       getContentsCallCount++;
       return originalGetContents.call(this);
     };
-    
-    sp.detect = function() {
+
+    sp.detect = function () {
       detectCallCount++;
       return originalDetect.call(this);
     };
-    
+
     sp.refresh();
-    
+
     expect(getContentsCallCount).toBe(1);
     expect(detectCallCount).toBe(1);
   });
 
   test('observeChanges sets up MutationObserver', () => {
     const sp = new ScrollSpy('#nav', { observe: true });
-    
+
     const members = getPrivateMembers(sp, '_observer');
     const observer = members._observer;
     expect(observer).not.toBeNull();
@@ -439,7 +452,7 @@ describe('Scrollspy', () => {
     nav = document.querySelector('#nav');
     const sp = new ScrollSpy('#nav');
     sp.observeChanges();
-    
+
     // Should observe nav and content parents
     const members = getPrivateMembers(sp, '_observer');
     const observer = members._observer;
@@ -449,7 +462,7 @@ describe('Scrollspy', () => {
   test('init does not proceed if nav element is not found', () => {
     document.body.innerHTML = '<div></div>';
     const sp = new ScrollSpy('#nonexistent');
-    
+
     expect(sp.nav).toBeNull();
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
@@ -468,7 +481,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav');
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -487,7 +500,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav');
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -505,7 +518,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav');
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -524,7 +537,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav');
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -545,10 +558,10 @@ describe('Scrollspy', () => {
     const members = getPrivateMembers(sp, 'navMap');
     const navMap = members.navMap as Map<string, Element>;
     navMap.clear(); // Clear the map
-    
+
     const mockSection = { id: 'nonexistent' } as Element;
     sp.activate([mockSection]);
-    
+
     const membersCurrent = getPrivateMembers(sp, 'current');
     const current = membersCurrent.current as Element[];
     expect(current).toEqual([mockSection]);
@@ -561,9 +574,9 @@ describe('Scrollspy', () => {
       eventFired = true;
     };
     document.addEventListener('gumshoeactivate', eventListener);
-    
+
     sp.emitEvent('activate', section1!, section1!);
-    
+
     expect(eventFired).toBe(false);
     document.removeEventListener('gumshoeactivate', eventListener);
   });
@@ -571,7 +584,7 @@ describe('Scrollspy', () => {
   test('destroyListeners handles empty listeners array', () => {
     const sp = new ScrollSpy('#nav');
     (sp as unknown as Record<string, unknown>)['_listeners'] = [];
-    
+
     expect(() => sp.destroyListeners()).not.toThrow();
   });
 
@@ -584,7 +597,11 @@ describe('Scrollspy', () => {
 
     Object.defineProperty(window, 'pageYOffset', { writable: true, configurable: true, value: 600 });
     Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 600 });
-    Object.defineProperty(document.documentElement, 'scrollHeight', { writable: true, configurable: true, value: 1200 });
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      writable: true,
+      configurable: true,
+      value: 1200,
+    });
 
     const active = sp.getCurrentActive(positions, 700);
     // Should not return last section due to bottomThreshold = 0
@@ -602,7 +619,7 @@ describe('Scrollspy', () => {
     section1 = document.getElementById('section1');
     const sp = new ScrollSpy('#nav');
     const navItem = sp.getNavItem(section1!);
-    
+
     expect(navItem?.tagName).toBe('A');
     expect(navItem?.getAttribute('href')).toBe('#section1');
   });
@@ -617,11 +634,11 @@ describe('Scrollspy', () => {
       <div id="section1"></div>
     `;
 
-    const sp = new ScrollSpy('#nav', { 
-      fragmentAttribute: 'data-target', 
-      navItemSelector: 'button', 
+    const sp = new ScrollSpy('#nav', {
+      fragmentAttribute: 'data-target',
+      navItemSelector: 'button',
     });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -639,11 +656,11 @@ describe('Scrollspy', () => {
       <div id="section1"></div>
     `;
 
-    const sp = new ScrollSpy('#nav', { 
+    const sp = new ScrollSpy('#nav', {
       fragmentAttribute: 'data-target',
       navItemSelector: 'a',
     });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -654,19 +671,19 @@ describe('Scrollspy', () => {
     spyScroll.mockClear();
     const sp = new ScrollSpy('#nav', { reflow: false });
     sp.setupListeners();
-    
+
     const scrollListener = spyScroll.mock.calls.find((call: readonly unknown[]) => call[0] === 'scroll');
     const resizeListener = spyScroll.mock.calls.find((call: readonly unknown[]) => call[0] === 'resize');
-    
+
     expect(scrollListener).toBeDefined();
     expect(resizeListener).toBeUndefined();
   });
 
   test('destroyListeners removes all registered listeners', () => {
     const sp = new ScrollSpy('#nav', { reflow: true });
-    
+
     sp.destroyListeners();
-    
+
     const members = getPrivateMembers(sp, '_listeners');
     const listeners = members._listeners as EventListener[];
     expect(listeners.length).toBe(0);
@@ -675,7 +692,7 @@ describe('Scrollspy', () => {
   test('destroy without observer does not throw', () => {
     const sp = new ScrollSpy('#nav');
     (sp as unknown as Record<string, unknown>)['_observer'] = null;
-    
+
     expect(() => sp.destroy()).not.toThrow();
     const members = getPrivateMembers(sp, '_observer');
     const observer = members._observer;
@@ -692,11 +709,11 @@ describe('Scrollspy', () => {
       <div id="section1"></div>
     `;
 
-    const sp = new ScrollSpy('#nav', { 
+    const sp = new ScrollSpy('#nav', {
       fragmentAttribute: 'data-target',
       navItemSelector: null as unknown as string,
     });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -714,7 +731,7 @@ describe('Scrollspy', () => {
     `;
 
     const sp = new ScrollSpy('#nav', { navItemSelector: null as unknown as string });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents.length).toBe(1);
@@ -733,11 +750,11 @@ describe('Scrollspy', () => {
     `;
 
     const fragmentFn = (item: Element) => item.getAttribute('data-id') || null;
-    const sp = new ScrollSpy('#nav', { 
+    const sp = new ScrollSpy('#nav', {
       fragmentAttribute: fragmentFn,
       navItemSelector: 'a',
     });
-    
+
     const members = getPrivateMembers(sp, 'contents');
     const contents = members.contents as Element[];
     expect(contents[0]?.id).toBe('section1');
@@ -747,8 +764,7 @@ describe('Scrollspy', () => {
   test('destroyListeners when listeners is falsy', () => {
     const sp = new ScrollSpy('#nav');
     (sp as unknown as Record<string, unknown>)['_listeners'] = null;
-    
+
     expect(() => sp.destroyListeners()).not.toThrow();
   });
 });
-

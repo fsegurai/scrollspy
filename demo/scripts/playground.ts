@@ -1,5 +1,5 @@
-import mdSample from './utils/markdown.example';
 import { mdRender } from './utils/markdown';
+import mdSample from './utils/markdown.example';
 import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from './utils/toc';
 
 type MarkdownEditorElement = HTMLElement & { value: string };
@@ -57,7 +57,7 @@ const showCopyFeedback = (button: HTMLElement | null, iconName: string): void =>
   }, FEEDBACK_DURATION);
 };
 
-const copyText = async(text: string, button: HTMLElement | null): Promise<void> => {
+const copyText = async (text: string, button: HTMLElement | null): Promise<void> => {
   try {
     await navigator.clipboard.writeText(text);
     showCopyFeedback(button, 'check');

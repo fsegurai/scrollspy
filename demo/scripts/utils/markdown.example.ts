@@ -154,5 +154,4 @@ Keep scrolling, keep exploring, and keep being awesome! 🚀✨
 - Long sections test offset and bottom-of-page logic.
 `;
 
-
 export default mdSample;
