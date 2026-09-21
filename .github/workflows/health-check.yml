@@ -8,7 +8,7 @@ on:
   push:
     branches: [ 'main' ]
     paths:
-      - 'packages/scrollspy-*/src/**'
+      - 'packages/*/src/**'
       - 'packages/.helper/**'
       - 'package.json'
       - 'bunfig.toml'
@@ -86,9 +86,12 @@ jobs:
         id: audit
         run: |
           echo "## Dependency Audit" >> $GITHUB_STEP_SUMMARY
-          bun audit --production 2>&1 | tee audit.log || true
-          AUDIT_STATUS=$?
-          
+
+          set +e
+          bun audit --production 2>&1 | tee audit.log
+          AUDIT_STATUS=${PIPESTATUS[0]}
+          set -e
+
           if [ $AUDIT_STATUS -eq 0 ]; then
             echo "✅ No security vulnerabilities" >> $GITHUB_STEP_SUMMARY
           else

@@ -1,4 +1,4 @@
-import ScrollSpy from '@fsegurai/scrollspy';
+import ScrollSpy from '../../../packages/scrollspy/src/index';
 
 let spy: ScrollSpy;
 
@@ -29,12 +29,13 @@ export const generateTOC = (content: HTMLElement): void => {
   const levelStack: HTMLElement[] = [tocUl];
 
   headings.forEach((heading) => {
-    const level = parseInt(heading.tagName.charAt(1));
+    const level = parseInt(heading.tagName.charAt(1), 10);
     const text = heading.textContent || '';
 
     // Generate ID if not exists
     if (!heading.id) {
-      heading.id = text.toLowerCase()
+      heading.id = text
+        .toLowerCase()
         .replace(/[^\w\s-]/g, '')
         .replace(/\s+/g, '-')
         .replace(/--+/g, '-')
@@ -74,7 +75,7 @@ export const generateTOC = (content: HTMLElement): void => {
     // Create a TOC item
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.href = `#${ heading.id }`;
+    a.href = `#${heading.id}`;
     a.textContent = text;
 
     li.appendChild(a);

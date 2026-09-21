@@ -1,9 +1,4 @@
-import type {
-  ContentPosition,
-  EventListener,
-  ScrollSpyEvent,
-  ScrollSpyOptions,
-} from './types';
+import type { ContentPosition, EventListener, ScrollSpyEvent, ScrollSpyOptions } from './types';
 
 /**
  * ScrollSpy - A framework-agnostic scrollspy implementation
@@ -94,9 +89,12 @@ export default class ScrollSpy {
     const { fragmentAttribute, navItemSelector } = this.settings;
 
     if (fragmentAttribute) {
-      navItems = this.nav?.querySelectorAll(navItemSelector || 'a') ?? new NodeList() as unknown as NodeListOf<Element>;
+      navItems =
+        this.nav?.querySelectorAll(navItemSelector || 'a') ?? (new NodeList() as unknown as NodeListOf<Element>);
     } else {
-      navItems = this.nav?.querySelectorAll(navItemSelector || 'a[href*="#"]') ?? new NodeList() as unknown as NodeListOf<Element>;
+      navItems =
+        this.nav?.querySelectorAll(navItemSelector || 'a[href*="#"]') ??
+        (new NodeList() as unknown as NodeListOf<Element>);
     }
 
     this.contents = [];
@@ -121,7 +119,7 @@ export default class ScrollSpy {
       if (!fragment) return;
 
       const target = document.getElementById(fragment);
-      if (target && target.id) {
+      if (target?.id) {
         this.contents.push(target);
         this.navMap.set(target.id, item);
       }
@@ -186,12 +184,11 @@ export default class ScrollSpy {
     const scrollTop = window.pageYOffset;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    const { bottomThreshold } = this.settings;
 
-    const nearBottom = scrollTop + windowHeight >= documentHeight - 50;
-    const offsetValue = typeof this.settings.offset === 'function'
-      ? this.settings.offset()
-      : this.settings.offset;
-    const dynamicOffset = nearBottom ? offsetValue - 100 : offsetValue;
+    const nearBottom = bottomThreshold > 0 && scrollTop + windowHeight >= documentHeight - bottomThreshold;
+    const offsetValue = typeof this.settings.offset === 'function' ? this.settings.offset() : this.settings.offset;
+    const dynamicOffset = nearBottom ? offsetValue - bottomThreshold : offsetValue;
 
     return scrollTop + dynamicOffset;
   }
@@ -207,13 +204,10 @@ export default class ScrollSpy {
     const scrollTop = window.pageYOffset;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    const nearBottom =
-      scrollTop + windowHeight >= documentHeight - this.settings.bottomThreshold;
+    const nearBottom = scrollTop + windowHeight >= documentHeight - this.settings.bottomThreshold;
 
     if (nearBottom && this.settings.bottomThreshold > 0) {
-      return [positions[positions.length - 1]?.content || positions[0]?.content].filter(
-        Boolean,
-      );
+      return [positions[positions.length - 1]?.content || positions[0]?.content].filter(Boolean);
     }
 
     for (let i = positions.length - 1; i >= 0; i -= 1) {
@@ -250,13 +244,19 @@ export default class ScrollSpy {
   }
 
   /**
-   * Activates the provided content items by adding an 'active' class to corresponding navigation items,
-   * handling nested navigation, and emitting an 'activate' event.
+   * Emits a 'deactivate' event for the previously active content, then activates the provided
+   * content items by adding an 'active' class to corresponding navigation items, handling nested
+   * navigation, and emitting an 'activate' event.
    *
    * @param active - An array of elements to be activated. Each element represents a piece of
    * content that corresponds to a navigation item.
    */
   activate(active: Element[]): void {
+    this.current.forEach((content) => {
+      const navItem = this.getNavItem(content);
+      if (navItem) this.emitEvent('deactivate', content, navItem);
+    });
+
     active.forEach((content) => {
       const navItem = this.getNavItem(content);
       if (navItem) {
@@ -377,10 +377,11 @@ export default class ScrollSpy {
    */
   observeChanges(): void {
     type GlobalWithMutationObserver = typeof globalThis & { MutationObserver: typeof MutationObserver };
-    const MutationObserverClass = typeof MutationObserver !== 'undefined' 
-      ? MutationObserver 
-      : (globalThis as unknown as GlobalWithMutationObserver).MutationObserver;
-    
+    const MutationObserverClass =
+      typeof MutationObserver !== 'undefined'
+        ? MutationObserver
+        : (globalThis as unknown as GlobalWithMutationObserver).MutationObserver;
+
     const observer = new MutationObserverClass(() => this.refresh());
     const config: MutationObserverInit = { childList: true, subtree: true };
 

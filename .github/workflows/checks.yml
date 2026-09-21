@@ -32,11 +32,9 @@ jobs:
 
       - name: TypeScript strict check
         run: bun run --shell "tsc --noEmit 2>&1 | head -20"
-        continue-on-error: true
 
       - name: Lint check (fail on warnings)
         run: bun run lint:check
-        continue-on-error: true
 
   pr_integration:
     name: Build Integration Test

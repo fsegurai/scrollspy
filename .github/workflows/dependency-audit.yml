@@ -8,7 +8,7 @@ on:
     paths:
       - 'package.json'
       - 'bun.lock'
-      - 'packages/scrollspy-*/package.json'
+      - 'packages/*/package.json'
       - 'packages/.helper/**'
   workflow_dispatch:
 

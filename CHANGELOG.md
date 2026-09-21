@@ -1,6 +1,6 @@
 # 📦 Changelog
 
-All notable changes to this project will be documented in this file.  
+All notable changes to this project will be documented in this file.
 This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
@@ -8,6 +8,86 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 ## [Unreleased]
 
 No changes have been made yet.
+
+---
+
+## [2.1.0] - 2026-09-21
+
+### 🔧 Infrastructure
+
+- **Linting migration: ESLint → Biome** — replaced `eslint`, `@eslint/js`, `globals`,
+  `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, and `typescript-eslint` with a single
+  `@biomejs/biome` dependency.
+	- Added `biome.json` (formatter + linter, single quotes, trailing commas, 120-char line width, import sorting).
+	- Removed `eslint.config.js`.
+	- `lint:check`/`lint:fix`/`lint:packages`/`lint:demo` now run Biome; added `format`/`format:check` aliases.
+	- Reformatted every `packages/*/src/{index,utils}.ts` file and the `demo/` scripts/styles with Biome — formatting
+	  and import-order only, no palette, tag, or behavioral changes.
+	- Renamed `postbuild:packages`/`postbuild:demo` to `build:packages:metadata`/`build:demo:metadata` and updated
+	  `build`, `build:packages:doppler`, `build:demo:doppler` to match.
+	- Fixed inverted `start`/`start:prod` scripts: `start` now runs the Vite dev server, `start:prod` serves the
+	  production build.
+	- `.github/workflows/dependency-audit.yml`: bumped `actions/github-script` to `v9` (Node 24 runtime) and added the
+	  `issues: write` permission needed to file security-audit issues.
+	- Aligned `.editorconfig` with Biome's formatting rules (2-space indent, 120-char line width) across
+	  `.js`/`.ts`/`.json`/`.css`.
+
+### 🔧 Changes
+
+- **Removed `manualChunks` split configuration** — dropped the custom chunk split from the Vite config, added missing
+  `<title>` elements to SVGs, and standardized `parseInt` radix usage across the codebase.
+- **Migrated the Vite config to TypeScript** — replaced `vite.config.js` with `vite.config.ts` and refreshed environment
+  typings (`vite-env.d.ts`, `demo/scripts/header.ts`).
+- **Migrated to `node:` imports** — adopted `node:`-prefixed imports and arrow-function consistency, and improved
+  TypeScript declaration generation with `vite-plugin-dts`.
+- **Added Git hooks for quality gates** — Husky `pre-commit` and `pre-push` hooks run linting and format audits with Bun.
+- **Updated engine requirements** — raised the minimum Node.js, Bun, and npm versions declared in `package.json`.
+- **Cleaned package publishing metadata** — removed `.npmignore` and set `"sideEffects": false` on
+  `@fsegurai/scrollspy` for better tree-shaking.
+- **Improved the demo TOC utility** — fixed import path resolution and normalized formatting in the TOC script.
+- **Enhanced Trivy integration** — expanded the `Makefile` with new scan targets, improved caching, and configurable
+  scan options (skip dirs, vulnerability types, severities, CI severities).
+- **Migrated the lockfile to version 2** — regenerated `bun.lock` with the v2 format during the dependency update.
+- **Normalized configuration and formatting** —
+	- Enforced newline consistency in `bunfig.toml`.
+	- Normalized CSS across themes (indents and whitespace).
+	- Simplified `.editorconfig` by removing redundant and unused rules.
+- **Updated CI workflows** — adjusted the labeler and documentation workflows for TypeScript and formatting; aligned
+  workflow references and paths with the scrollspy migration and fixed minor CI script formatting.
+
+### 📝 Documentation
+
+- Fixed `AGENTS.md`'s stale "rollup dev server" reference — the build system moved to Vite in an earlier release.
+- Added a changelog page to the demo — implemented `demo/changelog.html` with its script, refreshed the demo HTML
+  pages, and adjusted the library build configuration.
+- Updated the contributing guide — refreshed `CONTRIBUTING.md` with updated tool versions, improved commands, and
+  enhanced linting instructions.
+
+### 🔐 Security
+
+- Updated `trivy` to version `0.71.1` to address vulnerabilities in previous versions.
+- **Added dependencies**.
+	- Dev Dependencies
+		- `@biomejs/biome` - `2.5.14` - needed for linting and formatting - replaces ESLint toolchain.
+		- `husky` - `9.1.7` - needed for Git hooks to enforce code quality and pre-commit checks.
+		- `vite-plugin-dts` - `5.1.1` - needed for generating TypeScript declaration files for the package.
+- **Update dependencies** — address potential vulnerabilities and/or improvements in development dependencies.
+	- Dependencies
+		- `@material/web` from `2.4.1` to `2.5.0`
+		- `marked` from `18.0.0` to `18.0.13`
+	- Dev Dependencies
+		- `@types/jsdom` from `28.0.1` to `30.0.0`
+		- `@types/node` from `25.6.0` to `26.6.2`
+		- `bun-types` from `1.3.12` to `1.4.2`
+		- `jsdom` from `29.0.2` to `30.1.10`
+		- `portless` from `0.10.3` to `0.15.6`
+		- `terser` from `5.46.1` to `5.51.2`
+		- `typescript` from `6.0.2` to `7.0.2`
+		- `vite` from `8.0.8` to `8.3.0`
+	- Removed: `@eslint/js`, `@typescript-eslint/eslint-plugin`, `@typescript-eslint/parser`, `eslint`, `globals`,
+	  `typescript-eslint`
+
+**Full Changelog**: https://github.com/fsegurai/scrollspy/commits/v2.1.0
 
 ---
 
@@ -113,7 +193,7 @@ No changes have been made yet.
 
 ### 🐛 Fixed
 
-- For rollup configuration file, fixed `process` import reference to point to `node:process` directly.
+- For the rollup configuration file, fixed `process` import reference to point to `node:process` directly.
 
 ### 🔧 Changed
 
@@ -259,7 +339,9 @@ No changes have been made yet.
 
 ---
 
-[unreleased]: https://github.com/fsegurai/scrollspy/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/fsegurai/scrollspy/compare/v2.1.0...HEAD
+
+[2.1.0]: https://github.com/fsegurai/scrollspy/compare/v2.0.0...v2.1.0
 
 [2.0.0]: https://github.com/fsegurai/scrollspy/compare/v1.0.3...v2.0.0
 

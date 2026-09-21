@@ -11,12 +11,6 @@
     "strict": true,
     "noPropertyAccessFromIndexSignature": false
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "spec"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "spec"]
 }

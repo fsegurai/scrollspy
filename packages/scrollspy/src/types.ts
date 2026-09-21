@@ -105,10 +105,10 @@ export type EventListener = [event: string, handler: EventListenerOrEventListene
 
 /**
  * Type augmentation for custom ScrollSpy events in DocumentEventMap
- * 
+ *
  * This augmentation makes TypeScript recognize 'gumshoeactivate' and 'gumshoedeactivate'
  * events when using addEventListener/removeEventListener on the document object.
- * 
+ *
  * @example
  * ```typescript
  * document.addEventListener('gumshoeactivate', (event) => {
@@ -133,5 +133,3 @@ declare global {
     gumshoedeactivate: CustomEvent<ScrollSpyEvent>;
   }
 }
-
-

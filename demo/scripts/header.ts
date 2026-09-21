@@ -1,20 +1,20 @@
 import ENV_REFERENCE from './const/const-env-reference';
 
-const isProdEnv = ENV_REFERENCE.MODE === 'production';
+const isProdEnv = ENV_REFERENCE.IS_PROD;
 const hostUrl = ENV_REFERENCE.HOST_URL;
 const lsTheme = 'scrollspy:fsegurai';
 
 // Generate URL based on environment
-const urlGenerator = (path: string) => (isProdEnv ? `${ hostUrl }${ path }` : path);
+const urlGenerator = (path: string) => (isProdEnv && hostUrl ? `${hostUrl}${path}` : path);
 
 document.addEventListener('DOMContentLoaded', () => {
   interface Route {
-    path: string
-    label: string
-    icon: string
+    path: string;
+    label: string;
+    icon: string;
   }
 
-  if (!hostUrl) console.warn('CMT_HOST_URL_ENV is not defined');
+  if (!hostUrl) console.warn('HOST_URL is not defined');
 
   const routes: Route[] = [
     {
@@ -27,12 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
       label: 'Playground',
       icon: 'ar_stickers',
     },
+    {
+      path: urlGenerator('/changelog.html'),
+      label: 'Changelog',
+      icon: 'history',
+    },
   ];
 
   // Function to render tabs
   const tabLinkContainer = document.querySelector('#tabLinkContent');
   if (tabLinkContainer) {
-    routes.forEach(route => {
+    routes.forEach((route) => {
       const link = document.createElement('a');
       link.className = 'tab-link';
       link.href = route.path;
@@ -66,10 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tabLinkContainer.appendChild(link);
 
       // Check if the current URL matches the link's href
-      if (
-        window.location.href
-        === new URL(route.path, window.location.origin).href
-      ) {
+      if (window.location.href === new URL(route.path, window.location.origin).href) {
         link.classList.toggle('active');
       }
     });

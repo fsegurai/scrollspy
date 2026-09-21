@@ -3,13 +3,12 @@ import { generateTOC, initScrollspy, setupMobileToggle, setupSmoothScroll } from
 
 const mdBody = document.querySelector('.markdown-body') as HTMLElement;
 const loadingSpinner = document.querySelector('#loadingSpinner') as HTMLElement;
-const readmeURL =
-  'https://raw.githubusercontent.com/fsegurai/scrollspy/refs/heads/main/README.md';
+const readmeURL = 'https://raw.githubusercontent.com/fsegurai/scrollspy/refs/heads/main/README.md';
 
 const stripContent = () => {
   // Remove the "Table of Contents" heading and the next sibling (the list)
-  const tocHeading = Array.from(mdBody.querySelectorAll('h2')).find(
-    (h) => h.textContent?.trim().toLowerCase().includes('table of contents'),
+  const tocHeading = Array.from(mdBody.querySelectorAll('h2')).find((h) =>
+    h.textContent?.trim().toLowerCase().includes('table of contents'),
   );
 
   if (tocHeading) {
@@ -22,8 +21,8 @@ const stripContent = () => {
 document.addEventListener('DOMContentLoaded', () => {
   if (mdBody) {
     fetch(readmeURL)
-      .then(response => response.text())
-      .then(text => {
+      .then((response) => response.text())
+      .then((text) => {
         mdRender(text, mdBody);
 
         // Hide the TOC for the README.md
@@ -49,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 500);
       })
-      .catch(error => {
+      .catch((error) => {
         mdBody.innerHTML = `
           <div style="text-align: center; padding: 40px;">
             <h2 style="color: var(--md-sys-color-error);">Failed to load README.md</h2>
-            <p style="color: var(--md-sys-color-on-surface);">${ error }</p>
+            <p style="color: var(--md-sys-color-on-surface);">${error}</p>
           </div>
         `;
 
