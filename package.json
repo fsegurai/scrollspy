@@ -60,7 +60,8 @@
     "lint:packages": "biome lint packages/*/src/",
     "lint:demo": "biome lint demo/",
     "format": "biome check --write",
-    "format:audit": "biome check"
+    "format:audit": "biome check",
+    "generate:manifest": "manifest-generator --route ./docs/$npm_package_version/content --output ./docs/$npm_package_version"
   },
   "dependencies": {
     "@material/web": "^2.5.0",
@@ -71,6 +72,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
+    "@fsegurai/manifest-generator": "^1.1.0",
     "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.2",
     "@types/prismjs": "^1.26.6",

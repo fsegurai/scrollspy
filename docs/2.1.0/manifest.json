@@ -1,0 +1,562 @@
+[
+  {
+    "label": "Documentation Home",
+    "description": "Documentation for @fsegurai/scrollspy 2.1.0, a dependency-free scrollspy for navigation and tables of contents.",
+    "route": "content/README",
+    "tags": ["documentation", "overview", "scrollspy"],
+    "order": 0,
+    "breadcrumbTitle": "Home",
+    "keywords": ["table of contents", "toc", "navigation", "typescript"],
+    "breadcrumb": [
+      {
+        "label": "Home",
+        "route": "content/README"
+      }
+    ]
+  },
+  {
+    "label": "Getting Started",
+    "route": "content/getting-started",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "Getting Started",
+        "route": "content/getting-started"
+      }
+    ],
+    "order": 1,
+    "children": [
+      {
+        "label": "Getting Started",
+        "description": "Install @fsegurai/scrollspy and create your first instance.",
+        "route": "content/getting-started/README",
+        "tags": ["getting-started", "overview"],
+        "order": 1,
+        "breadcrumbTitle": "Getting Started",
+        "breadcrumb": [
+          {
+            "label": "Getting Started",
+            "route": "content/getting-started"
+          },
+          {
+            "label": "Getting Started",
+            "route": "content/getting-started/README"
+          }
+        ]
+      },
+      {
+        "label": "Installation",
+        "description": "Install @fsegurai/scrollspy from npm and choose ESM, CommonJS, or UMD.",
+        "route": "content/getting-started/installation",
+        "tags": ["installation", "npm", "setup"],
+        "order": 1,
+        "keywords": ["bun", "esm", "cjs", "umd"],
+        "breadcrumb": [
+          {
+            "label": "Getting Started",
+            "route": "content/getting-started"
+          },
+          {
+            "label": "Installation",
+            "route": "content/getting-started/installation"
+          }
+        ]
+      },
+      {
+        "label": "Quick Start",
+        "description": "Create a working scrollspy with a nav, section IDs, and an active class.",
+        "route": "content/getting-started/quick-start",
+        "tags": ["quick-start", "usage", "tutorial"],
+        "order": 2,
+        "breadcrumb": [
+          {
+            "label": "Getting Started",
+            "route": "content/getting-started"
+          },
+          {
+            "label": "Quick Start",
+            "route": "content/getting-started/quick-start"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Features",
+    "route": "content/features",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "Features",
+        "route": "content/features"
+      }
+    ],
+    "order": 2,
+    "children": [
+      {
+        "label": "Active Section Detection",
+        "description": "How ScrollSpy decides which section is active and which nav item gets the active class.",
+        "route": "content/features/active-section-detection",
+        "tags": ["features", "detection", "scroll", "active"],
+        "order": 1,
+        "keywords": ["bottomThreshold", "active class", "requestAnimationFrame"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Active Section Detection",
+            "route": "content/features/active-section-detection"
+          }
+        ]
+      },
+      {
+        "label": "Features",
+        "description": "Overview of every feature in @fsegurai/scrollspy 2.1.0.",
+        "route": "content/features/README",
+        "tags": ["features", "overview"],
+        "order": 2,
+        "breadcrumbTitle": "Features",
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Features",
+            "route": "content/features/README"
+          }
+        ]
+      },
+      {
+        "label": "Nested Navigation",
+        "description": "Mark parent list items of the active link in multi-level tables of contents.",
+        "route": "content/features/nested-navigation",
+        "tags": ["features", "nested", "toc"],
+        "order": 2,
+        "keywords": ["nestedClass", "active-parent"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Nested Navigation",
+            "route": "content/features/nested-navigation"
+          }
+        ]
+      },
+      {
+        "label": "Scroll Offset",
+        "description": "Shift the activation point to account for fixed headers, statically or dynamically.",
+        "route": "content/features/scroll-offset",
+        "tags": ["features", "offset", "fixed-header"],
+        "order": 3,
+        "keywords": ["sticky header", "function offset"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Scroll Offset",
+            "route": "content/features/scroll-offset"
+          }
+        ]
+      },
+      {
+        "label": "Fragment Mapping",
+        "description": "Map nav items to sections by href hash, custom attribute, or a function.",
+        "route": "content/features/fragment-mapping",
+        "tags": ["features", "fragment", "spa", "routing"],
+        "order": 4,
+        "keywords": ["fragmentAttribute", "navItemSelector", "href"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Fragment Mapping",
+            "route": "content/features/fragment-mapping"
+          }
+        ]
+      },
+      {
+        "label": "Custom Events",
+        "description": "React to section changes with the gumshoeactivate and gumshoedeactivate events.",
+        "route": "content/features/custom-events",
+        "tags": ["features", "events"],
+        "order": 5,
+        "keywords": ["gumshoeactivate", "gumshoedeactivate", "CustomEvent"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Custom Events",
+            "route": "content/features/custom-events"
+          }
+        ]
+      },
+      {
+        "label": "Dynamic Content",
+        "description": "Keep ScrollSpy in sync when the nav or sections change after initialization.",
+        "route": "content/features/dynamic-content",
+        "tags": ["features", "dynamic", "mutation-observer", "refresh"],
+        "order": 6,
+        "keywords": ["observe", "reflow", "MutationObserver"],
+        "breadcrumb": [
+          {
+            "label": "Features",
+            "route": "content/features"
+          },
+          {
+            "label": "Dynamic Content",
+            "route": "content/features/dynamic-content"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Guides",
+    "route": "content/guides",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "Guides",
+        "route": "content/guides"
+      }
+    ],
+    "order": 3,
+    "children": [
+      {
+        "label": "Fixed Headers",
+        "description": "Activate sections at the right moment when a fixed or sticky header covers the top of the page.",
+        "route": "content/guides/fixed-headers",
+        "tags": ["guides", "offset", "fixed-header"],
+        "order": 1,
+        "breadcrumb": [
+          {
+            "label": "Guides",
+            "route": "content/guides"
+          },
+          {
+            "label": "Fixed Headers",
+            "route": "content/guides/fixed-headers"
+          }
+        ]
+      },
+      {
+        "label": "SPA Integration",
+        "description": "Use ScrollSpy with client-side routing, route-prefixed links, and framework components.",
+        "route": "content/guides/spa-integration",
+        "tags": ["guides", "spa", "angular", "react", "routing"],
+        "order": 2,
+        "keywords": ["fragmentAttribute", "navItemSelector", "router"],
+        "breadcrumb": [
+          {
+            "label": "Guides",
+            "route": "content/guides"
+          },
+          {
+            "label": "SPA Integration",
+            "route": "content/guides/spa-integration"
+          }
+        ]
+      },
+      {
+        "label": "Guides",
+        "description": "Task-oriented guides for common @fsegurai/scrollspy setups.",
+        "route": "content/guides/README",
+        "tags": ["guides", "overview"],
+        "order": 3,
+        "breadcrumbTitle": "Guides",
+        "breadcrumb": [
+          {
+            "label": "Guides",
+            "route": "content/guides"
+          },
+          {
+            "label": "Guides",
+            "route": "content/guides/README"
+          }
+        ]
+      },
+      {
+        "label": "Lifecycle",
+        "description": "Create, refresh, and destroy ScrollSpy instances safely.",
+        "route": "content/guides/lifecycle",
+        "tags": ["guides", "lifecycle", "destroy", "refresh"],
+        "order": 3,
+        "breadcrumb": [
+          {
+            "label": "Guides",
+            "route": "content/guides"
+          },
+          {
+            "label": "Lifecycle",
+            "route": "content/guides/lifecycle"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "API",
+    "route": "content/api",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "API",
+        "route": "content/api"
+      }
+    ],
+    "order": 4,
+    "children": [
+      {
+        "label": "Options",
+        "description": "All ScrollSpyOptions fields with types, defaults, and behavior.",
+        "route": "content/api/options",
+        "tags": ["api", "options", "configuration"],
+        "order": 1,
+        "keywords": ["ScrollSpyOptions", "offset", "nested", "observe", "fragmentAttribute"],
+        "breadcrumb": [
+          {
+            "label": "API",
+            "route": "content/api"
+          },
+          {
+            "label": "Options",
+            "route": "content/api/options"
+          }
+        ]
+      },
+      {
+        "label": "Methods",
+        "description": "Public methods and properties of the ScrollSpy class.",
+        "route": "content/api/methods",
+        "tags": ["api", "methods", "reference"],
+        "order": 2,
+        "keywords": ["init", "refresh", "destroy", "detect", "setup"],
+        "breadcrumb": [
+          {
+            "label": "API",
+            "route": "content/api"
+          },
+          {
+            "label": "Methods",
+            "route": "content/api/methods"
+          }
+        ]
+      },
+      {
+        "label": "Events",
+        "description": "Reference for gumshoeactivate and gumshoedeactivate custom events.",
+        "route": "content/api/events",
+        "tags": ["api", "events", "reference"],
+        "order": 3,
+        "keywords": ["gumshoeactivate", "gumshoedeactivate", "ScrollSpyEvent"],
+        "breadcrumb": [
+          {
+            "label": "API",
+            "route": "content/api"
+          },
+          {
+            "label": "Events",
+            "route": "content/api/events"
+          }
+        ]
+      },
+      {
+        "label": "API",
+        "description": "Reference for the ScrollSpy class, its options, methods, events, and exported types.",
+        "route": "content/api/README",
+        "tags": ["api", "reference", "typescript"],
+        "order": 4,
+        "breadcrumbTitle": "API",
+        "breadcrumb": [
+          {
+            "label": "API",
+            "route": "content/api"
+          },
+          {
+            "label": "API",
+            "route": "content/api/README"
+          }
+        ]
+      },
+      {
+        "label": "Types",
+        "description": "TypeScript types exported by @fsegurai/scrollspy.",
+        "route": "content/api/types",
+        "tags": ["api", "types", "typescript"],
+        "order": 4,
+        "keywords": ["ScrollSpyOptions", "ScrollSpyEvent", "ContentPosition", "DocumentEventMap"],
+        "breadcrumb": [
+          {
+            "label": "API",
+            "route": "content/api"
+          },
+          {
+            "label": "Types",
+            "route": "content/api/types"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Examples",
+    "route": "content/examples",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "Examples",
+        "route": "content/examples"
+      }
+    ],
+    "order": 5,
+    "children": [
+      {
+        "label": "Basic Usage",
+        "description": "A static table of contents with nested items, offset, and an activation listener.",
+        "route": "content/examples/basic-usage",
+        "tags": ["examples", "basic", "javascript"],
+        "order": 1,
+        "breadcrumb": [
+          {
+            "label": "Examples",
+            "route": "content/examples"
+          },
+          {
+            "label": "Basic Usage",
+            "route": "content/examples/basic-usage"
+          }
+        ]
+      },
+      {
+        "label": "Generated TOC",
+        "description": "Build a table of contents from headings and attach ScrollSpy, following the repository demo.",
+        "route": "content/examples/generated-toc",
+        "tags": ["examples", "toc", "demo"],
+        "order": 2,
+        "keywords": ["generateTOC", "data-gumshoe", "headings"],
+        "breadcrumb": [
+          {
+            "label": "Examples",
+            "route": "content/examples"
+          },
+          {
+            "label": "Generated TOC",
+            "route": "content/examples/generated-toc"
+          }
+        ]
+      },
+      {
+        "label": "TypeScript",
+        "description": "Typed options, typed event listeners, and typed instance handling.",
+        "route": "content/examples/typescript",
+        "tags": ["examples", "typescript"],
+        "order": 3,
+        "breadcrumb": [
+          {
+            "label": "Examples",
+            "route": "content/examples"
+          },
+          {
+            "label": "TypeScript",
+            "route": "content/examples/typescript"
+          }
+        ]
+      },
+      {
+        "label": "Examples",
+        "description": "Copy-paste examples for common @fsegurai/scrollspy setups.",
+        "route": "content/examples/README",
+        "tags": ["examples", "overview"],
+        "order": 5,
+        "breadcrumbTitle": "Examples",
+        "breadcrumb": [
+          {
+            "label": "Examples",
+            "route": "content/examples"
+          },
+          {
+            "label": "Examples",
+            "route": "content/examples/README"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Help",
+    "route": "content/help",
+    "isParent": true,
+    "breadcrumb": [
+      {
+        "label": "Help",
+        "route": "content/help"
+      }
+    ],
+    "order": 6,
+    "children": [
+      {
+        "label": "FAQ",
+        "description": "Frequently asked questions about @fsegurai/scrollspy.",
+        "route": "content/help/faq",
+        "tags": ["help", "faq"],
+        "order": 1,
+        "breadcrumb": [
+          {
+            "label": "Help",
+            "route": "content/help"
+          },
+          {
+            "label": "FAQ",
+            "route": "content/help/faq"
+          }
+        ]
+      },
+      {
+        "label": "Troubleshooting",
+        "description": "Symptoms, causes, and fixes for common @fsegurai/scrollspy problems.",
+        "route": "content/help/troubleshooting",
+        "tags": ["help", "troubleshooting"],
+        "order": 2,
+        "breadcrumb": [
+          {
+            "label": "Help",
+            "route": "content/help"
+          },
+          {
+            "label": "Troubleshooting",
+            "route": "content/help/troubleshooting"
+          }
+        ]
+      },
+      {
+        "label": "Help",
+        "description": "FAQ, troubleshooting, changelog, and contribution links.",
+        "route": "content/help/README",
+        "tags": ["help", "support"],
+        "order": 6,
+        "breadcrumbTitle": "Help",
+        "breadcrumb": [
+          {
+            "label": "Help",
+            "route": "content/help"
+          },
+          {
+            "label": "Help",
+            "route": "content/help/README"
+          }
+        ]
+      }
+    ]
+  }
+]
